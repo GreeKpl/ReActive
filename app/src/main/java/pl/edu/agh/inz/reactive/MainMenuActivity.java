@@ -19,13 +19,15 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.devsmart.android.ui.HorizontialListView;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
 
@@ -55,7 +57,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
             labelUser = "Gość";
         }
 
-        GridView gallery = (GridView) this.findViewById(R.id.gamesList);
+        HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
         ImageView seaGame    = createGameImage(Sea.class, R.drawable.gra1);
         ImageView three1Game = createGameImage(Three.class, R.drawable.gra2);
@@ -64,20 +66,17 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         ImageView three4Game = createGameImage(Three.class, R.drawable.gra2);
         ImageView three5Game = createGameImage(Three.class, R.drawable.gra2);
 
-        gallery.setNumColumns(6);
-
-
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
 
 
-        gallery.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        gamesView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
         List<ImageView> games = Arrays.asList(seaGame, three1Game, three2Game, three3Game, three4Game, three5Game);
 
-        ImageArrayAdapter adapter = new ImageArrayAdapter(this, android.R.layout.simple_list_item_1, games);
-        gallery.setAdapter(adapter);
+        ImageArrayAdapter adapter = new ImageArrayAdapter(this, ViewGroup.LayoutParams.MATCH_PARENT, games);
+        gamesView.setAdapter(adapter);
 
         View showGraph = this.findViewById(R.id.button3);
         showGraph.setOnClickListener(this);
@@ -95,8 +94,6 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         Point size = new Point();
         display.getSize(size);
 
-        Resources r = getResources();
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size.y, r.getDisplayMetrics());
 
         game.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.MATCH_PARENT));
 

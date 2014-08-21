@@ -39,10 +39,10 @@
                 android:textSize="20dp" />
         </LinearLayout>
 
-        <GridView
+        <com.devsmart.android.ui.HorizontialListView
             android:id="@+id/gamesList"
-            android:layout_width="fill_parent"
-            android:layout_height="306dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:background="#ffffff"
             android:horizontalSpacing="0dp"
             android:numColumns="auto_fit"
