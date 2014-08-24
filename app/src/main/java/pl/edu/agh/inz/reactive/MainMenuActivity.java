@@ -1,33 +1,31 @@
 package pl.edu.agh.inz.reactive;
 
-import java.util.Arrays;
-import java.util.List;
-
-import pl.edu.agh.inz.reactive.games.Game;
-import pl.edu.agh.inz.reactive.games.Sea;
-import pl.edu.agh.inz.reactive.games.Three;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.devsmart.android.ui.HorizontialListView;
+
+import java.util.Arrays;
+import java.util.List;
+
+import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.SeaActivity;
+import pl.edu.agh.inz.reactive.games.ThreeActivity;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
 
@@ -57,26 +55,36 @@ public class MainMenuActivity extends Activity implements OnClickListener {
             labelUser = "Gość";
         }
 
-        HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
+        final HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
-        ImageView seaGame    = createGameImage(Sea.class, R.drawable.gra1);
-        ImageView three1Game = createGameImage(Three.class, R.drawable.gra2);
-        ImageView three2Game = createGameImage(Three.class, R.drawable.gra2);
-        ImageView three3Game = createGameImage(Three.class, R.drawable.gra2);
-        ImageView three4Game = createGameImage(Three.class, R.drawable.gra2);
-        ImageView three5Game = createGameImage(Three.class, R.drawable.gra2);
+        ImageView seaGame    = createGameImage(SeaActivity.class, R.drawable.gra1);
+        ImageView three1Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
+        ImageView three2Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
+        ImageView three3Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
+        ImageView three4Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
+        ImageView three5Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
 
-
-        gamesView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
         List<ImageView> games = Arrays.asList(seaGame, three1Game, three2Game, three3Game, three4Game, three5Game);
 
-        ImageArrayAdapter adapter = new ImageArrayAdapter(this, ViewGroup.LayoutParams.MATCH_PARENT, games);
+        ImageArrayAdapter adapter = new ImageArrayAdapter(this, android.R.layout.simple_list_item_1, games);
+
         gamesView.setAdapter(adapter);
+
+        gamesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Class<? extends GameActivity> game = (Class<? extends GameActivity>) gamesView.getAdapter().getItem(position);
+
+                Intent intent = new Intent(MainMenuActivity.this, game);
+                MainMenuActivity.this.startActivity(intent);
+            }
+        });
+
 
         View showGraph = this.findViewById(R.id.button3);
         showGraph.setOnClickListener(this);
@@ -86,7 +94,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         labelTextView.setText(labelUser);
     }
 
-    private ImageView createGameImage(Class<? extends Game> gameClass, int imgSrc) {
+    private ImageView createGameImage(Class<? extends GameActivity> gameClass, int imgSrc) {
         ImageView game = new ImageView(this);
         game.setImageResource(imgSrc);
 
@@ -95,9 +103,8 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         display.getSize(size);
 
 
-        game.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.MATCH_PARENT));
+        game.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
 
-        game.setOnClickListener(new GameSelectionListener(this, gameClass));
         return game;
     }
 

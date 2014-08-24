@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class Sea extends Activity implements Game {
+public class SeaActivity extends GameActivity {
 	/*
 	ImageView object;
 	RelativeLayout layout;

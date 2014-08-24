@@ -9,7 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -21,14 +22,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Zalogowano jako:"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvLoginUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -36,29 +37,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="."
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <com.devsmart.android.ui.HorizontialListView
             android:id="@+id/gamesList"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:background="#ffffff"
-            android:horizontalSpacing="0dp"
-            android:numColumns="auto_fit"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:background="#ff0000"
             android:stretchMode="columnWidth"
+            android:horizontalSpacing="0dp"
             android:verticalSpacing="0dp" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:layout_below="@+id/button2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:background="#f0f0ff"
-            android:text="Zobacz postępy"
-            android:textSize="30dp" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#f0f0ff"
+        android:text="Zobacz postępy"
+        android:layout_marginTop="50dp"
+        android:padding="30dp"
+        android:textSize="30sp" />
+</LinearLayout>
 
 </FrameLayout>
