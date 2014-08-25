@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class ThreeActivity extends GameActivity /* implements OnClickListener,*/ {
+public abstract class ThreeActivity extends GameActivity /* implements OnClickListener,*/ {
 /*
 	ImageView imgPattern, imgEx1, imgEx2, imgEx3, imgAnswer;
 	Random rand = new Random();

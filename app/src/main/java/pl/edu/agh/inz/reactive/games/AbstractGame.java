@@ -21,7 +21,6 @@ public abstract class AbstractGame {
     AbstractGame(String name, User user, int maxLevel) {
         this.name = name;
         this.user = user;
-
     }
 
     public void startGame() {

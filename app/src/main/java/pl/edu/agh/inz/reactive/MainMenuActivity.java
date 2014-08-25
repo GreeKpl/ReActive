@@ -78,9 +78,9 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Class<? extends GameActivity> game = (Class<? extends GameActivity>) gamesView.getAdapter().getItem(position);
+                //Class<? extends GameActivity> game = (Class<? extends GameActivity>) gamesView.getAdapter().getItem(position);
 
-                Intent intent = new Intent(MainMenuActivity.this, game);
+                Intent intent = new Intent(MainMenuActivity.this, SeaActivity.class);
                 MainMenuActivity.this.startActivity(intent);
             }
         });
@@ -97,12 +97,6 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     private ImageView createGameImage(Class<? extends GameActivity> gameClass, int imgSrc) {
         ImageView game = new ImageView(this);
         game.setImageResource(imgSrc);
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-
-
         game.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
 
         return game;

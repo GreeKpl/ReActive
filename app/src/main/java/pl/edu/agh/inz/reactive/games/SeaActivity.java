@@ -1,28 +1,26 @@
 package pl.edu.agh.inz.reactive.games;
 
-import java.util.Random;
-
-import android.app.Activity;
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.util.Random;
+
+import pl.edu.agh.inz.reactive.R;
+
 public class SeaActivity extends GameActivity {
-	/*
+
 	ImageView object;
 	RelativeLayout layout;
 	RelativeLayout.LayoutParams params;
-	
-	Random rand = new Random();
-	Random rand2 = new Random();
+
+    private SeaGame logic;
+
+    private Random rand = new Random();
+    private Random rand2 = new Random();
 	int x = 100;
 	int y = 100;	
 	int wys = 570;
@@ -56,16 +54,23 @@ public class SeaActivity extends GameActivity {
 		params.setMargins(x, y, 200, 200);        
 		object.setLayoutParams(params);		
 		layout.addView(object);
-		
+
+
 		levelNotification(level++, 0);
 
 	}
-	
-	public void levelNotification(int levelNo, int score) {
+
+    @Override
+    public AbstractGame getLogic() {
+        return null;
+    }
+
+    public void levelNotification(int levelNo, int score) {
 		Toast toast = Toast.makeText(this, "Runda "+levelNo+"\nWynik: "+score, Toast.LENGTH_SHORT);
-		MediaPlayer mp = MediaPlayer.create(this, R.raw.round);
+		/*MediaPlayer mp = MediaPlayer.create(this, R.raw.round);
 		toast.show();
-		mp.start();		
+		mp.start();
+		*/
 	}
 	
 	public void clickAction(View view, int x, int y) {		
@@ -79,5 +84,5 @@ public class SeaActivity extends GameActivity {
 			levelNotification(level++, score);
 		}		
 	}
-    */
+
 }
