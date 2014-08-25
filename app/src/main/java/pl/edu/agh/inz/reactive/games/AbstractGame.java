@@ -29,7 +29,6 @@ public abstract class AbstractGame {
         startLevel(showLevelsList(maxLevel));
     }
 
-    @Override
     public abstract void startLevel(int level);
 
     public int showLevelsList(int maxLevel) {
@@ -42,7 +41,6 @@ public abstract class AbstractGame {
         return 0;
     }
 
-    @Override
     public boolean saveScore(int score, User user) {
         //TODO !! :)
         return true;
@@ -104,7 +102,7 @@ public abstract class AbstractGame {
 
     public void endGame() {
         //TODO :)
-        while (!saveScore(score, user)) ;
+        while (!saveScore(score, user)) {};
         return;
     }
 
