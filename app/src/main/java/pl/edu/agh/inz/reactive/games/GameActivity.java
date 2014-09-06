@@ -7,8 +7,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.WrapperListAdapter;
 
 import pl.edu.agh.inz.reactive.R;
 
@@ -17,6 +15,9 @@ public abstract class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createGameLogic();
+
+        showLevelSelection();
     }
 
     public void showLevelSelection() {
@@ -24,22 +25,21 @@ public abstract class GameActivity extends Activity {
 
         ListView levelList = (ListView) this.findViewById(R.id.levelList);
 
-        int maxLevel = getLogic().getMaxLevel();
-        Integer[] ints = new Integer[maxLevel];
-        for (int i = 0; i < maxLevel; i++) {
-            ints[i] = i + 1;
-        }
-        ListAdapter adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, ints);
+        ListAdapter adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, getLogic().getLevelsArray());
         levelList.setAdapter(adapter);
 
         levelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println(position);
+                System.out.println("pos " + position + " id " + id);
+                startLevel((int)id);
             }
         });
-
     }
 
+    public abstract void startLevel(int levelId);
+
     public abstract AbstractGame getLogic();
+
+    public abstract void createGameLogic();
 }

@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import pl.edu.agh.inz.reactive.games.GameActivity;
-import pl.edu.agh.inz.reactive.games.SeaActivity;
+import pl.edu.agh.inz.reactive.games.rainbow.RainbowActivity;
 import pl.edu.agh.inz.reactive.games.ThreeActivity;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
@@ -57,7 +57,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
         final HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
-        ImageView seaGame    = createGameImage(SeaActivity.class, R.drawable.gra1);
+        ImageView seaGame    = createGameImage(RainbowActivity.class, R.drawable.gra1);
         ImageView three1Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
         ImageView three2Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
         ImageView three3Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
@@ -80,7 +80,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Class<? extends GameActivity> game = (Class<? extends GameActivity>) gamesView.getAdapter().getItem(position);
 
-                Intent intent = new Intent(MainMenuActivity.this, SeaActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, RainbowActivity.class);
                 MainMenuActivity.this.startActivity(intent);
             }
         });

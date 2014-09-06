@@ -12,27 +12,22 @@ public abstract class AbstractGame {
     User user;
     int level;
 
-    int userMaxLevel;
-    int maxLevel;
+    int userMaxLevel = 4;
+    int maxLevel = 40;
     int score;
 
-    GameActivity activity;
-
-    AbstractGame(String name, User user, int maxLevel) {
+    public AbstractGame(String name, User user, int maxLevel) {
         this.name = name;
         this.user = user;
     }
 
-    public void startGame() {
-        readUserMaxLevel(user);
-        startLevel(showLevelsList(maxLevel));
-    }
-
-    public abstract void startLevel(int level);
-
-    public int showLevelsList(int maxLevel) {
-        //TODO ;)
-        return 40;
+    public Integer[] getLevelsArray() {
+        int maxLevel = this.getUserMaxLevel();
+        Integer[] ints = new Integer[maxLevel];
+        for (int i = 0; i < maxLevel; i++) {
+            ints[i] = i + 1;
+        }
+        return ints;
     }
 
     private int readScore() {
@@ -106,4 +101,3 @@ public abstract class AbstractGame {
     }
 
 }
-
