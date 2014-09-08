@@ -22,13 +22,18 @@ public class RainbowGame extends AbstractGame {
         Level[] levels = new Level[] {
             new Level(1, 200, 0, 100, 20),
             new Level(1, 100, 0, 100, 20),
-            new Level(1,  50, 0, 200, 20),
+            new Level(1,  50, 0, 100, 20),
+            new Level(1,  50, 1, 100, 20),
         };
         return levels[level];
     }
 
     public void onObjectClick(View v) {
-        setScore(getScore() + 1);
+        if (v instanceof TargetImageView) {
+            setScore(getScore() + 1);
+        } else {
+            setScore(getScore() - 1);
+        }
     }
 
     public class Level {

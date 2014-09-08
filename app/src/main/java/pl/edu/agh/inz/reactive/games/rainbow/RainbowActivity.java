@@ -42,11 +42,18 @@ public class RainbowActivity extends GameActivity {
 
         logic.setLevel(levelId);
 
-        setupObjects();
+        updateGameState();
     }
 
     public ImageView createTargetObject(int imgResource, double size) {
         ImageView targetObject = new TargetImageView(this);
+        targetObjectsNow.add(targetObject);
+        setupObjectParams(targetObject, imgResource, size);
+        layout.addView(targetObject);
+        return targetObject;
+    }
+
+    private void setupObjectParams(ImageView targetObject, int imgResource, double size) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(150, 150);
 
         params.setMargins(rand.nextInt(szer), rand.nextInt(wys), 10, 10);
@@ -61,19 +68,21 @@ public class RainbowActivity extends GameActivity {
             public void onClick(View v) {
                 logic.onObjectClick(v);
                 removeObject(v);
-                setupObjects();
+                updateGameState();
             }
         });
-        targetObjectsNow.add(targetObject);
+        System.out.println("Score " + logic.getScore());
+    }
+
+    public ImageView createOtherObject(int imgResource, int size) {
+        ImageView targetObject = new OtherImageView(this);
+        otherObjectsNow.add(targetObject);
+        setupObjectParams(targetObject, imgResource, size);
         layout.addView(targetObject);
         return targetObject;
     }
 
-    public ImageView createOtherObject(int imgResource, int size) {
-        return new TargetImageView(this); // TODO!!!
-    }
-
-    public void setupObjects() {
+    public void updateGameState() {
         RainbowGame.Level desc = logic.getLevelDescription(logic.getLevel());
         for (int i = targetObjectsNow.size(); i < desc.getTargets(); i++) {
             System.out.println("dodaje target");
@@ -84,7 +93,7 @@ public class RainbowActivity extends GameActivity {
             removeObject(targetObjectsNow.get(i));
         }
         for (int i = otherObjectsNow.size(); i < desc.getOtherObjects(); i++) {
-            // add
+            createOtherObject(R.drawable.x, desc.getOtherObjectsSize());
         }
         for (int i = otherObjectsNow.size(); i > desc.getOtherObjects(); i--) {
             removeObject(otherObjectsNow.get(i));
