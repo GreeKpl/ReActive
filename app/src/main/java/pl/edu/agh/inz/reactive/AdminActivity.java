@@ -1,4 +1,4 @@
-/*package pl.edu.agh.inz.reactive;
+package pl.edu.agh.inz.reactive;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import static pl.edu.agh.inz.reactive.R.color;
+
 public class AdminActivity extends Activity implements OnClickListener {
 
 	ListView list;
@@ -24,7 +25,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 	ArrayList<String> listItems = new ArrayList<String>();
 	ArrayAdapter<String> adapter;
 	Map<String, User> usersMap = new HashMap<String, User>();
-	View bAddUser, bRemoveUser, bLoginUser;
+	View bAddUser, bDeleteUser, bLoginUser;
 	Bundle bundle;
 	Intent cel;
 	boolean newfl = true;
@@ -41,13 +42,13 @@ public class AdminActivity extends Activity implements OnClickListener {
 		nameUser = (EditText) this.findViewById(R.id.etName);
 		surnameUser = (EditText) this.findViewById(R.id.etSurname);
 		bAddUser = this.findViewById(R.id.buttonAdd);		
-		bRemoveUser = this.findViewById(R.id.buttonRemove);
+		bDeleteUser = this.findViewById(R.id.buttonDelete);
 		bLoginUser = this.findViewById(R.id.buttonLogin);
 		list = (ListView) this.findViewById(R.id.lvUsers);
 		information = (TextView) this.findViewById(R.id.tvInformation);
 		
 		bAddUser.setOnClickListener(this);
-		bRemoveUser.setOnClickListener(this);
+		bDeleteUser.setOnClickListener(this);
 		bLoginUser.setOnClickListener(this);
 		loginUser.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 		    @Override
@@ -89,11 +90,11 @@ public class AdminActivity extends Activity implements OnClickListener {
 		});
 		
 		db = new DatabaseManager(this);
-		if (db.dbReturnUsers().isEmpty()) {
+		if (db.getCollectionAllUsers().isEmpty()) {
 			User guest = new User("Gość", "Profil", "domyślny");
-			db.dbAddUser(guest);
+			db.insertUser(guest);
 		}
-		for (User u: db.dbReturnUsers()) {
+		for (User u: db.getCollectionAllUsers()) {
 			listItems.add(u.getLogin());
 			usersMap.put(u.getLogin(), u);
 			adapter.add(u.getLogin());
@@ -106,7 +107,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 		case R.id.buttonAdd:
 			addUser(view);
 			break;
-		case R.id.buttonRemove:
+		case R.id.buttonDelete:
 			removeUser(view);
 			break;
 		case R.id.buttonLogin:
@@ -128,14 +129,12 @@ public class AdminActivity extends Activity implements OnClickListener {
 			list.setAdapter(adapter);
 			cleanEditText();
 			
-			information.setText("Dodano użytkownika "+user.getLogin());
-			information.setTextColor(Color.GREEN);
+			showAcceptInformation("Dodano użytkownika " + user.getLogin());
 			
-			db.dbAddUser(user);
+			db.insertUser(user);
 
 		} else {
-			information.setText("Aby dodać nowego użytkownika wypełnij wszystkie pola");
-			information.setTextColor(Color.RED);
+			showWorningInformation("Aby dodać nowego użytkownika wypełnij wszystkie pola");
 		}
 		
 
@@ -150,11 +149,10 @@ public class AdminActivity extends Activity implements OnClickListener {
 		usersMap.remove(user.getLogin());
 		adapter.remove(user.getLogin());
 		list.setAdapter(adapter);
-		information.setText("Usunięto użytkownika "+user.getLogin());
-		information.setTextColor(Color.GREEN);
+		showAcceptInformation("Usunięto użytkownika " + user.getLogin());
 		cleanEditText();
 		
-		db.dbRemoveUser(user);
+		db.deleteUser(user);
 	}
 	
 	private void selected(String login) {
@@ -164,8 +162,8 @@ public class AdminActivity extends Activity implements OnClickListener {
 		surnameUser.setText(user.getSurname());
 		
 		activeText(true);
-				
-		information.setText("");
+
+        cleanInformation();
 	}
 	
 	public void loginUser(View view) {	
@@ -176,8 +174,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 			finish();
 			startActivity(cel);
 		} else {
-			information.setText("Wybierz użytkownika");
-			information.setTextColor(Color.RED);
+			showWorningInformation("Wybierz użytkownika");
 		}
 	}
 	
@@ -191,7 +188,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 		if (fl) {
 			bAddUser.setVisibility(View.INVISIBLE);
 			bLoginUser.setVisibility(View.VISIBLE);
-			bRemoveUser.setVisibility(View.VISIBLE);
+			bDeleteUser.setVisibility(View.VISIBLE);
 			newfl = true;
 		} else {
 			if (newfl) {
@@ -202,8 +199,23 @@ public class AdminActivity extends Activity implements OnClickListener {
 			}
 			bAddUser.setVisibility(View.VISIBLE);
 			bLoginUser.setVisibility(View.INVISIBLE);
-			bRemoveUser.setVisibility(View.INVISIBLE);
+			bDeleteUser.setVisibility(View.INVISIBLE);
 		}
 	}
+
+    private void showAcceptInformation(String text) {
+        information.setText(text);
+        information.setTextColor(color.txtAccept);
+    }
+
+    private void showWorningInformation(String text) {
+        information.setText(text);
+        information.setTextColor(color.txtWarning);
+    }
+
+    private void cleanInformation() {
+        information.setText("");
+    }
+
+
 }
-*/

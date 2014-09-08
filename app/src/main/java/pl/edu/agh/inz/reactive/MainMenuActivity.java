@@ -91,6 +91,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         View logout = this.findViewById(R.id.button5);
         logout.setOnClickListener(this);
         TextView labelTextView = (TextView) this.findViewById(R.id.tvLoginUser);
+        etPassword = (EditText) this.findViewById(R.id.etPassword);
         labelTextView.setText(labelUser);
     }
 
@@ -119,10 +120,8 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         builder.setView(inflater.inflate(R.layout.dialog_password, null))
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int id) {
-                                if (etPassword.getText().toString()
-                                        .equals("admin")) {
+                            public void onClick(DialogInterface dialog, int id) {
+                                if (etPassword.getText().toString().equals("admin")) {
                                     goLogin();
                                 }
                             }
@@ -133,10 +132,10 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     }
 
     private void goLogin() {
-        /*
+
         Intent intent = new Intent(this, AdminActivity.class);
         finish();
         startActivity(intent);
-        */
+
     }
 }
