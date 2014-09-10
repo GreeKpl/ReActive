@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="pl.edu.agh.inz.reactive.AdminActivity"
+            android:name=".AdminActivity"
             android:screenOrientation="landscape" />
 
     </application>

@@ -30,7 +30,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 	Intent cel;
 	boolean newfl = true;
 	
-	DatabaseManager db;
+	private DatabaseManager db;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,6 +90,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 		});
 		
 		db = new DatabaseManager(this);
+        db.open();
 		if (db.getCollectionAllUsers().isEmpty()) {
 			User guest = new User("Gość", "Profil", "domyślny");
 			db.insertUser(guest);

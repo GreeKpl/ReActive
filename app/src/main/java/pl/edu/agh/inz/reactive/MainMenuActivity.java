@@ -134,7 +134,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     private void goLogin() {
 
         Intent intent = new Intent(this, AdminActivity.class);
-//        finish();
+        finish();
         startActivity(intent);
     }
 }
