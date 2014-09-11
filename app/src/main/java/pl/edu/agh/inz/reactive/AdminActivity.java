@@ -120,19 +120,23 @@ public class AdminActivity extends Activity implements OnClickListener {
 	public void addUser(View view) {
 		
 		if ((loginUser.length() != 0) && (nameUser.length() != 0) && (surnameUser.length() != 0)) {
-		
-			User user = new User();
-			user.setLogin(loginUser.getText().toString());
-			user.setName(nameUser.getText().toString());
-			user.setSurname(surnameUser.getText().toString());
-			usersMap.put(user.getLogin(), user);
-			adapter.add(user.getLogin());
-			list.setAdapter(adapter);
-			cleanEditText();
-			
-			showAcceptInformation("Dodano użytkownika " + user.getLogin());
-			
-			db.insertUser(user);
+
+            if (db.getUser(loginUser.getText().toString()) == null) {
+                User user = new User();
+                user.setLogin(loginUser.getText().toString());
+                user.setName(nameUser.getText().toString());
+                user.setSurname(surnameUser.getText().toString());
+                usersMap.put(user.getLogin(), user);
+                adapter.add(user.getLogin());
+                list.setAdapter(adapter);
+                cleanEditText();
+
+                showAcceptInformation("Dodano użytkownika " + user.getLogin());
+
+                db.insertUser(user);
+            } else {
+                showWorningInformation("Użytkownik o danym loginie już istnieje");
+            }
 
 		} else {
 			showWorningInformation("Aby dodać nowego użytkownika wypełnij wszystkie pola");

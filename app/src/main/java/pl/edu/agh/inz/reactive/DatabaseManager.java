@@ -53,7 +53,7 @@ public class DatabaseManager {
             "create table "+ DB_RESULTS_TABLE +" ("+
                     LOGIN+" text primary key,"+
                     GAME+" int,"+
-                    DATE+" date,"+
+                    DATE+" long,"+
                     POINTS+" int);"+"";
 
     private static final String DB_DROP_TABLE = "drop table if exists ";
@@ -115,25 +115,25 @@ public class DatabaseManager {
 
     /*Functions for users*/
 
-    public long insertUser(User user) {
+    public void insertUser(User user) {
         ContentValues values = new ContentValues();
         values.put(LOGIN, user.getLogin());
         values.put(NAME, user.getName());
         values.put(SURNAME, user.getSurname());
-        return db.insert(DB_USERS_TABLE, null, values);   //zwraca id ostatnio zapisanego wiersza lub -1 gdy blad
+        db.insert(DB_USERS_TABLE, null, values);
     }
 
-    public boolean updateUser(String login, String name, String surname) {
-        String where = LOGIN + "=" + login;
+    public void updateUser(String login, String name, String surname) {
+        String where = LOGIN + "='" + login + "'";
         ContentValues updateValues = new ContentValues();
         updateValues.put(NAME, name);
         updateValues.put(SURNAME, surname);
-        return db.update(DB_USERS_TABLE, updateValues, where, null) > 0;
+        db.update(DB_USERS_TABLE, updateValues, where, null);
     }
 
-    public boolean deleteUser(User user){
-        String where = LOGIN + "=" + user.getLogin();
-        return db.delete(DB_USERS_TABLE, where, null) > 0;
+    public void deleteUser(User user){
+        String where = LOGIN + "='" + user.getLogin() + "'";
+        db.delete(DB_USERS_TABLE, where, null);
     }
 
     public Cursor getAllUsers() {
@@ -156,7 +156,7 @@ public class DatabaseManager {
 
     public User getUser(String login) {
         String[] columns = {LOGIN, NAME, SURNAME};
-        String where = LOGIN + "=" + login;
+        String where = LOGIN + "='" + login + "'";
         Cursor cursor = db.query(DB_USERS_TABLE, columns, where, null, null, null, null);
         User user = null;
         if(cursor != null && cursor.moveToFirst()) {
@@ -168,78 +168,117 @@ public class DatabaseManager {
     }
 
 
-    /*Functions for levels*/
-
     public int getMaxLevel(String login, int game) {
-        int maxLevel = 0, tmpLevel;
-        String[] columns = {LOGIN, GAME, LEVEL, POINTS};
-        String where = LOGIN + "=" + login + " AND " + GAME + "=" + game;   //game?
+        int maxLevel = 0;
+        String[] columns = {LEVEL};
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game;
+        String orderBy = LEVEL+" DESC";
 
-        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
+        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, orderBy);
 
-        while (cursor.moveToNext()) {
-            tmpLevel = cursor.getInt(2);
-            if(maxLevel < tmpLevel) {
-                maxLevel = tmpLevel;
-            }
+        if(cursor != null && cursor.moveToFirst()) {
+            maxLevel = cursor.getInt(0);
         }
 
         return maxLevel;
     }
 
-    public boolean saveResult(String login, int game, Date date, int level, int points) {
+    public int getPointsFromLevel(String login, int game, int level) {
+        String[] columns = {POINTS};
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
 
-        return true;
+        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
+
+        if(cursor != null && cursor.moveToFirst()) {
+            return cursor.getInt(0);
+        } else {
+            return 0;
+        }
     }
 
+    public int getPointsFromDate(String login, int game, long date) {
+        String[] columns = {POINTS};
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +date;
 
+        Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
-//    public List<User> dbReturnUsers() {
-//        List<User> users = new ArrayList<User>();
-//        String[] columns = {"login", "name", "surname"};
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.query("users", columns, null, null, null, null, null);
-//        while (cursor.moveToNext()) {
-//            User user = new User();
-//            user.setLogin(cursor.getString(0));
-//            user.setName(cursor.getString(1));
-//            user.setSurname(cursor.getString(2));
-//            users.add(user);
-//        }
-//
-//        return users;
-//    }
-//
-//    public User dbReturnUser(String login) {
-//        User user = new User();
-//        SQLiteDatabase db = getReadableDatabase();
-//        String[] columns = {"login", "name", "surname"};
-//        String[] args = {login};
-//        Cursor cursor = db.query("users", columns, "login=?", args, null, null, null);
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//            user.setLogin(cursor.getString(0));
-//            user.setName(cursor.getString(1));
-//            user.setSurname(cursor.getString(2));
-//        }
-//
-//        return user;
-//    }
-//
-//    public void dbAddUser(User user) {
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("login", user.getLogin());
-//        values.put("name", user.getName());
-//        values.put("surname", user.getSurname());
-//        db.insertOrThrow("users", null, values);
-//    }
-//
-//    public void dbRemoveUser(User user) {
-//        SQLiteDatabase db = getWritableDatabase();
-//        String [] args = {user.getLogin()};
-//        db.delete("users", "login=?", args);
-//    }
+        if(cursor != null && cursor.moveToFirst()) {
+            return cursor.getInt(0);
+        } else {
+            return 0;
+        }
+    }
+
+    public void insertLevelResult(String login, int game, int level, int points) {
+        ContentValues values = new ContentValues();
+        values.put(LOGIN, login);
+        values.put(GAME, game);
+        values.put(LEVEL, level);
+        values.put(POINTS, points);
+        db.insert(DB_LEVELS_TABLE, null, values);
+    }
+
+    public void deleteLevelResult(String login, int game, int level) {
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
+
+        db.delete(DB_LEVELS_TABLE, where, null);
+    }
+
+    public void saveLevelResult(String login, int game, int level, int points) {
+        String[] columns = {POINTS};
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
+
+        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
+
+        if(cursor == null) {
+            insertLevelResult(login, game, level, points);
+        } else {
+            cursor.moveToFirst();
+            if (cursor.getInt(0) < points) {
+                deleteLevelResult(login, game, level);
+                insertLevelResult(login, game, level, points);
+            }
+        }
+    }
+
+    public void insertDateResult(String login, int game, long date, int points) {
+        ContentValues values = new ContentValues();
+        values.put(LOGIN, login);
+        values.put(GAME, game);
+        values.put(DATE, date);
+        values.put(POINTS, points);
+        db.insert(DB_RESULTS_TABLE, null, values);
+    }
+
+    public void deleteDateResult(String login, int game, long date) {
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +date;
+
+        db.delete(DB_RESULTS_TABLE, where, null);
+    }
+
+    public void saveDateResult(String login, int game, long date, int points) {
+        String[] columns = {POINTS};
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +date;
+
+        Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
+
+        if(cursor == null) {
+            insertDateResult(login, game, date, points);
+        } else {
+            cursor.moveToFirst();
+            if (cursor.getInt(0) < points) {
+                deleteDateResult(login, game, date);
+                insertDateResult(login, game, date, points);
+            }
+        }
+    }
+
+    public boolean saveResult(String login, int game, long date, int level, int points) {
+
+        saveLevelResult(login, game, level, points);
+        saveDateResult(login, game, date, points);
+        return true;
+    }
 }
 
 
