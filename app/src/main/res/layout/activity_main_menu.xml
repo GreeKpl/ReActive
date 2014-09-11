@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:background="@drawable/tapeta"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="pl.edu.agh.inz.reactive.MainActivity" >
@@ -9,13 +10,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:orientation="vertical" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_margin="10dp" >
 
             <TextView
                 android:id="@+id/tvLabelUser"
@@ -26,36 +27,41 @@
 
             <TextView
                 android:id="@+id/tvLoginUser"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/button5"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/btnAdminPanel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="."
-                android:textSize="20sp" />
+                android:background="@drawable/star"
+                android:layout_margin="10dp"/>
         </LinearLayout>
 
         <com.devsmart.android.ui.HorizontialListView
             android:id="@+id/gamesList"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:background="#ff0000"
             android:stretchMode="columnWidth"
             android:horizontalSpacing="0dp"
-            android:verticalSpacing="0dp" />
+            android:verticalSpacing="0dp"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnSeeResults"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#f0f0ff"
+        android:background="@color/btnSeeResults"
         android:text="Zobacz postępy"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
+
         android:padding="30dp"
         android:textSize="30sp" />
 </LinearLayout>

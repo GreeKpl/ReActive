@@ -86,12 +86,11 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         });
 
 
-        View showGraph = this.findViewById(R.id.button3);
+        View showGraph = this.findViewById(R.id.btnSeeResults);
         showGraph.setOnClickListener(this);
-        View logout = this.findViewById(R.id.button5);
+        View logout = this.findViewById(R.id.btnAdminPanel);
         logout.setOnClickListener(this);
         TextView labelTextView = (TextView) this.findViewById(R.id.tvLoginUser);
-//        etPassword = (EditText) this.findViewById(R.id.etPassword);
         labelTextView.setText(labelUser);
     }
 
@@ -105,10 +104,10 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button3:
+            case R.id.btnSeeResults:
                 showGraph(v);
                 break;
-            case R.id.button5:
+            case R.id.btnAdminPanel:
                 passwordPopup();
                 break;
         }
