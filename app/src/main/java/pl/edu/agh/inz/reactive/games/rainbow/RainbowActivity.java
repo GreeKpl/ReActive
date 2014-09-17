@@ -8,6 +8,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.User;
@@ -16,18 +17,18 @@ import pl.edu.agh.inz.reactive.games.GameActivity;
 
 public class RainbowActivity extends GameActivity {
 
-	RelativeLayout layout;
+    private RelativeLayout layout;
 
     private RainbowGame logic;
 
-    List<ImageView> targetObjectsNow = new ArrayList<ImageView>();
-    List<ImageView> otherObjectsNow = new ArrayList<ImageView>();
+    private List<ImageView> targetObjectsNow = new ArrayList<ImageView>();
+    private List<ImageView> otherObjectsNow = new ArrayList<ImageView>();
 
     private Random rand = new Random();
-	int wys = 570;
-	int szer = 1070;
+    private int screenHeight = 570;
+    private int screenWidth = 1070;
 
-	int level = 1;
+    private Timer timer = new Timer(true);
 
     @Override
     public void createGameLogic() {
@@ -53,12 +54,21 @@ public class RainbowActivity extends GameActivity {
         return targetObject;
     }
 
+    public ImageView createOtherObject(int imgResource, double size) {
+        ImageView targetObject = new OtherImageView(this);
+        otherObjectsNow.add(targetObject);
+        setupObjectParams(targetObject, imgResource, size);
+        layout.addView(targetObject);
+        return targetObject;
+    }
+
     private void setupObjectParams(ImageView targetObject, int imgResource, double size) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(150, 150);
 
-        params.setMargins(rand.nextInt(szer), rand.nextInt(wys), 10, 10);
-        params.height = (int)(params.height * (size / 100));
-        params.width = (int)(params.width * (size / 100));
+        params.width = (int) (screenWidth * size);
+        params.height = (int) (screenHeight * size);
+        params.setMargins(rand.nextInt(screenWidth - params.width), rand.nextInt(screenHeight - params.height), 10, 10);
+
         targetObject.setLayoutParams(params);
         targetObject.setImageResource(imgResource);
         targetObject.setClickable(true);
@@ -74,26 +84,18 @@ public class RainbowActivity extends GameActivity {
         System.out.println("Score " + logic.getScore());
     }
 
-    public ImageView createOtherObject(int imgResource, int size) {
-        ImageView targetObject = new OtherImageView(this);
-        otherObjectsNow.add(targetObject);
-        setupObjectParams(targetObject, imgResource, size);
-        layout.addView(targetObject);
-        return targetObject;
-    }
-
     public void updateGameState() {
         RainbowGame.Level desc = logic.getLevelDescription(logic.getLevel());
         for (int i = targetObjectsNow.size(); i < desc.getTargets(); i++) {
             System.out.println("dodaje target");
-            createTargetObject(R.drawable.lodka, desc.getTargetSize());
+            createTargetObject(desc.getTargetImg(), desc.getTargetSize());
         }
         for (int i = targetObjectsNow.size(); i > desc.getTargets(); i--) {
             System.out.println("usuwam target");
             removeObject(targetObjectsNow.get(i));
         }
         for (int i = otherObjectsNow.size(); i < desc.getOtherObjects(); i++) {
-            createOtherObject(R.drawable.x, desc.getOtherObjectsSize());
+            createOtherObject(desc.getOtherImg(), desc.getOtherObjectsSize());
         }
         for (int i = otherObjectsNow.size(); i > desc.getOtherObjects(); i--) {
             removeObject(otherObjectsNow.get(i));

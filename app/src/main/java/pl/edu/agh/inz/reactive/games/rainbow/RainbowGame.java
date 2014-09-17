@@ -2,6 +2,7 @@ package pl.edu.agh.inz.reactive.games.rainbow;
 
 import android.view.View;
 
+import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.User;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 
@@ -9,6 +10,8 @@ import pl.edu.agh.inz.reactive.games.AbstractGame;
  * Created by alek on 25.08.14.
  */
 public class RainbowGame extends AbstractGame {
+
+    private RainbowSpecification specification;
 
     public RainbowGame(User user) {
         super("Sea", user, 40); // todo
@@ -19,12 +22,7 @@ public class RainbowGame extends AbstractGame {
             throw new IllegalArgumentException("level cannot be higher than " + getMaxLevel());
         }
 
-        Level[] levels = new Level[] {
-            new Level(1, 200, 0, 100, 20),
-            new Level(1, 100, 0, 100, 20),
-            new Level(1,  50, 0, 100, 20),
-            new Level(1,  50, 1, 100, 20),
-        };
+        Level[] levels = specification.getLevels();
         return levels[level];
     }
 
@@ -36,28 +34,37 @@ public class RainbowGame extends AbstractGame {
         }
     }
 
-    public class Level {
-        private final int targets;
-        private final int targetSize;
-        private final int otherObjects;
-
-        private final int otherObjectsSize;
+    public static class Level {
         private final int seconds;
 
-        public Level(int targets, int targetSize, int otherObjects, int otherObjectsSize, int seconds) {
+        private final int targets;
+        private final double targetSize;
+        private final int targetImg;
 
-            this.targets = targets;
-            this.targetSize = targetSize;
-            this.otherObjects = otherObjects;
-            this.otherObjectsSize = otherObjectsSize;
-            this.seconds = seconds;
+        private final int otherObjects;
+        private final double otherObjectsSize;
+        private final int otherImg;
+        private final int backgroundImg;
+        private final int scoreNeeded;
+
+        public Level(Builder levelBuilder) {
+            this.scoreNeeded = levelBuilder.scoreNeeded;
+            this.seconds = levelBuilder.seconds;
+
+            this.targets = levelBuilder.targets;
+            this.targetSize = levelBuilder.targetSize;
+            this.otherObjects = levelBuilder.otherObjects;
+            this.otherObjectsSize = levelBuilder.otherObjectsSize;
+            this.targetImg = levelBuilder.targetImg;
+            this.otherImg = levelBuilder.otherImg;
+            this.backgroundImg = levelBuilder.backgroundImg;
         }
 
         public int getTargets() {
             return targets;
         }
 
-        public int getTargetSize() {
+        public double getTargetSize() {
             return targetSize;
         }
 
@@ -65,12 +72,70 @@ public class RainbowGame extends AbstractGame {
             return otherObjects;
         }
 
-        public int getOtherObjectsSize() {
+        public double getOtherObjectsSize() {
             return otherObjectsSize;
         }
 
         public int getSeconds() {
             return seconds;
+        }
+
+        public int getOtherImg() {
+            return otherImg;
+        }
+
+        public int getBackgroundImg() {
+            return backgroundImg;
+        }
+
+        public int getTargetImg() {
+            return targetImg;
+        }
+
+        public int getScoreNeeded() {
+            return scoreNeeded;
+        }
+
+        public static class Builder {
+
+            private int targets;
+            private double targetSize;
+            private int targetImg;
+            private int otherObjects = 0;
+            private double otherObjectsSize = 0;
+            private int otherImg = 0;
+            private int scoreNeeded;
+            private int seconds;
+            private int backgroundImg;
+
+            public Builder(int scoreNeeded, int seconds) {
+                this.scoreNeeded = scoreNeeded;
+                this.seconds = seconds;
+            }
+
+            public Builder targets(int targets, double targetSize, int targetImg) {
+
+                this.targets = targets;
+                this.targetSize = targetSize;
+                this.targetImg = targetImg;
+                return this;
+            }
+
+            public Builder others(int otherObjects, double otherObjectsSize, int otherImg) {
+                this.otherObjects = otherObjects;
+                this.otherObjectsSize = otherObjectsSize;
+                this.otherImg = otherImg;
+                return this;
+            }
+
+            public Builder bg(int backgroundImg) {
+                this.backgroundImg = backgroundImg;
+                return this;
+            }
+
+            public Level build() {
+                return new Level(this);
+            }
         }
 
     }
