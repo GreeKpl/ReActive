@@ -1,5 +1,7 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -39,9 +41,14 @@ public class RainbowActivity extends GameActivity {
     public void startLevel(int levelId) {
         setContentView(R.layout.activity_sea);
 
-        layout = (RelativeLayout)findViewById(R.id.seaLayout);
-
         logic.setLevel(levelId);
+
+        RainbowGame.Level level = logic.getLevelDescription(levelId);
+
+        layout = (RelativeLayout)findViewById(R.id.seaLayout);
+        layout.setBackgroundResource(level.getBackgroundImg());
+
+
 
         updateGameState();
     }

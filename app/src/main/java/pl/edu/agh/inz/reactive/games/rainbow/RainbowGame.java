@@ -11,7 +11,7 @@ import pl.edu.agh.inz.reactive.games.AbstractGame;
  */
 public class RainbowGame extends AbstractGame {
 
-    private RainbowSpecification specification;
+    private RainbowSpecification specification = new RainbowSpecification();
 
     public RainbowGame(User user) {
         super("Sea", user, 40); // todo

@@ -57,7 +57,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
         final HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
-        ImageView seaGame    = createGameImage(RainbowActivity.class, R.drawable.gra1);
+        ImageView seaGame    = createGameImage(RainbowActivity.class, R.drawable.promo_rainbow_2);
         ImageView three1Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
         ImageView three2Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
         ImageView three3Game = createGameImage(ThreeActivity.class, R.drawable.gra2);

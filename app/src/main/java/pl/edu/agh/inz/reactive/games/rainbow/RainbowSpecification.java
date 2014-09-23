@@ -12,10 +12,10 @@ public class RainbowSpecification {
 
     public RainbowSpecification() {
         levels = new Level[] {
-            new Level.Builder(6, 20).bg(R.drawable.morze).targets(1, 0.3, R.drawable.lodka).build(),
-            new Level.Builder(8, 20).bg(R.drawable.morze).targets(1, 0.2, R.drawable.lodka).build(),
+            new Level.Builder(6, 20).bg(R.drawable.rainbow_bg_notepad1).targets(1, 0.3, R.drawable.lodka).build(),
+            new Level.Builder(8, 20).bg(R.drawable.rainbow_bg_cook1).targets(1, 0.2, R.drawable.rainbow_t_cook1).build(),
             new Level.Builder(10, 20).bg(R.drawable.morze).targets(1, 0.1, R.drawable.lodka).build(),
-            new Level.Builder(15, 20).bg(R.drawable.morze).targets(1, 0.05, R.drawable.lodka).others(1, 0.2, R.drawable.x).build()
+            new Level.Builder(15, 20).bg(R.drawable.rainbow_bg_moto1).targets(1, 0.15, R.drawable.rainbow_t_moto2).others(1, 0.1, R.drawable.lodka).build()
         };
     }
 
