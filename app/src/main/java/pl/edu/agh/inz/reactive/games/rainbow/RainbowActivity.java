@@ -38,7 +38,7 @@ public class RainbowActivity extends GameActivity {
 
     @Override
     public void createGameLogic() {
-        logic = new RainbowGame(new User("login", "name", "surname"), this);
+        logic = new RainbowGame(this);
     }
 
     @Override

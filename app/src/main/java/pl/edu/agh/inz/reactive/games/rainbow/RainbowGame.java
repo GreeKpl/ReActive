@@ -16,8 +16,8 @@ public class RainbowGame extends AbstractGame {
 
     private RainbowSpecification specification = new RainbowSpecification();
 
-    public RainbowGame(User user, Context context) {
-        super("Sea", user, context); // todo
+    public RainbowGame(Context context) {
+        super("Sea", context); // todo
     }
 
     public Level getLevelDescription(int level) {
@@ -35,7 +35,7 @@ public class RainbowGame extends AbstractGame {
         } else {
             setScore(getScore() - 1);
         }
-        //System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel()));
+        System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel()));
     }
 
     public static class Level {

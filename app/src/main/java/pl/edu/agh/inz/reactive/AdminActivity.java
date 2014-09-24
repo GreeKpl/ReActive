@@ -19,24 +19,27 @@ import static pl.edu.agh.inz.reactive.R.color;
 
 public class AdminActivity extends Activity implements OnClickListener {
 
-	ListView list;
-	EditText loginUser, nameUser, surnameUser;
-	TextView information;
-	ArrayList<String> listItems = new ArrayList<String>();
-	ArrayAdapter<String> adapter;
-	Map<String, User> usersMap = new HashMap<String, User>();
-	View bAddUser, bDeleteUser, bLoginUser;
-	Bundle bundle;
-	Intent cel;
-	boolean newfl = true;
+	private ListView list;
+	private EditText loginUser, nameUser, surnameUser;
+	private TextView information;
+	private ArrayList<String> listItems = new ArrayList<String>();
+	private ArrayAdapter<String> adapter;
+	private Map<String, User> usersMap = new HashMap<String, User>();
+	private View bAddUser, bDeleteUser, bLoginUser;
+	private Intent target;
+	private boolean newfl = true;
+
+    public static final String DEFAULT_USER_LOGIN = "Gość";
+    public static final String DEFAULT_USER_NAME = "Profil";
+    public static final String DEFAULT_USER_SURNAME = "domyślny";
 	
 	private DatabaseManager db;
-	
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin);
 
-		cel = new Intent(this, MainMenuActivity.class);
+		target = new Intent(this, MainMenuActivity.class);
 		
 		loginUser = (EditText) this.findViewById(R.id.etLogin);
 		nameUser = (EditText) this.findViewById(R.id.etName);
@@ -91,11 +94,11 @@ public class AdminActivity extends Activity implements OnClickListener {
 		
 		db = new DatabaseManager(this);
         db.open();
-		if (db.getCollectionAllUsers().isEmpty()) {
-			User guest = new User("Gość", "Profil", "domyślny");
+		if (db.getAllUsersCollection().isEmpty()) {
+			User guest = new User(DEFAULT_USER_LOGIN, DEFAULT_USER_NAME, DEFAULT_USER_SURNAME);
 			db.insertUser(guest);
 		}
-		for (User u: db.getCollectionAllUsers()) {
+		for (User u: db.getAllUsersCollection()) {
 			listItems.add(u.getLogin());
 			usersMap.put(u.getLogin(), u);
 			adapter.add(u.getLogin());
@@ -120,7 +123,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 	public void addUser(View view) {
 		
 		if ((loginUser.length() != 0) && (nameUser.length() != 0) && (surnameUser.length() != 0)) {
-
+            System.out.println("USER: " + loginUser.getText());
             if (db.getUser(loginUser.getText().toString()) == null) {
                 User user = new User();
                 user.setLogin(loginUser.getText().toString());
@@ -135,11 +138,11 @@ public class AdminActivity extends Activity implements OnClickListener {
 
                 db.insertUser(user);
             } else {
-                showWorningInformation("Użytkownik o danym loginie już istnieje");
+                showWarningInformation("Użytkownik o danym loginie już istnieje");
             }
 
 		} else {
-			showWorningInformation("Aby dodać nowego użytkownika wypełnij wszystkie pola");
+			showWarningInformation("Aby dodać nowego użytkownika wypełnij wszystkie pola");
 		}
 		
 
@@ -171,24 +174,25 @@ public class AdminActivity extends Activity implements OnClickListener {
         cleanInformation();
 	}
 	
-	public void loginUser(View view) {	
+	public void loginUser(View view) {
 		if ((loginUser.length() != 0) && (nameUser.length() != 0) && (surnameUser.length() != 0)) {
-			cel.putExtra("login", loginUser.getText().toString());
-			cel.putExtra("name", nameUser.getText().toString());
-			cel.putExtra("surname", surnameUser.getText().toString());
+			db.setActiveUser(loginUser.getText().toString());
+
+            db.close();
+
 			finish();
-			startActivity(cel);
+			startActivity(target);
 		} else {
-			showWorningInformation("Wybierz użytkownika");
+			showWarningInformation("Wybierz użytkownika");
 		}
 	}
-	
+
 	private void cleanEditText() {
 		loginUser.setText("");
 		nameUser.setText("");
 		surnameUser.setText("");
 	}
-	
+
 	private void activeText(boolean fl) {
 		if (fl) {
 			bAddUser.setVisibility(View.INVISIBLE);
@@ -213,7 +217,7 @@ public class AdminActivity extends Activity implements OnClickListener {
         information.setTextColor(color.txtAccept);
     }
 
-    private void showWorningInformation(String text) {
+    private void showWarningInformation(String text) {
         information.setText(text);
         information.setTextColor(color.txtWarning);
     }

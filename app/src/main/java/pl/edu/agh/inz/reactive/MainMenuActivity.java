@@ -36,6 +36,8 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
     private static final int TILES_HEIGHT = 300;
 
+    private DatabaseManager db = new DatabaseManager(this);
+
     private void showGraph(View view) {
         /*LineGraph line = new LineGraph();
         Intent intent = line.getIntent(this);
@@ -47,13 +49,11 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        if (getIntent().getStringExtra("login") != null) {
-            labelUser = getIntent().getStringExtra("login") + " ("
-                    + getIntent().getStringExtra("name") + " "
-                    + getIntent().getStringExtra("surname") + ")";
-        } else {
-            labelUser = "Gość";
-        }
+        db.open();
+
+        User user = db.getActiveUser();
+
+        labelUser = user.getLogin() + " (" + user.getName() + " " + user.getSurname() + ")";
 
         final HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
@@ -82,7 +82,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
                 Class<? extends GameActivity> game = clickedGameImage.getGameClass();
 
                 Intent intent = new Intent(MainMenuActivity.this, game);
-
+                db.close();
                 MainMenuActivity.this.startActivity(intent);
             }
         });
@@ -133,7 +133,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     }
 
     private void goLogin() {
-
+        db.close();
         Intent intent = new Intent(this, AdminActivity.class);
         finish();
         startActivity(intent);

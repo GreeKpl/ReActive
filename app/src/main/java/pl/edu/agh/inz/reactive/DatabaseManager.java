@@ -14,9 +14,9 @@ import android.util.Log;
 import android.widget.ImageView;
 
 public class DatabaseManager {
-    private static final String DEBUG_TAG = "DatebaseManager";
+    private static final String DEBUG_TAG = "DatabaseManager";
 
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     private static final String DB_NAME = "database.db";
 
@@ -36,28 +36,38 @@ public class DatabaseManager {
     private static final String DB_RESULTS_TABLE = "results";
     public static final String DATE = "date";
 
+    private static final String DB_GLOBALS_TABLE = "globals";
+    public static final String KEY = "key";
+    public static final String VALUE = "value";
+
 
     private static final String DB_CREATE_USERS_TABLE =
             "create table "+ DB_USERS_TABLE +" ("+
                     LOGIN+" text primary key,"+
                     NAME+" text,"+
-                    SURNAME+" text);"+"";
+                    SURNAME+" text);";
 
     private static final String DB_CREATE_LEVELS_TABLE =
             "create table "+ DB_LEVELS_TABLE +" ("+
                     LOGIN+" text primary key,"+
                     GAME+" int,"+
                     LEVEL+" int,"+
-                    POINTS+" int);"+"";
+                    POINTS+" int);";
 
     private static final String DB_CREATE_RESULTS_TABLE =
             "create table "+ DB_RESULTS_TABLE +" ("+
-                    LOGIN+" text primary key,"+
-                    GAME+" int,"+
-                    DATE+" long,"+
-                    POINTS+" int);"+"";
+                    LOGIN + " text primary key,"+
+                    GAME + " int," +
+                    DATE + " long," +
+                    POINTS +" int);";
+
+    private static final String DB_CREATE_GLOBALS_TABLE =
+            "create table "+ DB_GLOBALS_TABLE +" ("+
+                    KEY +" text primary key,"+
+                    VALUE +" text);";
 
     private static final String DB_DROP_TABLE = "drop table if exists ";
+    private static final String ACTIVE_USER = "activeUser";
 
     private SQLiteDatabase db;
     private Context context;
@@ -79,6 +89,8 @@ public class DatabaseManager {
             Log.d(DEBUG_TAG, "Table " + DB_LEVELS_TABLE + " ver." + DB_VERSION + " created");
             db.execSQL(DB_CREATE_RESULTS_TABLE);
             Log.d(DEBUG_TAG, "Table " + DB_RESULTS_TABLE + " ver." + DB_VERSION + " created");
+            db.execSQL(DB_CREATE_GLOBALS_TABLE);
+            Log.d(DEBUG_TAG, "Table " + DB_GLOBALS_TABLE + " ver." + DB_VERSION + " created");
         }
 
         @Override
@@ -91,6 +103,8 @@ public class DatabaseManager {
             Log.d(DEBUG_TAG, "Table " + DB_LEVELS_TABLE + " updated from ver." + oldVersion + " to ver." + newVersion);
             db.execSQL(DB_DROP_TABLE+ DB_RESULTS_TABLE);
             Log.d(DEBUG_TAG, "Table " + DB_RESULTS_TABLE + " updated from ver." + oldVersion + " to ver." + newVersion);
+            db.execSQL(DB_DROP_TABLE + DB_GLOBALS_TABLE);
+            Log.d(DEBUG_TAG, "Table " + DB_GLOBALS_TABLE + " updated from ver." + oldVersion + " to ver." + newVersion);
 
             onCreate(db);
         }
@@ -142,7 +156,7 @@ public class DatabaseManager {
         return db.query(DB_USERS_TABLE, columns, null, null, null, null, null);
     }
 
-    public Collection<User> getCollectionAllUsers() {
+    public Collection<User> getAllUsersCollection() {
         Collection<User> users = new ArrayList<User>();
         Cursor cursor = getAllUsers();
         while (cursor.moveToNext()) {
@@ -160,12 +174,45 @@ public class DatabaseManager {
         String where = LOGIN + "='" + login + "'";
         Cursor cursor = db.query(DB_USERS_TABLE, columns, where, null, null, null, null);
         User user = null;
-        if(cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             String name = cursor.getString(1);
             String surname = cursor.getString(2);
             user = new User(login, name, surname);
         }
+
         return user;
+    }
+
+    public User getActiveUser() {
+        setupDefaultUser();
+        String[] columns = {VALUE};
+        String where = KEY + " = '" + ACTIVE_USER + "'";
+        Cursor cursor = db.query(DB_GLOBALS_TABLE, columns, where, null, null, null, null);
+
+        String login = AdminActivity.DEFAULT_USER_LOGIN;
+        if (cursor.moveToFirst()) {
+            login = cursor.getString(0);
+        }
+        cursor.close();
+
+        System.out.println(login);
+        return getUser(login);
+    }
+
+    public void setActiveUser(String login) {
+        ContentValues values = new ContentValues();
+        values.put(KEY, ACTIVE_USER); // todo! check if user does exist
+        values.put(VALUE, login);
+        db.replace(DB_GLOBALS_TABLE, null, values);
+    }
+
+    public void setupDefaultUser() {
+        String[] columns = { LOGIN };
+        String select = LOGIN + " = '" + AdminActivity.DEFAULT_USER_LOGIN + "'";
+        Cursor cursor = db.query(DB_USERS_TABLE, columns, select, null, null, null, null);
+        if (!cursor.moveToFirst()) {
+            insertUser(new User(AdminActivity.DEFAULT_USER_LOGIN, AdminActivity.DEFAULT_USER_NAME, AdminActivity.DEFAULT_USER_SURNAME));
+        }
     }
 
 
@@ -211,7 +258,6 @@ public class DatabaseManager {
     }
 
     public void insertLevelResult(String login, int game, int level, int points) {
-        System.out.println("INSRT: " + login + " " + game + " " + level + " pts: " + points);
         ContentValues values = new ContentValues();
         values.put(LOGIN, login);
         values.put(GAME, game);
@@ -263,15 +309,12 @@ public class DatabaseManager {
 
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
-        if (cursor.getCount() == 0) {
-            insertDateResult(login, game, date, points);
-        } else {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             if (cursor.getInt(0) < points) {
                 deleteDateResult(login, game, date);
-                insertDateResult(login, game, date, points);
             }
         }
+        insertDateResult(login, game, date, points);
     }
 
     public boolean saveResult(String login, int game, long date, int level, int points) {

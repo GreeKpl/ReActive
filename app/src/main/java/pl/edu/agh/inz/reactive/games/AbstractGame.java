@@ -23,11 +23,13 @@ public abstract class AbstractGame {
     int maxLevel = 40;
     int score;
 
-    public AbstractGame(String name, User user, Context context) {
+    public AbstractGame(String name, Context context) {
         this.name = name;
-        this.user = user;
+
         db = new DatabaseManager(context);
         db.open();
+        this.user = db.getActiveUser();
+
     }
 
     public Integer[] getLevelsArray() {
