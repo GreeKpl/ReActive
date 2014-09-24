@@ -2,7 +2,6 @@ package pl.edu.agh.inz.reactive;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +9,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.ImageView;
 
 public class DatabaseManager {
     private static final String DEBUG_TAG = "DatebaseManager";
@@ -189,7 +190,7 @@ public class DatabaseManager {
 
         Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
 
-        if(cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             return cursor.getInt(0);
         } else {
             return 0;
@@ -210,6 +211,7 @@ public class DatabaseManager {
     }
 
     public void insertLevelResult(String login, int game, int level, int points) {
+        System.out.println("INSRT: " + login + " " + game + " " + level + " pts: " + points);
         ContentValues values = new ContentValues();
         values.put(LOGIN, login);
         values.put(GAME, game);
@@ -230,14 +232,13 @@ public class DatabaseManager {
 
         Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
 
-        if(cursor == null) {
-            insertLevelResult(login, game, level, points);
-        } else {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             if (cursor.getInt(0) < points) {
                 deleteLevelResult(login, game, level);
                 insertLevelResult(login, game, level, points);
             }
+        } else {
+            insertLevelResult(login, game, level, points);
         }
     }
 
@@ -262,7 +263,7 @@ public class DatabaseManager {
 
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
-        if(cursor == null) {
+        if (cursor.getCount() == 0) {
             insertDateResult(login, game, date, points);
         } else {
             cursor.moveToFirst();

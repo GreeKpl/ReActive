@@ -1,6 +1,7 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
 import android.annotation.TargetApi;
+import android.content.SyncStatusObserver;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.User;
@@ -19,9 +21,11 @@ import pl.edu.agh.inz.reactive.games.GameActivity;
 
 public class RainbowActivity extends GameActivity {
 
+    private static final int MSEC_PER_SEC = 1000;
     private RelativeLayout layout;
 
     private RainbowGame logic;
+    private RainbowGame.Level level;
 
     private List<ImageView> targetObjectsNow = new ArrayList<ImageView>();
     private List<ImageView> otherObjectsNow = new ArrayList<ImageView>();
@@ -34,7 +38,7 @@ public class RainbowActivity extends GameActivity {
 
     @Override
     public void createGameLogic() {
-        logic = new RainbowGame(new User());
+        logic = new RainbowGame(new User("login", "name", "surname"), this);
     }
 
     @Override
@@ -43,21 +47,40 @@ public class RainbowActivity extends GameActivity {
 
         logic.setLevel(levelId);
 
-        RainbowGame.Level level = logic.getLevelDescription(levelId);
+        level = logic.getLevelDescription(levelId);
 
         layout = (RelativeLayout)findViewById(R.id.seaLayout);
         layout.setBackgroundResource(level.getBackgroundImg());
 
-
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("DING!");
+            }
+        }, 5000);
 
         updateGameState();
     }
 
     public ImageView createTargetObject(int imgResource, double size) {
-        ImageView targetObject = new TargetImageView(this);
+        final ImageView targetObject = new TargetImageView(this);
         targetObjectsNow.add(targetObject);
         setupObjectParams(targetObject, imgResource, size);
         layout.addView(targetObject);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        removeObject(targetObject);
+                        updateGameState();
+                    }
+                });
+            }
+        }, MSEC_PER_SEC * level.getSeconds());
+
         return targetObject;
     }
 
@@ -92,7 +115,7 @@ public class RainbowActivity extends GameActivity {
     }
 
     public void updateGameState() {
-        RainbowGame.Level desc = logic.getLevelDescription(logic.getLevel());
+        RainbowGame.Level desc = level;
         for (int i = targetObjectsNow.size(); i < desc.getTargets(); i++) {
             System.out.println("dodaje target");
             createTargetObject(desc.getTargetImg(), desc.getTargetSize());

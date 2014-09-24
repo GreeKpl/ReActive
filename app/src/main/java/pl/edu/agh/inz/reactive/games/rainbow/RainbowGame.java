@@ -1,10 +1,13 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
+import android.content.Context;
 import android.view.View;
 
+import pl.edu.agh.inz.reactive.DatabaseManager;
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.User;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
+import pl.edu.agh.inz.reactive.games.GameActivity;
 
 /**
  * Created by alek on 25.08.14.
@@ -13,8 +16,8 @@ public class RainbowGame extends AbstractGame {
 
     private RainbowSpecification specification = new RainbowSpecification();
 
-    public RainbowGame(User user) {
-        super("Sea", user, 40); // todo
+    public RainbowGame(User user, Context context) {
+        super("Sea", user, context); // todo
     }
 
     public Level getLevelDescription(int level) {
@@ -32,6 +35,7 @@ public class RainbowGame extends AbstractGame {
         } else {
             setScore(getScore() - 1);
         }
+        //System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel()));
     }
 
     public static class Level {

@@ -78,9 +78,11 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Class<? extends GameActivity> game = (Class<? extends GameActivity>) gamesView.getAdapter().getItem(position);
+                GameDescriptorImageView clickedGameImage = (GameDescriptorImageView) gamesView.getAdapter().getItem(position);
+                Class<? extends GameActivity> game = clickedGameImage.getGameClass();
 
-                Intent intent = new Intent(MainMenuActivity.this, RainbowActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, game);
+
                 MainMenuActivity.this.startActivity(intent);
             }
         });
@@ -94,8 +96,8 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         labelTextView.setText(labelUser);
     }
 
-    private ImageView createGameImage(Class<? extends GameActivity> gameClass, int imgSrc) {
-        ImageView game = new ImageView(this);
+    private GameDescriptorImageView createGameImage(Class<? extends GameActivity> gameClass, int imgSrc) {
+        GameDescriptorImageView game = new GameDescriptorImageView(this, gameClass);
         game.setImageResource(imgSrc);
         game.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
 

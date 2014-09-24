@@ -1,5 +1,10 @@
 package pl.edu.agh.inz.reactive.games;
 
+import android.content.Context;
+
+import java.util.Date;
+
+import pl.edu.agh.inz.reactive.DatabaseManager;
 import pl.edu.agh.inz.reactive.User;
 
 /**
@@ -7,18 +12,22 @@ import pl.edu.agh.inz.reactive.User;
  */
 public abstract class AbstractGame {
 
+    public static final int RAINBOW_GAME = 1;
+    protected final DatabaseManager db;
     String name;
 
-    User user;
+    protected User user;
     int level;
 
     int userMaxLevel = 4;
     int maxLevel = 40;
     int score;
 
-    public AbstractGame(String name, User user, int maxLevel) {
+    public AbstractGame(String name, User user, Context context) {
         this.name = name;
         this.user = user;
+        db = new DatabaseManager(context);
+        db.open();
     }
 
     public Integer[] getLevelsArray() {
@@ -91,13 +100,16 @@ public abstract class AbstractGame {
     }
 
     public void setScore(int score) {
+        /* TODO!!!
+        if (score > db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel())) {
+            db.saveResult(user.getLogin(), RAINBOW_GAME, new Date().getTime(), getLevel(), score);
+        }
+        */
         this.score = score;
     }
 
     public void endGame() {
-        //TODO :)
-        while (!saveScore(score, user)) {};
-        return;
+
     }
 
 }
