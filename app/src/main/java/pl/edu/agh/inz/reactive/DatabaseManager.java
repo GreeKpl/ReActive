@@ -9,14 +9,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.ImageView;
 
 public class DatabaseManager {
     private static final String DEBUG_TAG = "DatabaseManager";
 
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     private static final String DB_NAME = "database.db";
 
@@ -43,28 +41,28 @@ public class DatabaseManager {
 
     private static final String DB_CREATE_USERS_TABLE =
             "create table "+ DB_USERS_TABLE +" ("+
-                    LOGIN+" text primary key,"+
-                    NAME+" text,"+
-                    SURNAME+" text);";
+                    LOGIN+" TEXT PRIMARY KEY,"+
+                    NAME+" TEXT,"+
+                    SURNAME+" TEXT);";
 
     private static final String DB_CREATE_LEVELS_TABLE =
             "create table "+ DB_LEVELS_TABLE +" ("+
-                    LOGIN+" text primary key,"+
+                    LOGIN+" TEXT,"+
                     GAME+" int,"+
                     LEVEL+" int,"+
-                    POINTS+" int);";
+                    POINTS+" int, primary key (" + LOGIN + ", " + GAME + "));";
 
     private static final String DB_CREATE_RESULTS_TABLE =
             "create table "+ DB_RESULTS_TABLE +" ("+
-                    LOGIN + " text primary key,"+
+                    LOGIN + " TEXT,"+
                     GAME + " int," +
                     DATE + " long," +
-                    POINTS +" int);";
+                    POINTS +" int, PRIMARY KEY (" + LOGIN + ", " + GAME + ", " + DATE + "));";
 
     private static final String DB_CREATE_GLOBALS_TABLE =
             "create table "+ DB_GLOBALS_TABLE +" ("+
-                    KEY +" text primary key,"+
-                    VALUE +" text);";
+                    KEY +" TEXT PRIMARY KEY,"+
+                    VALUE +" TEXT);";
 
     private static final String DB_DROP_TABLE = "drop table if exists ";
     private static final String ACTIVE_USER = "activeUser";
@@ -114,7 +112,7 @@ public class DatabaseManager {
         this.context = context;
     }
 
-    public DatabaseManager open(){
+    public DatabaseManager open() {
         dbHelper = new DatabaseHelper(context, DB_NAME, null, DB_VERSION);
         try {
             db = dbHelper.getWritableDatabase();
@@ -166,6 +164,7 @@ public class DatabaseManager {
             user.setSurname(cursor.getString(2));
             users.add(user);
         }
+        cursor.close();
         return users;
     }
 
@@ -179,6 +178,7 @@ public class DatabaseManager {
             String surname = cursor.getString(2);
             user = new User(login, name, surname);
         }
+        cursor.close();
 
         return user;
     }
@@ -213,6 +213,7 @@ public class DatabaseManager {
         if (!cursor.moveToFirst()) {
             insertUser(new User(AdminActivity.DEFAULT_USER_LOGIN, AdminActivity.DEFAULT_USER_NAME, AdminActivity.DEFAULT_USER_SURNAME));
         }
+        cursor.close();
     }
 
 
@@ -224,9 +225,10 @@ public class DatabaseManager {
 
         Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, orderBy);
 
-        if(cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             maxLevel = cursor.getInt(0);
         }
+        cursor.close();
 
         return maxLevel;
     }
@@ -237,11 +239,13 @@ public class DatabaseManager {
 
         Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
 
+        int pointsOnLevel = 0;
         if (cursor.moveToFirst()) {
-            return cursor.getInt(0);
-        } else {
-            return 0;
+            pointsOnLevel = cursor.getInt(0);
         }
+        cursor.close();
+
+        return pointsOnLevel;
     }
 
     public int getPointsFromDate(String login, int game, long date) {
@@ -250,26 +254,22 @@ public class DatabaseManager {
 
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
-        if(cursor != null && cursor.moveToFirst()) {
-            return cursor.getInt(0);
-        } else {
-            return 0;
+        int pointsFromDate = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            pointsFromDate = cursor.getInt(0);
         }
+        cursor.close();
+
+        return pointsFromDate;
     }
 
-    public void insertLevelResult(String login, int game, int level, int points) {
+    public void updateLevelResult(String login, int game, int level, int points) {
         ContentValues values = new ContentValues();
         values.put(LOGIN, login);
         values.put(GAME, game);
         values.put(LEVEL, level);
         values.put(POINTS, points);
-        db.insert(DB_LEVELS_TABLE, null, values);
-    }
-
-    public void deleteLevelResult(String login, int game, int level) {
-        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
-
-        db.delete(DB_LEVELS_TABLE, where, null);
+        db.replace(DB_LEVELS_TABLE, null, values);
     }
 
     public void saveLevelResult(String login, int game, int level, int points) {
@@ -280,12 +280,12 @@ public class DatabaseManager {
 
         if (cursor.moveToFirst()) {
             if (cursor.getInt(0) < points) {
-                deleteLevelResult(login, game, level);
-                insertLevelResult(login, game, level, points);
+                updateLevelResult(login, game, level, points);
             }
         } else {
-            insertLevelResult(login, game, level, points);
+            updateLevelResult(login, game, level, points);
         }
+        cursor.close();
     }
 
     public void insertDateResult(String login, int game, long date, int points) {
@@ -314,6 +314,7 @@ public class DatabaseManager {
                 deleteDateResult(login, game, date);
             }
         }
+        cursor.close();
         insertDateResult(login, game, date, points);
     }
 

@@ -1,4 +1,4 @@
-package pl.edu.agh.inz.reactive.games.rainbow;
+package pl.edu.agh.inz.reactive.games.rainbow.images;
 
 import android.content.Context;
 import android.util.AttributeSet;

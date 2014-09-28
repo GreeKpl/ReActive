@@ -1,8 +1,7 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
-import android.annotation.TargetApi;
-import android.content.SyncStatusObserver;
-import android.os.Build;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,10 +13,13 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import pl.edu.agh.inz.reactive.MainMenuActivity;
 import pl.edu.agh.inz.reactive.R;
-import pl.edu.agh.inz.reactive.User;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
+import pl.edu.agh.inz.reactive.games.AbstractLevelSummaryDialog;
 import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.rainbow.images.OtherImageView;
+import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
 public class RainbowActivity extends GameActivity {
 
@@ -52,10 +54,46 @@ public class RainbowActivity extends GameActivity {
         layout = (RelativeLayout)findViewById(R.id.seaLayout);
         layout.setBackgroundResource(level.getBackgroundImg());
 
+        targetObjectsNow = new ArrayList<ImageView>();
+        otherObjectsNow = new ArrayList<ImageView>();
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("DING!");
+                new AbstractLevelSummaryDialog () {
+
+                    @Override
+                    public DialogInterface.OnClickListener getNextLevelClickListener() {
+                        return new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                RainbowActivity.this.startLevel(logic.getLevel() + 1);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public DialogInterface.OnClickListener getRestartLevelClickListener() {
+                        return new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                RainbowActivity.this.startLevel(logic.getLevel());
+                            }
+                        };
+                    }
+
+                    @Override
+                    public DialogInterface.OnClickListener getBackToMenuListener() {
+                        return new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(RainbowActivity.this, MainMenuActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        };
+                    }
+                }.show(getFragmentManager(), "level finished");
             }
         }, 5000);
 

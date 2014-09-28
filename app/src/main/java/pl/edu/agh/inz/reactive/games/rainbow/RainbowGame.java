@@ -3,11 +3,8 @@ package pl.edu.agh.inz.reactive.games.rainbow;
 import android.content.Context;
 import android.view.View;
 
-import pl.edu.agh.inz.reactive.DatabaseManager;
-import pl.edu.agh.inz.reactive.R;
-import pl.edu.agh.inz.reactive.User;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
-import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
 /**
  * Created by alek on 25.08.14.

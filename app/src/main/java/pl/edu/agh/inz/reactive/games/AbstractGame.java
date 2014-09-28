@@ -102,11 +102,11 @@ public abstract class AbstractGame {
     }
 
     public void setScore(int score) {
-        /* TODO!!!
+
         if (score > db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel())) {
             db.saveResult(user.getLogin(), RAINBOW_GAME, new Date().getTime(), getLevel(), score);
         }
-        */
+
         this.score = score;
     }
 
