@@ -16,8 +16,9 @@ import java.util.TimerTask;
 import pl.edu.agh.inz.reactive.MainMenuActivity;
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
-import pl.edu.agh.inz.reactive.games.AbstractLevelSummaryDialog;
+import pl.edu.agh.inz.reactive.games.LevelSummaryDialog;
 import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.LevelSummaryDialogFactory;
 import pl.edu.agh.inz.reactive.games.rainbow.images.OtherImageView;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
@@ -60,40 +61,7 @@ public class RainbowActivity extends GameActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                new AbstractLevelSummaryDialog () {
-
-                    @Override
-                    public DialogInterface.OnClickListener getNextLevelClickListener() {
-                        return new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                RainbowActivity.this.startLevel(logic.getLevel() + 1);
-                            }
-                        };
-                    }
-
-                    @Override
-                    public DialogInterface.OnClickListener getRestartLevelClickListener() {
-                        return new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                RainbowActivity.this.startLevel(logic.getLevel());
-                            }
-                        };
-                    }
-
-                    @Override
-                    public DialogInterface.OnClickListener getBackToMenuListener() {
-                        return new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(RainbowActivity.this, MainMenuActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        };
-                    }
-                }.show(getFragmentManager(), "level finished");
+                new LevelSummaryDialogFactory().create(RainbowActivity.this, 80).show(getFragmentManager(), "level finished");
             }
         }, 5000);
 
