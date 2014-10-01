@@ -6,6 +6,7 @@ import java.util.Date;
 
 import pl.edu.agh.inz.reactive.DatabaseManager;
 import pl.edu.agh.inz.reactive.User;
+import pl.edu.agh.inz.reactive.games.rainbow.RainbowGame;
 
 /**
  * Created by jacek on 21.08.14.
@@ -19,7 +20,6 @@ public abstract class AbstractGame {
     protected User user;
     int level;
 
-    int userMaxLevel = 4;
     int maxLevel = 40;
     int score;
 
@@ -33,22 +33,12 @@ public abstract class AbstractGame {
     }
 
     public Integer[] getLevelsArray() {
-        int maxLevel = this.getUserMaxLevel();
+        int maxLevel = this.getUserMaxLevel() + 1;
         Integer[] ints = new Integer[maxLevel];
         for (int i = 0; i < maxLevel; i++) {
             ints[i] = i + 1;
         }
         return ints;
-    }
-
-    private int readScore() {
-        //TODO :)
-        return 0;
-    }
-
-    public boolean saveScore(int score, User user) {
-        //TODO !! :)
-        return true;
     }
 
     public String getName() {
@@ -76,21 +66,11 @@ public abstract class AbstractGame {
     }
 
     public int getUserMaxLevel() {
-        return userMaxLevel;
-    }
-
-    public void setUserMaxLevel(int userMaxLevel) {
-        this.userMaxLevel = userMaxLevel;
+        return db.getMaxLevel(user.getLogin(), RAINBOW_GAME);
     }
 
     public int getMaxLevel() {
         return maxLevel;
-    }
-
-    public void readUserMaxLevel(User user) {
-        //TODO !!!!!!!!!!!!!!!!!
-        int readLevel = 1; //wcale nie 1 :P
-        setUserMaxLevel(readLevel);
     }
 
     public void setMaxLevel(int maxLevel) {

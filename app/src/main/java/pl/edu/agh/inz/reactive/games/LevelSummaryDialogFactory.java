@@ -9,8 +9,15 @@ public class LevelSummaryDialogFactory {
 
     }
 
-    public LevelSummaryDialog create(GameActivity gameActivity, int percent) {
-        LevelSummaryDialog summaryDialog = new LevelSummaryDialog();
+    public AbstractLevelSummaryDialog create(GameActivity gameActivity, boolean passed, boolean isLast, int percent) {
+        AbstractLevelSummaryDialog summaryDialog;
+        if (passed && isLast) {
+            summaryDialog = new GameFinishedSummaryDialog();
+        } else if (passed) {
+            summaryDialog = new LevelPassedSummaryDialog();
+        } else {
+            summaryDialog = new LevelFailedSummaryDialog();
+        }
         summaryDialog.setParams(gameActivity, percent);
         return summaryDialog;
     }

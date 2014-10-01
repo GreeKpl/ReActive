@@ -1,7 +1,5 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,10 +11,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import pl.edu.agh.inz.reactive.MainMenuActivity;
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
-import pl.edu.agh.inz.reactive.games.LevelSummaryDialog;
 import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.LevelSummaryDialogFactory;
 import pl.edu.agh.inz.reactive.games.rainbow.images.OtherImageView;
@@ -61,7 +57,7 @@ public class RainbowActivity extends GameActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                new LevelSummaryDialogFactory().create(RainbowActivity.this, 80).show(getFragmentManager(), "level finished");
+                new LevelSummaryDialogFactory().create(RainbowActivity.this, true, logic.getLevel() == logic.getMaxLevel(), 80).show(getFragmentManager(), "level finished");
             }
         }, 5000);
 

@@ -13,12 +13,12 @@ import pl.edu.agh.inz.reactive.MainMenuActivity;
 /**
  * Created by alek on 29.09.14.
  */
-public class LevelSummaryDialog extends DialogFragment {
+public abstract class AbstractLevelSummaryDialog extends DialogFragment {
 
     private int percent;
     private GameActivity gameActivity;
 
-    public LevelSummaryDialog() {}
+    public AbstractLevelSummaryDialog() {}
 
     public DialogInterface.OnClickListener getNextLevelClickListener() {
         return new DialogInterface.OnClickListener() {
@@ -55,14 +55,13 @@ public class LevelSummaryDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("level passed")
-                .setPositiveButton("next level", getNextLevelClickListener())
-                .setNegativeButton("back to menu", getBackToMenuListener());
+        AlertDialog.Builder builder = getBuilder(80);
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
+
+    protected abstract AlertDialog.Builder getBuilder(int percent);
 
     public DialogFragment setParams(GameActivity activity, int percent) {
         gameActivity = activity;
