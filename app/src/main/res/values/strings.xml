@@ -2,7 +2,36 @@
 <resources>
 
     <string name="app_name">Re:Active</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    //AdminActivity.java
+    <string name="add_user_information">Dodano użytkownika </string>
+    <string name="delete_user_information">Usunięto użytkownika </string>
+    <string name="busy_login_information">Użytkownik o danym loginie już istnieje</string>
+    <string name="empty_fields_information">Aby dodać nowego użytkownika wypełnij wszystkie pola</string>
+    <string name="choose_user_information">Wybierz użytkownika</string>
+
+    //MainMenuActivity.java
+    <string name="admin_dialog_message">Podaj hasło do panelu administratora</string>
+    <string name="positive_button_text">OK</string>
+    <string name="password">admin</string>
+
+    //GameFinishedSummaryDialog.java
+    <string name="game_finished_summary_dialog_message">Brawo! Wygrałeś grę!!!</string>
+    <string name="game_finished_summary_dialog_negative_button">done</string>
+
+    //LevelPassedSummaryDialog.java
+    <string name="level_passed_summary_dialog_message">Poziom pomyślnie ukończono z</string>
+    <string name="level_passed_summary_dialog_positive_button">Powtórz poziom</string>
+    <string name="level_passed_summary_dialog_negative_button">Wróc do menu</string>
+
+    //LevelFailedSummaryDialog.java
+    <string name="level_failed_summary_dialog_message">Poziom ukończono z</string>
+    <string name="level_failed_summary_dialog_positive_button">Powtórz poziom</string>
+    <string name="level_failed_summary_dialog_negative_button">Wróc do menu</string>
+
+    //activity_main_menu
+    <string name="user_prefix">Zalogowano jako: </string>
+    <string name="btnSeeResults_text">Zobacz postępy</string>
 
 </resources>

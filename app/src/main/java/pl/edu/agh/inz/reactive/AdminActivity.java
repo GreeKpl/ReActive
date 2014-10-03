@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import static pl.edu.agh.inz.reactive.R.color;
 
+
 public class AdminActivity extends Activity implements OnClickListener {
 
 	private ListView list;
@@ -134,15 +135,14 @@ public class AdminActivity extends Activity implements OnClickListener {
                 list.setAdapter(adapter);
                 cleanEditText();
 
-                showAcceptInformation("Dodano użytkownika " + user.getLogin());
+                showAcceptInformation(getString(R.string.add_user_information) + user.getLogin());
 
                 db.insertUser(user);
             } else {
-                showWarningInformation("Użytkownik o danym loginie już istnieje");
+                showWarningInformation(getString(R.string.busy_login_information));
             }
-
 		} else {
-			showWarningInformation("Aby dodać nowego użytkownika wypełnij wszystkie pola");
+			showWarningInformation(getString(R.string.empty_fields_information));
 		}
 		
 
@@ -157,7 +157,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 		usersMap.remove(user.getLogin());
 		adapter.remove(user.getLogin());
 		list.setAdapter(adapter);
-		showAcceptInformation("Usunięto użytkownika " + user.getLogin());
+		showAcceptInformation(getString(R.string.delete_user_information) + user.getLogin());
 		cleanEditText();
 		
 		db.deleteUser(user);
@@ -183,7 +183,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 			finish();
 			startActivity(target);
 		} else {
-			showWarningInformation("Wybierz użytkownika");
+			showWarningInformation(getString(R.string.choose_user_information));
 		}
 	}
 

@@ -22,7 +22,7 @@
                 android:id="@+id/tvLabelUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Zalogowano jako:"
+                android:text="@string/user_prefix"
                 android:textSize="20sp" />
 
             <TextView
@@ -59,7 +59,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/btnSeeResults"
-        android:text="Zobacz postępy"
+        android:text="@string/btnSeeResults_text"
         android:layout_marginTop="10dp"
 
         android:padding="30dp"

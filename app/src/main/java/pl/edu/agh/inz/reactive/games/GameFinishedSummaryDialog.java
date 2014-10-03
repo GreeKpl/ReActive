@@ -2,6 +2,8 @@ package pl.edu.agh.inz.reactive.games;
 
 import android.app.AlertDialog;
 
+import pl.edu.agh.inz.reactive.R;
+
 /**
  * Created by alek on 02.10.14.
  */
@@ -10,8 +12,8 @@ public class GameFinishedSummaryDialog extends AbstractLevelSummaryDialog {
     @Override
     protected AlertDialog.Builder getBuilder(int percent) {
         return new AlertDialog.Builder(getActivity())
-                .setMessage("BRAWO! WYGRALES TO!!!" + percent + "%")
-                .setNegativeButton("done", getBackToMenuListener());
+                .setMessage(getString(R.string.game_finished_summary_dialog_message) + percent + "%")
+                .setNegativeButton(getString(R.string.game_finished_summary_dialog_negative_button), getBackToMenuListener());
     }
 }
 

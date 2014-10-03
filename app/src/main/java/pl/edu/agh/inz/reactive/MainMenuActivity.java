@@ -119,10 +119,11 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_password, null))
-                .setPositiveButton("OK",
+                .setMessage(R.string.admin_dialog_message)
+                .setPositiveButton(getString(R.string.positive_button_text),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                if (etPassword.getText().toString().equals("admin")) {
+                                if (etPassword.getText().toString().equals(getString(R.string.password))) {
                                     goLogin();
                                 }
                             }
