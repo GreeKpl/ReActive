@@ -15,8 +15,8 @@ import pl.edu.agh.inz.reactive.MainMenuActivity;
  */
 public abstract class AbstractLevelSummaryDialog extends DialogFragment {
 
-    private int percent;
     private GameActivity gameActivity;
+    private int percent;
 
     public AbstractLevelSummaryDialog() {}
 
@@ -54,16 +54,18 @@ public abstract class AbstractLevelSummaryDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        System.out.println("PERCENT " + percent);
+        AlertDialog dialog = getBuilder(percent);
 
-        AlertDialog.Builder builder = getBuilder(80);
-        AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
 
-    protected abstract AlertDialog.Builder getBuilder(int percent);
+    protected abstract AlertDialog getBuilder(int percent);
 
     public DialogFragment setParams(GameActivity activity, int percent) {
+
+        System.out.println("SET PARAMS PERCENT: " + percent);
         gameActivity = activity;
         this.percent = percent;
         return this;

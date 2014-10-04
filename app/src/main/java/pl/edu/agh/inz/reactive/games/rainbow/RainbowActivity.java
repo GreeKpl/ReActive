@@ -45,6 +45,7 @@ public class RainbowActivity extends GameActivity {
         setContentView(R.layout.activity_sea);
 
         logic.setLevel(levelId);
+        logic.setScore(0);
 
         level = logic.getLevelDescription(levelId);
 
@@ -57,7 +58,8 @@ public class RainbowActivity extends GameActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                new LevelSummaryDialogFactory().create(RainbowActivity.this, true, logic.getLevel() == logic.getMaxLevel(), 80).show(getFragmentManager(), "level finished");
+                int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
+                new LevelSummaryDialogFactory().create(RainbowActivity.this, scorePercent >= 20, logic.getLevel() == logic.getMaxLevel(), scorePercent).show(getFragmentManager(), "level finished");
             }
         }, 5000);
 
