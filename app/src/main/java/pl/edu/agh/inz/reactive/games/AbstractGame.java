@@ -6,7 +6,6 @@ import java.util.Date;
 
 import pl.edu.agh.inz.reactive.DatabaseManager;
 import pl.edu.agh.inz.reactive.User;
-import pl.edu.agh.inz.reactive.games.rainbow.RainbowGame;
 
 /**
  * Created by jacek on 21.08.14.
