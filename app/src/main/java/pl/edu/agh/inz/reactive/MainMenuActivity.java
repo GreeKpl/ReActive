@@ -39,10 +39,10 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     private DatabaseManager db = new DatabaseManager(this);
 
     private void showGraph(View view) {
-        /*LineGraph line = new LineGraph();
+        LineGraph line = new LineGraph();
         Intent intent = line.getIntent(this);
         startActivity(intent);
-        */
+
     }
 
     protected void onCreate(Bundle savedInstanceState) {

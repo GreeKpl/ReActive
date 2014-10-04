@@ -26,7 +26,9 @@
         <activity
             android:name=".AdminActivity"
             android:screenOrientation="landscape" />
-
+        <activity
+            android:name="org.achartengine.GraphicalActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
