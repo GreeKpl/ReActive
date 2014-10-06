@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    //AdminActivity.java
     <color name="btnSeeResults">#66ff66</color>
     <color name="btnLoginUser">#00BFFF</color>
     <color name="btnAddUser">#7CFC00</color>
     <color name="btnDeleteUser">#FF0000</color>
     <color name="txtAccept">#00FF00</color>
     <color name="txtWarning">#FF6A53</color>
+
+    //LineGraph.java
+    <color name="graph_background">#CCCCCC</color>
+    <color name="graph_margin">#111111</color>
+    <color name="graph_grid">#555555</color>
+    <color name="graph_x_label">#DDDDDD</color>
+    <color name="graph_y_label">#DDDDDD</color>
+    <color name="graph_axes_labels">#FFFF00</color>
+    <color name="graph_axes">#BBBBBB</color>
+    <color name="graph_first_chart">#0000FF</color>
+    <color name="graph_second_chart">#00FF00</color>
 </resources>

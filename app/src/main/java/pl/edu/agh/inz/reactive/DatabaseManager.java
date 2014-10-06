@@ -2,6 +2,9 @@ package pl.edu.agh.inz.reactive;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,13 +27,13 @@ public class DatabaseManager {
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
 
-    /*Table of users*/
+    /*Table of lavels*/
     private static final String DB_LEVELS_TABLE = "levels";
     public static final String GAME = "game";
     public static final String LEVEL = "level";
     public static final String POINTS = "points";
 
-    /*Table of users*/
+    /*Table of dates*/
     private static final String DB_RESULTS_TABLE = "results";
     public static final String DATE = "date";
 
@@ -113,6 +116,7 @@ public class DatabaseManager {
     }
 
     public DatabaseManager open() {
+        Log.d(DEBUG_TAG, "Database open...");
         dbHelper = new DatabaseHelper(context, DB_NAME, null, DB_VERSION);
         try {
             db = dbHelper.getWritableDatabase();
@@ -123,6 +127,7 @@ public class DatabaseManager {
     }
 
     public void close() {
+        Log.d(DEBUG_TAG, "Database close...");
         dbHelper.close();
     }
 
@@ -261,6 +266,24 @@ public class DatabaseManager {
         cursor.close();
 
         return pointsFromDate;
+    }
+
+    public Map<Long, Integer> getAchievements(String login, int game) {
+        String[] columns = {DATE, POINTS};
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game;
+        String orderBy = DATE;
+
+        Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, orderBy);
+
+        Map<Long, Integer> achievements = new TreeMap<Long, Integer>();
+        while (cursor.moveToNext()) {
+            achievements.put(cursor.getLong(0), cursor.getInt(1));
+        }
+        cursor.close();
+
+
+        return achievements;
+
     }
 
     public void updateLevelResult(String login, int game, int level, int points) {
