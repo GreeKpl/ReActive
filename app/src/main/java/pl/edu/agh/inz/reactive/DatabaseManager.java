@@ -268,6 +268,22 @@ public class DatabaseManager {
         return pointsFromDate;
     }
 
+    public long getMinDate(String login) {
+        String[] columns = {DATE};
+        String where = LOGIN + "='" + login + "'";
+        String orderBy = DATE;
+
+        Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, orderBy);
+
+        long date = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            date = cursor.getInt(0);
+        }
+        cursor.close();
+
+        return date;
+    }
+
     public Map<Long, Integer> getAchievements(String login, int game) {
         String[] columns = {DATE, POINTS};
         String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game;
@@ -276,8 +292,9 @@ public class DatabaseManager {
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, orderBy);
 
         Map<Long, Integer> achievements = new TreeMap<Long, Integer>();
+
         while (cursor.moveToNext()) {
-            achievements.put(cursor.getLong(0), cursor.getInt(1));
+            achievements.put(cursor.getLong(0) - getMinDate(login), cursor.getInt(1));
         }
         cursor.close();
 
