@@ -1,5 +1,6 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
+import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,7 +34,7 @@ public class RainbowActivity extends GameActivity {
     private int screenHeight = 570;
     private int screenWidth = 1070;
 
-    private Timer timer = new Timer(true);
+    private Timer timer;
 
     @Override
     public void createGameLogic() {
@@ -55,11 +56,16 @@ public class RainbowActivity extends GameActivity {
         targetObjectsNow = new ArrayList<ImageView>();
         otherObjectsNow = new ArrayList<ImageView>();
 
+        timer = new Timer(true);
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                timer.cancel();
                 int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
-                new LevelSummaryDialogFactory().create(RainbowActivity.this, scorePercent >= 20, logic.getLevel() == logic.getMaxLevel(), scorePercent).show(getFragmentManager(), "level finished");
+                new LevelSummaryDialogFactory().create(RainbowActivity.this, scorePercent >= 20,
+                    logic.getLevel() == logic.getMaxLevel(), scorePercent)
+                        .show(getFragmentManager(), "level finished");
             }
         }, 5000);
 
@@ -145,10 +151,6 @@ public class RainbowActivity extends GameActivity {
         layout.removeView(image);
     }
 
-    public ImageView createIncorrectObject(int imgResource, int size) {
-        return null;
-    }
-
     @Override
     public AbstractGame getLogic() {
         return logic;
@@ -156,10 +158,10 @@ public class RainbowActivity extends GameActivity {
 
 
     public void levelNotification(int levelNo, int score) {
-		Toast toast = Toast.makeText(this, "Runda "+levelNo+"\nWynik: "+score, Toast.LENGTH_SHORT);
-		/*MediaPlayer mp = MediaPlayer.create(this, R.raw.round);
+		Toast toast = Toast.makeText(this, "Runda " + levelNo + "\n" +
+            "Wynik: "+score, Toast.LENGTH_SHORT);
+		MediaPlayer mp = MediaPlayer.create(this, R.raw.round);
 		toast.show();
 		mp.start();
-		*/
 	}
 }
