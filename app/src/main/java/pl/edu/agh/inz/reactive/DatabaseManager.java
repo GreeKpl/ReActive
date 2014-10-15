@@ -151,6 +151,8 @@ public class DatabaseManager {
 
     public void deleteUser(User user){
         String where = LOGIN + "='" + user.getLogin() + "'";
+        db.delete(DB_LEVELS_TABLE, where, null);
+        db.delete(DB_RESULTS_TABLE, where, null);
         db.delete(DB_USERS_TABLE, where, null);
     }
 

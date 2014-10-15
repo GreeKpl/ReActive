@@ -83,7 +83,8 @@ public abstract class AbstractGame {
     public void setScore(int score) {
 
         if (score > db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel())) {
-            db.saveResult(user.getLogin(), RAINBOW_GAME, new Date().getTime(), getLevel(), score);
+            db.saveResult(user.getLogin(), RAINBOW_GAME, new Date().getTime()/(24*60*60*1000), getLevel(), score);
+            System.out.println("Today: " + new Date().getTime()/(24*60*60*1000));
         }
 
         this.score = score;
