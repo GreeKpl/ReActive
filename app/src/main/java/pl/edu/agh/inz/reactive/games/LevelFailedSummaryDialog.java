@@ -11,11 +11,8 @@ public class LevelFailedSummaryDialog extends AbstractLevelSummaryDialog {
     @Override
     protected AlertDialog getBuilder(int percent) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setMessage(getString(R.string.level_failed_summary_dialog_message) + percent + "%")
-                .setPositiveButton(getString(R.string.level_failed_summary_dialog_positive_button), getRestartLevelClickListener())
-                .setNegativeButton(getString(R.string.level_failed_summary_dialog_negative_button), getBackToMenuListener());
+                .setMessage(getString(R.string.level_failed_summary_dialog_message) + percent + "%").setTitle("Tym razem niestety się nie udało");
 
-        AlertDialog dialog = builder.create();
-        return dialog;
+        return builder.create();
     }
 }

@@ -37,12 +37,9 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setView(summaryContentsView)
-                .setPositiveButton(getString(R.string.level_passed_summary_dialog_positive_button), getNextLevelClickListener())
-                .setNegativeButton(getString(R.string.level_passed_summary_dialog_negative_button), getBackToMenuListener());
+                .setView(summaryContentsView).setTitle("Gratulacje! Poziom został ukończony!");
 
-        AlertDialog dialog = builder.create();
-        return dialog;
+        return builder.create();
     }
 
     private ImageView createStar() {

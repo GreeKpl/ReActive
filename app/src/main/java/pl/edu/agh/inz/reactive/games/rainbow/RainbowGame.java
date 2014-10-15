@@ -14,7 +14,9 @@ public class RainbowGame extends AbstractGame {
     private RainbowSpecification specification = new RainbowSpecification();
 
     public RainbowGame(Context context) {
-        super("Sea", context); // todo
+        super("Sea", context);
+
+        setMaxLevel(specification.getLevels().length - 1);
     }
 
     public Level getLevelDescription(int level) {

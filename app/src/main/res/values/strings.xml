@@ -26,10 +26,10 @@
     <string name="level_passed_summary_dialog_negative_button">Wróc do menu</string>
 
     //LevelStartDialog.java
-    <string name="instruction">W następnym poziomie klikaj</string>
+    <string name="instruction">W następnym poziomie klikaj na</string>
 
     //LevelFailedSummaryDialog.java
-    <string name="level_failed_summary_dialog_message">Poziom ukończono z</string>
+    <string name="level_failed_summary_dialog_message">Spróbuj ponownie! Tym razem uzyskałeś </string>
     <string name="level_failed_summary_dialog_positive_button">Powtórz poziom</string>
     <string name="level_failed_summary_dialog_negative_button">Wróc do menu</string>
 

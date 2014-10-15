@@ -6,9 +6,14 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import pl.edu.agh.inz.reactive.MainMenuActivity;
+import pl.edu.agh.inz.reactive.R;
 
 /**
  * Created by alek on 29.09.14.
@@ -18,26 +23,38 @@ public abstract class AbstractLevelSummaryDialog extends DialogFragment {
     private GameActivity gameActivity;
     private int percent;
 
+    protected Timer timer = new Timer(true);
+
     public AbstractLevelSummaryDialog() {}
 
-    public DialogInterface.OnClickListener getNextLevelClickListener() {
-        return new DialogInterface.OnClickListener() {
-
+    public void startNextLevel(int delay) {
+        timer.schedule(new TimerTask() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                gameActivity.startLevel(gameActivity.getLogic().getLevel() + 1);
+            public void run() {
+                gameActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameActivity.startLevel(gameActivity.getLogic().getLevel() + 1);
+                        AbstractLevelSummaryDialog.this.dismiss();
+                    }
+                });
             }
-        };
+        }, delay);
     }
 
-    public DialogInterface.OnClickListener getRestartLevelClickListener() {
-        return new DialogInterface.OnClickListener() {
-
+    public void restartTheSameLevel(int delay) {
+        timer.schedule(new TimerTask() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                gameActivity.startLevel(gameActivity.getLogic().getLevel());
+            public void run() {
+                gameActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameActivity.startLevel(gameActivity.getLogic().getLevel());
+                        AbstractLevelSummaryDialog.this.dismiss();
+                    }
+                });
             }
-        };
+        }, delay);
     }
 
     public DialogInterface.OnClickListener getBackToMenuListener() {
@@ -58,6 +75,7 @@ public abstract class AbstractLevelSummaryDialog extends DialogFragment {
         AlertDialog dialog = getBuilder(percent);
 
         dialog.setCanceledOnTouchOutside(false);
+
         return dialog;
     }
 

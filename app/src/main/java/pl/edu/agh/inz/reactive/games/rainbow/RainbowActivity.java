@@ -145,7 +145,7 @@ public class RainbowActivity extends GameActivity {
     private void removeObject(View image) {
         if (image instanceof TargetImageView) {
             targetObjectsNow.remove(image);
-        } else {
+        } else if (image instanceof OtherImageView){
             otherObjectsNow.remove(image);
         }
         layout.removeView(image);
@@ -160,8 +160,7 @@ public class RainbowActivity extends GameActivity {
     public void levelNotification(int levelNo, int score) {
 		Toast toast = Toast.makeText(this, "Runda " + levelNo + "\n" +
             "Wynik: "+score, Toast.LENGTH_SHORT);
-		MediaPlayer mp = MediaPlayer.create(this, R.raw.round);
-		toast.show();
-		mp.start();
+        toast.show();
+
 	}
 }
