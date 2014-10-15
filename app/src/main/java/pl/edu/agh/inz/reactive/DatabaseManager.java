@@ -255,7 +255,7 @@ public class DatabaseManager {
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
         int pointsFromDate = 0;
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             pointsFromDate = cursor.getInt(0);
         }
         cursor.close();
