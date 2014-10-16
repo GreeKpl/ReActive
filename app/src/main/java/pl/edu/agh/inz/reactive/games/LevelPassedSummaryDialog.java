@@ -37,7 +37,7 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setView(summaryContentsView).setTitle("Gratulacje! Poziom został ukończony!");
+                .setView(summaryContentsView).setTitle(getString(R.string.level_passed_summary_dialog_message) + " ");
 
         return builder.create();
     }

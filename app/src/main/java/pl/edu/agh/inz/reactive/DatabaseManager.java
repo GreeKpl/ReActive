@@ -295,8 +295,16 @@ public class DatabaseManager {
 
         Map<Long, Integer> achievements = new TreeMap<Long, Integer>();
 
+        long minDate = 0;
+
+        if (cursor != null && cursor.moveToFirst()) {
+            minDate = cursor.getLong(0)/(24*60*60*1000);
+            achievements.put(minDate, cursor.getInt(1));
+        }
+
         while (cursor.moveToNext()) {
-            achievements.put(cursor.getLong(0) - getMinDate(login), cursor.getInt(1));
+            achievements.put(cursor.getLong(0)/(24*60*60*1000) - minDate, cursor.getInt(1));
+            System.out.println("+++++ " + minDate + " " + (cursor.getLong(0)/(24*60*60*1000) - minDate));
         }
         cursor.close();
 

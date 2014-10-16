@@ -135,7 +135,7 @@ public class AdminActivity extends Activity implements OnClickListener {
                 list.setAdapter(adapter);
                 cleanEditText();
 
-                showAcceptInformation(getString(R.string.add_user_information) + user.getLogin());
+                showAcceptInformation(getString(R.string.add_user_information) + " " + user.getLogin());
 
                 db.insertUser(user);
             } else {
@@ -157,7 +157,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 		usersMap.remove(user.getLogin());
 		adapter.remove(user.getLogin());
 		list.setAdapter(adapter);
-		showAcceptInformation(getString(R.string.delete_user_information) + user.getLogin());
+		showAcceptInformation(getString(R.string.delete_user_information) + " " + user.getLogin());
 		cleanEditText();
 		
 		db.deleteUser(user);

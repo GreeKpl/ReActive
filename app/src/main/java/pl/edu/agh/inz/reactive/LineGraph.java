@@ -39,6 +39,7 @@ public class LineGraph {
 
             x1[i] = new Long(entry.getKey().toString());
             y1[i] = new Integer(entry.getValue().toString());
+            System.out.println("Indeks: " + x1[i] + " wynik: " + y1[i]);
             series1.add(x1[i], y1[i]);
             i++;
         }

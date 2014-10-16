@@ -78,18 +78,20 @@ public class RainbowActivity extends GameActivity {
         setupObjectParams(targetObject, imgResource, size);
         layout.addView(targetObject);
 
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        removeObject(targetObject);
-                        updateGameState();
-                    }
-                });
-            }
-        }, MSEC_PER_SEC * level.getSeconds());
+        try {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            removeObject(targetObject);
+                            updateGameState();
+                        }
+                    });
+                }
+            }, MSEC_PER_SEC * level.getSeconds());
+        } catch (Exception e) {} // TODO
 
         return targetObject;
     }

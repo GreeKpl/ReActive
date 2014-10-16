@@ -53,7 +53,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
         User user = db.getActiveUser();
 
-        labelUser = user.getLogin() + " (" + user.getName() + " " + user.getSurname() + ")";
+        labelUser = " " + user.getLogin() + " (" + user.getName() + " " + user.getSurname() + ")";
 
         final HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
