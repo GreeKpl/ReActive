@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import pl.edu.agh.inz.reactive.games.AbstractGame;
+import pl.edu.agh.inz.reactive.games.GameLevel;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
 /**
@@ -14,7 +15,7 @@ public class RainbowGame extends AbstractGame {
     private RainbowSpecification specification = new RainbowSpecification();
 
     public RainbowGame(Context context) {
-        super("Sea", context);
+        super(RAINBOW_GAME, context);
 
         setMaxLevel(specification.getLevels().length - 1);
     }
@@ -37,7 +38,7 @@ public class RainbowGame extends AbstractGame {
         System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel()));
     }
 
-    public static class Level {
+    public static class Level implements GameLevel {
         private final int seconds;
 
         private final int targets;

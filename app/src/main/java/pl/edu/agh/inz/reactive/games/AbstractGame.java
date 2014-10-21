@@ -13,8 +13,10 @@ import pl.edu.agh.inz.reactive.User;
 public abstract class AbstractGame {
 
     public static final int RAINBOW_GAME = 1;
+    public static final int THREE_GAME = 2;
+
     protected final DatabaseManager db;
-    String name;
+    private final int gameId;
 
     protected User user;
     int level;
@@ -22,13 +24,12 @@ public abstract class AbstractGame {
     int maxLevel = 40;
     int score;
 
-    public AbstractGame(String name, Context context) {
-        this.name = name;
+    public AbstractGame(int gameId, Context context) {
+        this.gameId = gameId;
 
         db = new DatabaseManager(context);
         db.open();
         this.user = db.getActiveUser();
-
     }
 
     public Integer[] getLevelsArray() {
@@ -38,14 +39,6 @@ public abstract class AbstractGame {
             ints[i] = i + 1;
         }
         return ints;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     private User getUser() {
@@ -82,15 +75,14 @@ public abstract class AbstractGame {
 
     public void setScore(int score) {
 
-        if (score > db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel())) {
-            db.saveResult(user.getLogin(), RAINBOW_GAME, new Date().getTime(), getLevel(), score);
+        if (score > db.getPointsFromLevel(user.getLogin(), gameId, getLevel())) {
+            db.saveResult(user.getLogin(), gameId, new Date().getTime(), getLevel(), score);
         }
 
         this.score = score;
     }
 
-    public void endGame() {
-
+    public void destroy() {
+        db.close();
     }
-
 }

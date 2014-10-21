@@ -25,7 +25,7 @@ import java.util.List;
 
 import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.rainbow.RainbowActivity;
-import pl.edu.agh.inz.reactive.games.ThreeActivity;
+import pl.edu.agh.inz.reactive.games.three.ThreeActivity;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
 

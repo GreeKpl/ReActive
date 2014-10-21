@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
@@ -34,7 +37,7 @@ public class RainbowActivity extends GameActivity {
     private int screenHeight = 570;
     private int screenWidth = 1070;
 
-    private Timer timer;
+    private ScheduledThreadPoolExecutor timer;
 
     @Override
     public void createGameLogic() {
@@ -56,18 +59,18 @@ public class RainbowActivity extends GameActivity {
         targetObjectsNow = new ArrayList<ImageView>();
         otherObjectsNow = new ArrayList<ImageView>();
 
-        timer = new Timer(true);
+        timer = new ScheduledThreadPoolExecutor(1);
 
-        timer.schedule(new TimerTask() {
+        timer.schedule(new Runnable() {
             @Override
             public void run() {
-                timer.cancel();
                 int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
                 new LevelSummaryDialogFactory().create(RainbowActivity.this, scorePercent >= 20,
                     logic.getLevel() == logic.getMaxLevel(), scorePercent)
                         .show(getFragmentManager(), "level finished");
+                timer.shutdownNow();
             }
-        }, 5000);
+        }, 5, TimeUnit.SECONDS);
 
         updateGameState();
     }
@@ -79,7 +82,7 @@ public class RainbowActivity extends GameActivity {
         layout.addView(targetObject);
 
         try {
-            timer.schedule(new TimerTask() {
+            timer.schedule(new Runnable() {
                 @Override
                 public void run() {
                     runOnUiThread(new Runnable() {
@@ -90,7 +93,7 @@ public class RainbowActivity extends GameActivity {
                         }
                     });
                 }
-            }, MSEC_PER_SEC * level.getSeconds());
+            }, level.getSeconds(), TimeUnit.SECONDS);
         } catch (Exception e) {} // TODO
 
         return targetObject;
@@ -126,7 +129,7 @@ public class RainbowActivity extends GameActivity {
         System.out.println("Score " + logic.getScore());
     }
 
-    public void updateGameState() {
+    private void updateGameState() {
         RainbowGame.Level desc = level;
         for (int i = targetObjectsNow.size(); i < desc.getTargets(); i++) {
             System.out.println("dodaje target");
@@ -156,6 +159,13 @@ public class RainbowActivity extends GameActivity {
     @Override
     public AbstractGame getLogic() {
         return logic;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        timer.shutdownNow();
+        logic.destroy();
     }
 
 
