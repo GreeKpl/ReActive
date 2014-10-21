@@ -29,7 +29,7 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
     private ThreeGame.Level level;
     private ArrayList<PickableImageView> pickablesList;
     private ScheduledThreadPoolExecutor timer;
-    private MediaPlayer mp = MediaPlayer.create(this, R.raw.round);;
+    private MediaPlayer mp;
 
     @Override
     public AbstractGame getLogic() {
@@ -43,6 +43,8 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
 
     @Override
     public void startLevel(int levelId) {
+
+        mp = MediaPlayer.create(this, R.raw.round);
         setContentView(R.layout.activity_three);
 
         logic.setLevel(levelId);
