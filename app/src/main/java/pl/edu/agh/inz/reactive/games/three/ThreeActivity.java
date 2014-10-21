@@ -72,7 +72,7 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
                         .show(getFragmentManager(), "level finished");
                 timer.shutdownNow();
             }
-        }, 5, TimeUnit.SECONDS);
+        }, 10, TimeUnit.SECONDS);
 
         updateGameState();
     }
