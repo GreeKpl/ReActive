@@ -4,6 +4,10 @@
     <string name="app_name">Re:Active</string>
     <string name="action_settings">Settings</string>
 
+    <string name="default_user_login">Gość</string>
+    <string name="default_user_name">Profil</string>
+    <string name="default_user_surname">domyślny</string>
+
     //AdminActivity.java
     <string name="add_user_information">Dodano użytkownika </string>
     <string name="delete_user_information">Usunięto użytkownika </string>

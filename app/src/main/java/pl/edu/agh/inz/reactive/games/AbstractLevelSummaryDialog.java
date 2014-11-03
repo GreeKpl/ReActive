@@ -3,17 +3,14 @@ package pl.edu.agh.inz.reactive.games;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import pl.edu.agh.inz.reactive.MainMenuActivity;
-import pl.edu.agh.inz.reactive.R;
 
 /**
  * Created by alek on 29.09.14.

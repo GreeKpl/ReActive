@@ -30,10 +30,6 @@ public class AdminActivity extends Activity implements OnClickListener {
 	private Intent target;
 	private boolean newfl = true;
 
-    public static final String DEFAULT_USER_LOGIN = "Gość";
-    public static final String DEFAULT_USER_NAME = "Profil";
-    public static final String DEFAULT_USER_SURNAME = "domyślny";
-	
 	private DatabaseManager db;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +92,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 		db = new DatabaseManager(this);
         db.open();
 		if (db.getAllUsersCollection().isEmpty()) {
-			User guest = new User(DEFAULT_USER_LOGIN, DEFAULT_USER_NAME, DEFAULT_USER_SURNAME);
+			User guest = new User(getString(R.string.default_user_login), getString(R.string.default_user_name), getString(R.string.default_user_surname));
 			db.insertUser(guest);
 		}
 		for (User u: db.getAllUsersCollection()) {
@@ -124,7 +120,6 @@ public class AdminActivity extends Activity implements OnClickListener {
 	public void addUser(View view) {
 		
 		if ((loginUser.length() != 0) && (nameUser.length() != 0) && (surnameUser.length() != 0)) {
-            System.out.println("USER: " + loginUser.getText());
             if (db.getUser(loginUser.getText().toString()) == null) {
                 User user = new User();
                 user.setLogin(loginUser.getText().toString());

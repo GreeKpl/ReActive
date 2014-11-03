@@ -14,6 +14,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import static pl.edu.agh.inz.reactive.R.string;
+
 public class DatabaseManager {
     private static final String DEBUG_TAG = "DatabaseManager";
 
@@ -196,13 +198,11 @@ public class DatabaseManager {
         String where = KEY + " = '" + ACTIVE_USER + "'";
         Cursor cursor = db.query(DB_GLOBALS_TABLE, columns, where, null, null, null, null);
 
-        String login = AdminActivity.DEFAULT_USER_LOGIN;
+        String login = context.getString(R.string.default_user_login);
         if (cursor.moveToFirst()) {
             login = cursor.getString(0);
         }
         cursor.close();
-
-        System.out.println(login);
         return getUser(login);
     }
 
@@ -215,10 +215,10 @@ public class DatabaseManager {
 
     public void setupDefaultUser() {
         String[] columns = { LOGIN };
-        String select = LOGIN + " = '" + AdminActivity.DEFAULT_USER_LOGIN + "'";
+        String select = LOGIN + " = '" + context.getString(R.string.default_user_login) + "'";
         Cursor cursor = db.query(DB_USERS_TABLE, columns, select, null, null, null, null);
         if (!cursor.moveToFirst()) {
-            insertUser(new User(AdminActivity.DEFAULT_USER_LOGIN, AdminActivity.DEFAULT_USER_NAME, AdminActivity.DEFAULT_USER_SURNAME));
+            insertUser(new User(context.getString(R.string.default_user_login), context.getString(R.string.default_user_name), context.getString(R.string.default_user_surname)));
         }
         cursor.close();
     }
@@ -304,13 +304,22 @@ public class DatabaseManager {
 
         while (cursor.moveToNext()) {
             achievements.put(cursor.getLong(0)/(24*60*60*1000) - minDate, cursor.getInt(1));
-            System.out.println("+++++ " + minDate + " " + (cursor.getLong(0)/(24*60*60*1000) - minDate));
+//            System.out.println("+++++ " + minDate + " " + (cursor.getLong(0)/(24*60*60*1000) - minDate));
         }
         cursor.close();
 
 
         return achievements;
 
+    }
+
+    public void insertLevelResult(String login, int game, int level, int points) {
+        ContentValues values = new ContentValues();
+        values.put(LOGIN, login);
+        values.put(GAME, game);
+        values.put(LEVEL, level);
+        values.put(POINTS, points);
+        db.insert(DB_LEVELS_TABLE, null, values);
     }
 
     public void updateLevelResult(String login, int game, int level, int points) {
@@ -323,24 +332,27 @@ public class DatabaseManager {
     }
 
     public void saveLevelResult(String login, int game, int level, int points) {
-        String[] columns = {POINTS};
-        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
+//        String[] columns = {POINTS};
+//        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
+//
+//        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
+//
+//        if (cursor.moveToFirst()) {
+//            if (cursor.getInt(0) < points) {
+//                updateLevelResult(login, game, level, points);
+//            }
+//        } else {
+//            insertLevelResult(login, game, level, points);
+//        }
+//        cursor.close();
 
-        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            if (cursor.getInt(0) < points) {
-                updateLevelResult(login, game, level, points);
-            }
-        } else {
-            updateLevelResult(login, game, level, points);
-        }
-        cursor.close();
+        insertLevelResult(login, game, level, points);
     }
 
     public void insertDateResult(String login, int game, long date, int points) {
+        System.out.println("insertDataResult("+login+", "+game+", "+date+", "+points+")");
         ContentValues values = new ContentValues();
-        values.put(LOGIN, login);
+        values.put(LOGIN, login.toString());
         values.put(GAME, game);
         values.put(DATE, date);
         values.put(POINTS, points);
@@ -354,23 +366,24 @@ public class DatabaseManager {
     }
 
     public void saveDateResult(String login, int game, long date, int points) {
+        long day = date / (1000*60*60*24);
         String[] columns = {POINTS};
-        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +date;
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +day;
 
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             if (cursor.getInt(0) < points) {
-                deleteDateResult(login, game, date);
+                deleteDateResult(login, game, day);
             }
         }
         cursor.close();
-        insertDateResult(login, game, date, points);
+        insertDateResult(login, game, day, points);
     }
 
     public boolean saveResult(String login, int game, long date, int level, int points) {
 
-        saveLevelResult(login, game, level, points);
+//        saveLevelResult(login, game, level, points);
         saveDateResult(login, game, date, points);
         return true;
     }
@@ -378,9 +391,10 @@ public class DatabaseManager {
     public void printUsersTable() {
         String[] columns = {LOGIN, NAME, SURNAME};
         Cursor cursor = db.query(DB_USERS_TABLE, columns, null, null, null, null, null);
+        System.out.println();
         System.out.println("START PRINT USERS TABLE");
         while (cursor.moveToNext()) {
-            System.out.println(cursor.getString(0) + cursor.getString(1) + cursor.getString(2));
+            System.out.println(cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2));
         }
         cursor.close();
         System.out.println("END PRINT USERS TABLE");
@@ -389,27 +403,22 @@ public class DatabaseManager {
     public void printLevelsTable() {
         String[] columns = {LOGIN, GAME, LEVEL, POINTS};
         Cursor cursor = db.query(DB_LEVELS_TABLE, columns, null, null, null, null, null);
+        System.out.println();
         System.out.println("START PRINT LEVELS TABLE");
         while (cursor.moveToNext()) {
-            System.out.println(cursor.getString(0) + cursor.getInt(1) + cursor.getInt(2) + cursor.getInt(3));
+            System.out.println(cursor.getString(0) + " " + cursor.getInt(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3));
         }
         cursor.close();
         System.out.println("END PRINT LEVELS TABLE");
     }
 
     public void printResultsTable() {
-        /*
-        DB_RESULTS_TABLE +" ("+
-                    LOGIN + " TEXT,"+
-                    GAME + " int," +
-                    DATE + " long," +
-                    POINTS +" int, PRIMARY KEY (" + LOGIN + ", " + GAME + ", " + DATE + "));";
-         */
         String[] columns = {LOGIN, GAME, DATE, POINTS};
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, null, null, null, null, null);
+        System.out.println();
         System.out.println("START PRINT RESULTS TABLE");
         while (cursor.moveToNext()) {
-            System.out.println(cursor.getString(0) + cursor.getInt(1) + cursor.getLong(2) + cursor.getInt(3));
+            System.out.println(cursor.getString(0) + " " + cursor.getInt(1) + " " + cursor.getLong(2) + " " + cursor.getInt(3));
         }
         cursor.close();
         System.out.println("END PRINT RESULTS TABLE");
