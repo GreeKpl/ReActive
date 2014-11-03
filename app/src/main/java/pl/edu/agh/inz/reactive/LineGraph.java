@@ -25,6 +25,11 @@ public class LineGraph {
         User user = db.getActiveUser();
         String labelUser = user.getLogin() + " (" + user.getName() + " " + user.getSurname() + ")";
 
+        //wypisywanie zawartosci tabel
+        db.printUsersTable();
+        db.printLevelsTable();
+        db.printResultsTable();
+
         //Rainbow
         Map<Long, Integer> map1 = db.getAchievements(user.getLogin(), 1);
         Iterator<Map.Entry<Long, Integer>> iterator = map1.entrySet().iterator();
