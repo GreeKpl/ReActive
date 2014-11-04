@@ -19,7 +19,7 @@ import static pl.edu.agh.inz.reactive.R.string;
 public class DatabaseManager {
     private static final String DEBUG_TAG = "DatabaseManager";
 
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
 
     private static final String DB_NAME = "database.db";
 
@@ -55,7 +55,7 @@ public class DatabaseManager {
                     LOGIN+" TEXT,"+
                     GAME+" int,"+
                     LEVEL+" int,"+
-                    POINTS+" int, primary key (" + LOGIN + ", " + GAME + "));";
+                    POINTS+" int, primary key (" + LOGIN + ", " + GAME + ", " + LEVEL + "));";
 
     private static final String DB_CREATE_RESULTS_TABLE =
             "create table "+ DB_RESULTS_TABLE +" ("+
@@ -71,6 +71,7 @@ public class DatabaseManager {
 
     private static final String DB_DROP_TABLE = "drop table if exists ";
     private static final String ACTIVE_USER = "activeUser";
+    public static final int MSEC_PER_DAY = 24 * 60 * 60 * 1000;
 
     private SQLiteDatabase db;
     private Context context;
@@ -278,7 +279,7 @@ public class DatabaseManager {
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, orderBy);
 
         long date = 0;
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             date = cursor.getInt(0);
         }
         cursor.close();
@@ -298,7 +299,7 @@ public class DatabaseManager {
         long minDate = getMinDate(login);
         System.out.println("MIN DATE: "+minDate);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             achievements.put(minDate, cursor.getInt(1));
         }
 
@@ -331,27 +332,22 @@ public class DatabaseManager {
     }
 
     public void saveLevelResult(String login, int game, int level, int points) {
-//        String[] columns = {POINTS};
-//        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
-//
-//        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
-//
-//        if (cursor.moveToFirst()) {
-//            if (cursor.getInt(0) < points) {
-//                updateLevelResult(login, game, level, points);
-//            }
-//        } else {
-//            insertLevelResult(login, game, level, points);
-//        }
-//        cursor.close();
+        String[] columns = { POINTS };
+        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
 
-        insertLevelResult(login, game, level, points);
+        Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
+
+        boolean alreadyExists = cursor.moveToFirst();
+        if (!alreadyExists || cursor.getInt(0) < points) {
+            updateLevelResult(login, game, level, points);
+        }
+        cursor.close();
     }
 
-    public void insertDateResult(String login, int game, long date, int points) {
+    public void updateDateResult(String login, int game, long date, int points) {
         System.out.println("insertDataResult("+login+", "+game+", "+date+", "+points+")");
         ContentValues values = new ContentValues();
-        values.put(LOGIN, login.toString());
+        values.put(LOGIN, login);
         values.put(GAME, game);
         values.put(DATE, date);
         values.put(POINTS, points);
@@ -365,24 +361,23 @@ public class DatabaseManager {
     }
 
     public void saveDateResult(String login, int game, long date, int points) {
-        long day = date / (1000*60*60*24);
+        long day;
+        day = date / (MSEC_PER_DAY);
         String[] columns = {POINTS};
         String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +day;
 
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
-        if (cursor.moveToFirst()) {
-            if (cursor.getInt(0) < points) {
-                deleteDateResult(login, game, day);
-            }
+        boolean alreadyExists = cursor.moveToFirst();
+        if (!alreadyExists || cursor.getInt(0) < points) {
+            updateDateResult(login, game, day, points);
         }
         cursor.close();
-        insertDateResult(login, game, day, points);
     }
 
     public boolean saveResult(String login, int game, long date, int level, int points) {
 
-//        saveLevelResult(login, game, level, points);
+        saveLevelResult(login, game, level, points);
         saveDateResult(login, game, date, points);
         return true;
     }
