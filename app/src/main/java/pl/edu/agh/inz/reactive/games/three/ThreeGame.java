@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameLevel;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
@@ -70,6 +71,15 @@ public class ThreeGame extends AbstractGame {
             return scoreNeeded;
         }
 
+        @Override
+        public String getPreparationText() {
+            return "Klikaj w obrazek u dołu taki jak na górze";
+        }
+
+        @Override
+        public int getPreparationImgResource() {
+            return R.drawable.three_task;
+        }
 
         public static class Builder {
 

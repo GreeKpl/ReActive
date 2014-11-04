@@ -15,8 +15,7 @@ public class GameFinishedSummaryDialog extends AbstractLevelSummaryDialog {
                 .setMessage(getString(R.string.game_finished_summary_dialog_message) + percent + "%")
                 .setNegativeButton(getString(R.string.game_finished_summary_dialog_negative_button), getBackToMenuListener());
 
-        AlertDialog dialog = builder.create();
-        return dialog;
+        return builder.create();
     }
 }
 

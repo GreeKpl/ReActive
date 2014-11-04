@@ -22,7 +22,7 @@ public class RainbowGame extends AbstractGame {
 
     public Level getLevelDescription(int level) {
         if (level > getMaxLevel()) {
-            throw new IllegalArgumentException("level cannot be higher than " + getMaxLevel());
+            return null;
         }
 
         Level[] levels = specification.getLevels();
@@ -98,6 +98,17 @@ public class RainbowGame extends AbstractGame {
 
         public int getScoreNeeded() {
             return scoreNeeded;
+        }
+
+
+        @Override
+        public String getPreparationText() {
+            return "W następnym poziomie klikaj na: ";
+        }
+
+        @Override
+        public int getPreparationImgResource() {
+            return targetImg;
         }
 
         public static class Builder {
