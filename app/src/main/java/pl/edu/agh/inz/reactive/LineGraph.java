@@ -45,7 +45,7 @@ public class LineGraph {
             x1[i] = new Long(entry.getKey().toString());
             y1[i] = new Integer(entry.getValue().toString());
 //            System.out.println("Indeks: " + x1[i] + " wynik: " + y1[i]);
-            series1.add(x1[i], y1[i]);
+            series1.add(x1[i]-db.getMinDate(user.getLogin()), y1[i]);
             i++;
         }
 
@@ -63,7 +63,7 @@ public class LineGraph {
 
             x2[i] = new Long(entry.getKey().toString());
             y2[i] = new Integer(entry.getValue().toString());
-            series2.add(x2[i], y2[i]);
+            series2.add(x2[i]-db.getMinDate(user.getLogin()), y2[i]);
             i++;
         }
 
@@ -119,6 +119,7 @@ public class LineGraph {
 
 
 		Intent intent = ChartFactory.getLineChartIntent(context, dataset, mRenderer, labelUser);
+        db.close();
 		return intent;
 	}
 

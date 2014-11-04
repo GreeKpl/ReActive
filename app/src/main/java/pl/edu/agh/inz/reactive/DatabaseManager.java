@@ -290,9 +290,7 @@ public class DatabaseManager {
         String[] columns = {DATE, POINTS};
         String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game;
         String orderBy = DATE;
-
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, orderBy);
-
         Map<Long, Integer> achievements = new TreeMap<Long, Integer>();
 
         long minDate = getMinDate(login);
@@ -306,19 +304,8 @@ public class DatabaseManager {
             achievements.put(cursor.getLong(0) - minDate, cursor.getInt(1));
         }
         cursor.close();
-
-
         return achievements;
 
-    }
-
-    public void insertLevelResult(String login, int game, int level, int points) {
-        ContentValues values = new ContentValues();
-        values.put(LOGIN, login);
-        values.put(GAME, game);
-        values.put(LEVEL, level);
-        values.put(POINTS, points);
-        db.insert(DB_LEVELS_TABLE, null, values);
     }
 
     public void updateLevelResult(String login, int game, int level, int points) {
@@ -333,7 +320,6 @@ public class DatabaseManager {
     public void saveLevelResult(String login, int game, int level, int points) {
         String[] columns = { POINTS };
         String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + LEVEL + "=" +level;
-
         Cursor cursor = db.query(DB_LEVELS_TABLE, columns, where, null, null, null, null);
 
         boolean alreadyExists = cursor.moveToFirst();
@@ -344,13 +330,12 @@ public class DatabaseManager {
     }
 
     public void updateDateResult(String login, int game, long date, int points) {
-        System.out.println("insertDataResult("+login+", "+game+", "+date+", "+points+")");
         ContentValues values = new ContentValues();
         values.put(LOGIN, login);
         values.put(GAME, game);
         values.put(DATE, date);
         values.put(POINTS, points);
-        db.insert(DB_RESULTS_TABLE, null, values);
+        db.replace(DB_RESULTS_TABLE, null, values);
     }
 
     public void deleteDateResult(String login, int game, long date) {
@@ -360,11 +345,9 @@ public class DatabaseManager {
     }
 
     public void saveDateResult(String login, int game, long date, int points) {
-        long day;
-        day = date / (MSEC_PER_DAY);
+        long day = date / (MSEC_PER_DAY);
         String[] columns = {POINTS};
         String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +day;
-
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
 
         boolean alreadyExists = cursor.moveToFirst();
@@ -375,7 +358,6 @@ public class DatabaseManager {
     }
 
     public boolean saveResult(String login, int game, long date, int level, int points) {
-
         saveLevelResult(login, game, level, points);
         int allPoints = 0;
         for (int prevLevel = 0; prevLevel < level; prevLevel++) {
