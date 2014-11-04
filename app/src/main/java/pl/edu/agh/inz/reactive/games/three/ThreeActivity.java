@@ -107,8 +107,9 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
     @Override
     public void onDestroy() {
         super.onDestroy();
-        timer.shutdownNow();
-        logic.destroy();
+        if (timer != null) {
+            timer.shutdownNow();
+        }
     }
 
 	public void playPositiveSound() {

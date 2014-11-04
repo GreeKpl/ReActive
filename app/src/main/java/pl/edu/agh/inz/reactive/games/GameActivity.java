@@ -42,4 +42,12 @@ public abstract class GameActivity extends Activity {
     public abstract AbstractGame getLogic();
 
     public abstract void createGameLogic();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (getLogic() != null) { // logic can be null if destroyed when being on level selection page
+            getLogic().destroy();
+        }
+    }
 }
