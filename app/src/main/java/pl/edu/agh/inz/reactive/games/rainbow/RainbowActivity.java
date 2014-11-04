@@ -66,7 +66,7 @@ public class RainbowActivity extends GameActivity {
             public void run() {
                 int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
                 new LevelSummaryDialogFactory().create(RainbowActivity.this, scorePercent >= 20,
-                    logic.getLevel() == logic.getMaxLevel(), scorePercent)
+                    logic.getLevelDescription(logic.getLevel() + 1), scorePercent)
                         .show(getFragmentManager(), "level finished");
                 timer.shutdownNow();
             }
@@ -164,7 +164,9 @@ public class RainbowActivity extends GameActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        timer.shutdownNow();
+        if (timer != null) {
+            timer.shutdownNow();
+        }
     }
 
 

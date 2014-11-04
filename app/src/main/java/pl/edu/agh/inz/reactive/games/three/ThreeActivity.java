@@ -70,7 +70,7 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
             public void run() {
                 int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
                 new LevelSummaryDialogFactory().create(ThreeActivity.this, scorePercent >= 20,
-                        logic.getLevel() == logic.getMaxLevel(), scorePercent)
+                        logic.getLevelDescription(logic.getLevel() + 1), scorePercent)
                         .show(getFragmentManager(), "level finished");
                 timer.shutdownNow();
             }

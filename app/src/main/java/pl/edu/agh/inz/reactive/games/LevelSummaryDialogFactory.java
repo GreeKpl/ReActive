@@ -13,12 +13,15 @@ public class LevelSummaryDialogFactory {
 
     }
 
-    public AbstractLevelSummaryDialog create(GameActivity gameActivity, boolean passed, boolean isLast, int percent) {
+    public AbstractLevelSummaryDialog create(GameActivity gameActivity, boolean passed, GameLevel nextLevel, int percent) {
         AbstractLevelSummaryDialog summaryDialog;
-        if (passed && isLast) {
+        if (passed && nextLevel == null) {
             summaryDialog = new GameFinishedSummaryDialog();
         } else if (passed) {
-            summaryDialog = new LevelPassedSummaryDialog();
+            LevelPassedSummaryDialog levelPassedDialog = new LevelPassedSummaryDialog();
+            levelPassedDialog.setNextLevel(nextLevel);
+            summaryDialog = levelPassedDialog;
+
             summaryDialog.startNextLevel(3000);
             MediaPlayer mp = MediaPlayer.create(gameActivity, R.raw.round);
             mp.start();

@@ -13,6 +13,11 @@ import pl.edu.agh.inz.reactive.R;
  * Created by alek on 02.10.14.
  */
 public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
+
+    private TextView instructionField;
+    private LinearLayout images;
+    private GameLevel nextLevel;
+
     @Override
     protected AlertDialog getBuilder(int percent) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -34,15 +39,26 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
             descView.addView(createStar(false));
             descView.addView(createStar(false));
         }
-
         String instruction = getString(R.string.instruction);
         instructionField.setText(instruction);
-        images.addView(createImage());
+
+        if (nextLevel != null && nextLevel.getPreparationText() != null) {
+            instructionField.setText(nextLevel.getPreparationText());
+        }
+        if (nextLevel != null && nextLevel.getPreparationImgResource() != 0) {
+            images.addView(createImage(nextLevel.getPreparationImgResource()));
+        }
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setView(summaryContentsView).setTitle(getString(R.string.level_passed_summary_dialog_message) + " ");
 
         return builder.create();
+    }
+
+
+    public void setNextLevel(GameLevel nextLevel) {
+        this.nextLevel = nextLevel;
     }
 
     private ImageView createStar(boolean activeStar) {
@@ -58,9 +74,9 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         return star;
     }
 
-    private ImageView createImage() {
+    private ImageView createImage(int resource) {
         ImageView image = new ImageView(getActivity());
-        image.setImageResource(R.drawable.lodka);
+        image.setImageResource(resource);
         return image;
     }
 }
