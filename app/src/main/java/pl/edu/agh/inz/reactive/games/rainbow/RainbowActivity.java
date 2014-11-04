@@ -165,7 +165,6 @@ public class RainbowActivity extends GameActivity {
     public void onDestroy() {
         super.onDestroy();
         timer.shutdownNow();
-        logic.destroy();
     }
 
 

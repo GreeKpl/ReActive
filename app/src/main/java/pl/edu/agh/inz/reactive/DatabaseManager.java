@@ -221,7 +221,6 @@ public class DatabaseManager {
         cursor.close();
     }
 
-
     public int getMaxLevel(String login, int game) {
         int maxLevel = 0;
         String[] columns = {LEVEL};
@@ -376,7 +375,11 @@ public class DatabaseManager {
     public boolean saveResult(String login, int game, long date, int level, int points) {
 
         saveLevelResult(login, game, level, points);
-        saveDateResult(login, game, date, points);
+        int allPoints = 0;
+        for (int prevLevel = 0; prevLevel < level; prevLevel++) {
+            allPoints += getPointsFromLevel(login, game, prevLevel);
+        }
+        saveDateResult(login, game, date, allPoints + points);
         return true;
     }
 
