@@ -21,20 +21,23 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         TextView instructionField = (TextView) summaryContentsView.findViewById(R.id.tvInstructionForLevel);
         LinearLayout images = (LinearLayout) summaryContentsView.findViewById(R.id.imagesForLevel);
 
-        descView.addView(createStar());
-
-        if (percent >= 70) {
-            descView.addView(createStar());
+        if (percent < 70) {
+            descView.addView(createStar(true));
+            descView.addView(createStar(false));
+            descView.addView(createStar(false));
+        } else if (percent >= 70) {
+            descView.addView(createStar(true));
+            descView.addView(createStar(true));
+            descView.addView(createStar(false));
+        } else if (percent >= 80) {
+            descView.addView(createStar(true));
+            descView.addView(createStar(false));
+            descView.addView(createStar(false));
         }
-        if (percent >= 80) {
-            descView.addView(createStar());
 
-            String instruction = getString(R.string.instruction);
-            instructionField.setText(instruction);
-
-            images.addView(createImage());
-
-        }
+        String instruction = getString(R.string.instruction);
+        instructionField.setText(instruction);
+        images.addView(createImage());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setView(summaryContentsView).setTitle(getString(R.string.level_passed_summary_dialog_message) + " ");
@@ -42,9 +45,13 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         return builder.create();
     }
 
-    private ImageView createStar() {
+    private ImageView createStar(boolean activeStar) {
         ImageView star = new ImageView(getActivity());
-        star.setImageResource(R.drawable.star);
+        if(activeStar) {
+            star.setImageResource(R.drawable.star);
+        } else {
+            star.setImageResource(R.drawable.empty_star);
+        }
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(5, 0, 5, 0);
         star.setLayoutParams(lp);
