@@ -29,8 +29,6 @@ import pl.edu.agh.inz.reactive.games.three.ThreeActivity;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
 
-    Context ctx;
-    RadioGroup radioGroup;
     String labelUser;
     EditText etPassword;
 

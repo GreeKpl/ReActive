@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     //AdminActivity.java
-    <color name="btnSeeResults">#66ff66</color>
-    <color name="btnLoginUser">#00BFFF</color>
-    <color name="btnAddUser">#7CFC00</color>
-    <color name="btnDeleteUser">#FF0000</color>
+    <color name="btnSeeResults">#990000</color>
+    <color name="btnLoginUser">#888877</color>
+    <color name="btnAddUser">#888899</color>
+    <color name="btnDeleteUser">#999999</color>
     <color name="txtAccept">#00FF00</color>
     <color name="txtWarning">#FF6A53</color>
 
