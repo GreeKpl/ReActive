@@ -29,6 +29,7 @@ public class LineGraph {
         db.printUsersTable();
         db.printLevelsTable();
         db.printResultsTable();
+        System.out.println("Minimalna data: "+db.getMinDate(user.getLogin()));
 
         //Rainbow
         Map<Long, Integer> map1 = db.getAchievements(user.getLogin(), 1);
@@ -36,6 +37,7 @@ public class LineGraph {
         TimeSeries series1 = new TimeSeries("Rainbow   ");
 
         int length1 = map1.size();
+        System.out.println("length1 = "+length1);
         long[] x1 = new long[length1];
         int[] y1 = new int[length1];
         int i = 0;
@@ -44,8 +46,8 @@ public class LineGraph {
 
             x1[i] = new Long(entry.getKey().toString());
             y1[i] = new Integer(entry.getValue().toString());
-//            System.out.println("Indeks: " + x1[i] + " wynik: " + y1[i]);
-            series1.add(x1[i]-db.getMinDate(user.getLogin()), y1[i]);
+            System.out.println("Rainbow Indeks: " + x1[i] + " wynik: " + y1[i]);
+            series1.add(x1[i], y1[i]);
             i++;
         }
 
@@ -55,6 +57,7 @@ public class LineGraph {
         TimeSeries series2 = new TimeSeries("Three   ");
 
         int length2 = map2.size();
+        System.out.println("length2 = "+length2);
         long[] x2 = new long[length2];
         int[] y2 = new int[length2];
         i = 0;
@@ -63,7 +66,8 @@ public class LineGraph {
 
             x2[i] = new Long(entry.getKey().toString());
             y2[i] = new Integer(entry.getValue().toString());
-            series2.add(x2[i]-db.getMinDate(user.getLogin()), y2[i]);
+            System.out.println("Three Indeks: " + x2[i] + " wynik: " + y2[i]);
+            series2.add(x2[i], y2[i]);
             i++;
         }
 

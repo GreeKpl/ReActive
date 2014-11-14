@@ -294,10 +294,9 @@ public class DatabaseManager {
         Map<Long, Integer> achievements = new TreeMap<Long, Integer>();
 
         long minDate = getMinDate(login);
-        System.out.println("MIN DATE: "+minDate);
 
         if (cursor.moveToFirst()) {
-            achievements.put(minDate, cursor.getInt(1));
+            achievements.put(new Long(0), cursor.getInt(1));
         }
 
         while (cursor.moveToNext()) {
@@ -346,6 +345,7 @@ public class DatabaseManager {
 
     public void saveDateResult(String login, int game, long date, int points) {
         long day = date / (MSEC_PER_DAY);
+        System.out.println("DATE: "+date+" DAY: "+day);
         String[] columns = {POINTS};
         String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +day;
         Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);

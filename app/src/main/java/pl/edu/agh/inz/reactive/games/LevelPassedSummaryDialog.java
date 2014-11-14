@@ -14,8 +14,6 @@ import pl.edu.agh.inz.reactive.R;
  */
 public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
 
-    private TextView instructionField;
-    private LinearLayout images;
     private GameLevel nextLevel;
 
     @Override
