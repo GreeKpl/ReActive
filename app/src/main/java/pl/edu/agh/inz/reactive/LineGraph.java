@@ -31,6 +31,27 @@ public class LineGraph {
         db.printResultsTable();
         System.out.println("Minimalna data: "+db.getMinDate(user.getLogin()));
 
+/*
+        //Rainbow time
+        Map<Long, Integer> map1 = db.getAchievements(user.getLogin(), 1);
+        Iterator<Map.Entry<Long, Integer>> iterator = map1.entrySet().iterator();
+        TimeSeries series1 = new TimeSeries("Rainbow   ");
+
+        int length1 = map1.size();
+        System.out.println("length1 = "+length1);
+        long[] x1 = new long[length1];
+        int[] y1 = new int[length1];
+        int i = 0;
+        while(iterator.hasNext()) {
+            Map.Entry entry = iterator.next();
+
+            x1[i] = new Long(entry.getKey().toString());
+            y1[i] = new Integer(entry.getValue().toString());
+            System.out.println("Rainbow Indeks: " + x1[i] + " wynik: " + y1[i]);
+            series1.add(x1[i], y1[i]);
+            i++;
+        }
+*/
         //Rainbow
         Map<Long, Integer> map1 = db.getAchievements(user.getLogin(), 1);
         Iterator<Map.Entry<Long, Integer>> iterator = map1.entrySet().iterator();
