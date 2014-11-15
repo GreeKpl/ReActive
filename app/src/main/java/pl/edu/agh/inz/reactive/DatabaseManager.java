@@ -2,7 +2,6 @@ package pl.edu.agh.inz.reactive;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -294,10 +293,6 @@ public class DatabaseManager {
         Map<Long, Integer> achievements = new TreeMap<Long, Integer>();
 
         long minDate = getMinDate(login);
-
-        if (cursor.moveToFirst()) {
-            achievements.put(new Long(0), cursor.getInt(1));
-        }
 
         while (cursor.moveToNext()) {
             achievements.put(cursor.getLong(0) - minDate, cursor.getInt(1));

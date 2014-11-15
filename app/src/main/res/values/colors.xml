@@ -17,5 +17,7 @@
     <color name="graph_axes_labels">#FFFF00</color>
     <color name="graph_axes">#BBBBBB</color>
     <color name="graph_first_chart">#0000FF</color>
-    <color name="graph_second_chart">#00FF00</color>
+    <color name="graph_second_chart">#0088AA</color>
+    <color name="graph_third_chart">#00FF00</color>
+    <color name="graph_fourth_chart">#228822</color>
 </resources>
