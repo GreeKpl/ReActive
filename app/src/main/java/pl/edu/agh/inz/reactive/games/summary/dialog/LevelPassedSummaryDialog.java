@@ -25,19 +25,22 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         TextView instructionField = (TextView) summaryContentsView.findViewById(R.id.tvInstructionForLevel);
         LinearLayout images = (LinearLayout) summaryContentsView.findViewById(R.id.imagesForLevel);
 
-        if (percent < 70) {
+
+        if (percent >= AbstractLevelSummaryDialog.PERCENT_FOR_THREE_STARS) {
             descView.addView(createStar(true));
             descView.addView(createStar(false));
             descView.addView(createStar(false));
-        } else if (percent >= 70) {
+        } else if (percent >= AbstractLevelSummaryDialog.PERCENT_FOR_TWO_STARS) {
             descView.addView(createStar(true));
             descView.addView(createStar(true));
             descView.addView(createStar(false));
-        } else if (percent >= 80) {
+        } else {
             descView.addView(createStar(true));
             descView.addView(createStar(false));
             descView.addView(createStar(false));
         }
+
+
         String instruction = getString(R.string.instruction);
         instructionField.setText(instruction);
 

@@ -3,6 +3,7 @@ package pl.edu.agh.inz.reactive.games.finish.criteria;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.GameLevel;
+import pl.edu.agh.inz.reactive.games.summary.dialog.AbstractLevelSummaryDialog;
 import pl.edu.agh.inz.reactive.games.summary.dialog.LevelSummaryDialogFactory;
 
 /**
@@ -23,11 +24,11 @@ public abstract class DefaultFinishListener implements FinishListener {
     @Override
     public void onFinish() {
         int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
-        new LevelSummaryDialogFactory().create(activity, scorePercent >= 50,
+        new LevelSummaryDialogFactory().create(activity, scorePercent >= AbstractLevelSummaryDialog.PERCENT_TO_WIN,
                 logic.getLevelDescription(logic.getLevel() + 1), scorePercent)
                 .show(activity.getFragmentManager(), "level finished");
-        onFinishAddition();
+        finishAddition();
     }
 
-    public abstract void onFinishAddition();
+    public abstract void finishAddition();
 }

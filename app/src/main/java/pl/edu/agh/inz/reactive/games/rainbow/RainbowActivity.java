@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.finish.criteria.DefaultFinishListener;
 import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
 import pl.edu.agh.inz.reactive.games.rainbow.images.OtherImageView;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
@@ -56,10 +57,9 @@ public class RainbowActivity extends GameActivity {
 
         timer = new ScheduledThreadPoolExecutor(1);
 
-        logic.setFinishListener(new FinishListener() {
+        logic.setFinishListener(new DefaultFinishListener(logic, level, this) {
             @Override
-            public void onFinish() {
-
+            public void finishAddition() {
                 timer.shutdownNow();
             }
         });
@@ -162,12 +162,4 @@ public class RainbowActivity extends GameActivity {
             timer.shutdownNow();
         }
     }
-
-
-    public void levelNotification(int levelNo, int score) {
-		Toast toast = Toast.makeText(this, "Runda " + levelNo + "\n" +
-            "Wynik: "+score, Toast.LENGTH_SHORT);
-        toast.show();
-
-	}
 }
