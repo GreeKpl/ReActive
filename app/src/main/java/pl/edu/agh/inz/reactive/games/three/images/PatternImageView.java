@@ -1,4 +1,4 @@
-package pl.edu.agh.inz.reactive.games.three;
+package pl.edu.agh.inz.reactive.games.three.images;
 
 import android.content.Context;
 import android.util.AttributeSet;

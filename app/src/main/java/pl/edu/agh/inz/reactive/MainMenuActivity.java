@@ -55,18 +55,16 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
         final HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
-        ImageView seaGame    = createGameImage(RainbowActivity.class, R.drawable.promo_rainbow_2);
-        ImageView three1Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
-        ImageView three2Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
-        ImageView three3Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
-        ImageView three4Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
-        ImageView three5Game = createGameImage(ThreeActivity.class, R.drawable.gra2);
+        ImageView seaGame    = createGameImage(RainbowActivity.class, true, R.drawable.promo_rainbow_time);
+        ImageView three1Game = createGameImage(RainbowActivity.class, false, R.drawable.promo_rainbow);
+        ImageView three2Game = createGameImage(ThreeActivity.class, true, R.drawable.promo_three_time);
+        ImageView three3Game = createGameImage(ThreeActivity.class, false, R.drawable.promo_three);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
 
-        List<ImageView> games = Arrays.asList(seaGame, three1Game, three2Game, three3Game, three4Game, three5Game);
+        List<ImageView> games = Arrays.asList(seaGame, three1Game, three2Game, three3Game);
 
         ImageArrayAdapter adapter = new ImageArrayAdapter(this, android.R.layout.simple_list_item_1, games);
 
@@ -80,6 +78,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
                 Class<? extends GameActivity> game = clickedGameImage.getGameClass();
 
                 Intent intent = new Intent(MainMenuActivity.this, game);
+                intent.putExtra("withTimer", clickedGameImage.isWithTime());
                 db.close();
                 MainMenuActivity.this.startActivity(intent);
             }
@@ -94,8 +93,8 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         labelTextView.setText(labelUser);
     }
 
-    private GameDescriptorImageView createGameImage(Class<? extends GameActivity> gameClass, int imgSrc) {
-        GameDescriptorImageView game = new GameDescriptorImageView(this, gameClass);
+    private GameDescriptorImageView createGameImage(Class<? extends GameActivity> gameClass, boolean withTime, int imgSrc) {
+        GameDescriptorImageView game = new GameDescriptorImageView(this, gameClass, withTime);
         game.setImageResource(imgSrc);
         game.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
 

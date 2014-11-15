@@ -6,6 +6,9 @@ import java.util.Date;
 
 import pl.edu.agh.inz.reactive.DatabaseManager;
 import pl.edu.agh.inz.reactive.User;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteria;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteriaFactory;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
 
 /**
  * Created by jacek on 21.08.14.
@@ -13,23 +16,52 @@ import pl.edu.agh.inz.reactive.User;
 public abstract class AbstractGame {
 
     public static final int RAINBOW_GAME = 1;
-    public static final int THREE_GAME = 2;
+    public static final int RAINBOW_GAME_TRAINING = 2;
+    public static final int THREE_GAME = 3;
+    public static final int THREE_GAME_TRAINING = 4;
+
 
     protected final DatabaseManager db;
     private final int gameId;
+    private FinishCriteriaFactory factory;
 
     protected User user;
     int level;
 
-    int maxLevel = 40;
     int score;
+    private FinishCriteria finishCriteria;
 
-    public AbstractGame(int gameId, Context context) {
+    public AbstractGame(int gameId, FinishCriteriaFactory factory, Context context) {
         this.gameId = gameId;
+        this.factory = factory;
 
         db = new DatabaseManager(context);
         db.open();
         this.user = db.getActiveUser();
+    }
+
+    public void startLevel(int levelId) {
+        setLevel(levelId);
+
+        if (finishCriteria != null) {
+            finishCriteria.destroy();
+        }
+        finishCriteria = factory.create(getSpecification().getLevels()[levelId]);
+
+        setScore(0);
+    }
+
+    public void setFinishListener(FinishListener listener) {
+        finishCriteria.setOnFinishListener(listener);
+    }
+
+    public GameLevel getLevelDescription(int level) {
+        if (level > getMaxLevel()) {
+            return null;
+        }
+
+        GameLevel[] levels = getSpecification().getLevels();
+        return levels[level];
     }
 
     public Integer[] getLevelsArray() {
@@ -40,6 +72,8 @@ public abstract class AbstractGame {
         }
         return ints;
     }
+
+    public abstract GameSpecification getSpecification();
 
     private User getUser() {
         return user;
@@ -62,11 +96,7 @@ public abstract class AbstractGame {
     }
 
     public int getMaxLevel() {
-        return maxLevel;
-    }
-
-    public void setMaxLevel(int maxLevel) {
-        this.maxLevel = maxLevel;
+        return getSpecification().getMaxLevel();
     }
 
     public int getScore() {
@@ -80,9 +110,14 @@ public abstract class AbstractGame {
         }
 
         this.score = score;
+
+        finishCriteria.onScoreChange(score);
     }
 
     public void destroy() {
         db.close();
+        if (finishCriteria != null) {
+            finishCriteria.destroy();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package pl.edu.agh.inz.reactive.games.three;
+package pl.edu.agh.inz.reactive.games.three.images;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -34,4 +34,4 @@ public class PickableImageView extends ImageView {
     }
 }
 
-// TODO! PickableImageView and pl.edu.agh.inz.reactive.games.three.PatternImageView should have abstract superclass
+// TODO! PickableImageView and pl.edu.agh.inz.reactive.games.three.images.PatternImageView should have abstract superclass

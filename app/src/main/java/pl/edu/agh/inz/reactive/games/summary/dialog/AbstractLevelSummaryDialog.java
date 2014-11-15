@@ -1,4 +1,4 @@
-package pl.edu.agh.inz.reactive.games;
+package pl.edu.agh.inz.reactive.games.summary.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,11 +11,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import pl.edu.agh.inz.reactive.MainMenuActivity;
+import pl.edu.agh.inz.reactive.games.GameActivity;
 
 /**
  * Created by alek on 29.09.14.
  */
 public abstract class AbstractLevelSummaryDialog extends DialogFragment {
+
+    public static final int PERCENT_TO_WIN= 50;
+    public static final int PERCENT_FOR_TWO_STARS = 70;
+    public static final int PERCENT_FOR_THREE_STARS = 90;
 
     private GameActivity gameActivity;
     private int percent;

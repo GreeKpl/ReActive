@@ -1,17 +1,18 @@
 package pl.edu.agh.inz.reactive.games.three;
 
 import android.content.Context;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameLevel;
-import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteriaFactory;
+import pl.edu.agh.inz.reactive.games.GameSpecification;
+import pl.edu.agh.inz.reactive.games.three.images.PatternImageView;
+import pl.edu.agh.inz.reactive.games.three.images.PickableImageView;
 
 /**
  * Created by alek on 21.10.14.
@@ -20,19 +21,12 @@ public class ThreeGame extends AbstractGame {
 
     private ThreeSpecification specification = new ThreeSpecification();
 
-    public ThreeGame(Context context) {
-        super(THREE_GAME, context);
-
-        setMaxLevel(specification.getLevels().length - 1);
+    public ThreeGame(Context context, FinishCriteriaFactory factory) {
+        super(factory.isTimeBased() ? THREE_GAME_TRAINING : THREE_GAME_TRAINING, factory, context);
     }
 
     public Level getLevelDescription(int level) {
-        if (level > getMaxLevel()) {
-            throw new IllegalArgumentException("level cannot be higher than " + getMaxLevel());
-        }
-
-        Level[] levels = specification.getLevels();
-        return levels[level ];
+        return (Level) super.getLevelDescription(level);
     }
 
     public void onClick(PickableImageView v, PatternImageView pattern) {
@@ -44,11 +38,17 @@ public class ThreeGame extends AbstractGame {
             System.out.println("Nietrafione!!!");
         }
 
-        System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), THREE_GAME, getLevel()));
+        System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), THREE_GAME_TRAINING, getLevel()));
+    }
+
+    @Override
+    public GameSpecification getSpecification() {
+        return specification;
     }
 
     public static class Level implements GameLevel {
 
+        private final int seconds;
         private final int shownAtOnce;
         private final int scoreNeeded;
         private final List<Integer> images;
@@ -57,6 +57,7 @@ public class ThreeGame extends AbstractGame {
             scoreNeeded = builder.scoreNeeded;
             images = builder.images;
             shownAtOnce = builder.shownAtOnce;
+            seconds = builder.seconds;
         }
 
         public List<Integer> getImages() {
@@ -69,6 +70,11 @@ public class ThreeGame extends AbstractGame {
 
         public int getScoreNeeded() {
             return scoreNeeded;
+        }
+
+        @Override
+        public int getSeconds() {
+            return seconds;
         }
 
         @Override
@@ -85,12 +91,14 @@ public class ThreeGame extends AbstractGame {
 
             private final int shownAtOnce;
             private final int scoreNeeded;
+            private final int seconds;
 
             private List<Integer> images;
 
-            public Builder(int scoreNeeded, int shownAtOnce) {
+            public Builder(int scoreNeeded, int shownAtOnce, int seconds) {
                 this.scoreNeeded = scoreNeeded;
                 this.shownAtOnce = shownAtOnce;
+                this.seconds = seconds;
             }
 
             public Builder setImages(Integer[] images) {

@@ -1,6 +1,5 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
-import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,16 +8,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
-import pl.edu.agh.inz.reactive.games.LevelSummaryDialogFactory;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
 import pl.edu.agh.inz.reactive.games.rainbow.images.OtherImageView;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
@@ -41,15 +37,14 @@ public class RainbowActivity extends GameActivity {
 
     @Override
     public void createGameLogic() {
-        logic = new RainbowGame(this);
+        logic = new RainbowGame(this, factory);
     }
 
     @Override
     public void startLevel(int levelId) {
         setContentView(R.layout.activity_sea);
 
-        logic.setLevel(levelId);
-        logic.setScore(0);
+        logic.startLevel(levelId);
 
         level = logic.getLevelDescription(levelId);
 
@@ -61,16 +56,13 @@ public class RainbowActivity extends GameActivity {
 
         timer = new ScheduledThreadPoolExecutor(1);
 
-        timer.schedule(new Runnable() {
+        logic.setFinishListener(new FinishListener() {
             @Override
-            public void run() {
-                int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
-                new LevelSummaryDialogFactory().create(RainbowActivity.this, scorePercent >= 20,
-                    logic.getLevelDescription(logic.getLevel() + 1), scorePercent)
-                        .show(getFragmentManager(), "level finished");
+            public void onFinish() {
+
                 timer.shutdownNow();
             }
-        }, 5, TimeUnit.SECONDS);
+        });
 
         updateGameState();
     }
@@ -93,8 +85,10 @@ public class RainbowActivity extends GameActivity {
                         }
                     });
                 }
-            }, level.getSeconds(), TimeUnit.SECONDS);
-        } catch (Exception e) {} // TODO
+            }, level.getSecondsUntilMove(), TimeUnit.SECONDS);
+        } catch (Exception e) {
+            System.out.println("THATS VERY BAD!!!");
+        } // TODO
 
         return targetObject;
     }

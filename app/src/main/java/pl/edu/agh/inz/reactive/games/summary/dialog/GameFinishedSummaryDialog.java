@@ -1,4 +1,4 @@
-package pl.edu.agh.inz.reactive.games;
+package pl.edu.agh.inz.reactive.games.summary.dialog;
 
 import android.app.AlertDialog;
 

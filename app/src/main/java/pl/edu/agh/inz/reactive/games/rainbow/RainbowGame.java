@@ -5,6 +5,8 @@ import android.view.View;
 
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameLevel;
+import pl.edu.agh.inz.reactive.games.GameSpecification;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteriaFactory;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
 /**
@@ -14,19 +16,8 @@ public class RainbowGame extends AbstractGame {
 
     private RainbowSpecification specification = new RainbowSpecification();
 
-    public RainbowGame(Context context) {
-        super(RAINBOW_GAME, context);
-
-        setMaxLevel(specification.getLevels().length - 1);
-    }
-
-    public Level getLevelDescription(int level) {
-        if (level > getMaxLevel()) {
-            return null;
-        }
-
-        Level[] levels = specification.getLevels();
-        return levels[level];
+    public RainbowGame(Context context, FinishCriteriaFactory factory) {
+        super(factory.isTimeBased() ? RAINBOW_GAME: RAINBOW_GAME_TRAINING, factory, context);
     }
 
     public void onObjectClick(View v) {
@@ -36,6 +27,16 @@ public class RainbowGame extends AbstractGame {
             setScore(getScore() - 1);
         }
         System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel()));
+    }
+
+    @Override
+    public Level getLevelDescription(int level) {
+        return (Level) super.getLevelDescription(level);
+    }
+
+    @Override
+    public GameSpecification getSpecification() {
+        return specification;
     }
 
     public static class Level implements GameLevel {
@@ -50,6 +51,7 @@ public class RainbowGame extends AbstractGame {
         private final int otherImg;
         private final int backgroundImg;
         private final int scoreNeeded;
+        private final int secondsUntilMove;
 
         public Level(Builder levelBuilder) {
             this.scoreNeeded = levelBuilder.scoreNeeded;
@@ -57,6 +59,7 @@ public class RainbowGame extends AbstractGame {
 
             this.targets = levelBuilder.targets;
             this.targetSize = levelBuilder.targetSize;
+            this.secondsUntilMove = levelBuilder.secondsUntilMove;
             this.otherObjects = levelBuilder.otherObjects;
             this.otherObjectsSize = levelBuilder.otherObjectsSize;
             this.targetImg = levelBuilder.targetImg;
@@ -71,6 +74,8 @@ public class RainbowGame extends AbstractGame {
         public double getTargetSize() {
             return targetSize;
         }
+
+        public int getSecondsUntilMove() { return secondsUntilMove; }
 
         public int getOtherObjects() {
             return otherObjects;
@@ -100,7 +105,6 @@ public class RainbowGame extends AbstractGame {
             return scoreNeeded;
         }
 
-
         @Override
         public String getPreparationText() {
             return "W następnym poziomie klikaj na: ";
@@ -122,16 +126,17 @@ public class RainbowGame extends AbstractGame {
             private int scoreNeeded;
             private int seconds;
             private int backgroundImg;
+            private int secondsUntilMove;
 
             public Builder(int scoreNeeded, int seconds) {
                 this.scoreNeeded = scoreNeeded;
                 this.seconds = seconds;
             }
 
-            public Builder targets(int targets, double targetSize, int targetImg) {
-
+            public Builder targets(int targets, double targetSize, int secondsUntilMove, int targetImg) {
                 this.targets = targets;
                 this.targetSize = targetSize;
+                this.secondsUntilMove = secondsUntilMove;
                 this.targetImg = targetImg;
                 return this;
             }

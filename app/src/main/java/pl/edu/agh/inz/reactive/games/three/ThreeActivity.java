@@ -2,22 +2,21 @@ package pl.edu.agh.inz.reactive.games.three;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
-import pl.edu.agh.inz.reactive.games.LevelSummaryDialogFactory;
+import pl.edu.agh.inz.reactive.games.summary.dialog.LevelSummaryDialogFactory;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
+import pl.edu.agh.inz.reactive.games.three.images.PatternImageView;
+import pl.edu.agh.inz.reactive.games.three.images.PickableImageView;
 
 public class ThreeActivity extends GameActivity /* implements OnClickListener,*/ {
 
@@ -38,7 +37,7 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
 
     @Override
     public void createGameLogic() {
-        logic = new ThreeGame(this);
+        logic = new ThreeGame(this, factory);
     }
 
     @Override
@@ -47,8 +46,7 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
         mp = MediaPlayer.create(this, R.raw.round);
         setContentView(R.layout.activity_three);
 
-        logic.setLevel(levelId);
-        logic.setScore(0);
+        logic.startLevel(levelId);
 
         level = logic.getLevelDescription(levelId);
 
@@ -65,16 +63,15 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
 
         timer = new ScheduledThreadPoolExecutor(1);
 
-        timer.schedule(new Runnable() {
+        logic.setFinishListener(new FinishListener() {
             @Override
-            public void run() {
+            public void onFinish() {
                 int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
                 new LevelSummaryDialogFactory().create(ThreeActivity.this, scorePercent >= 20,
-                        logic.getLevelDescription(logic.getLevel() + 1), scorePercent)
-                        .show(getFragmentManager(), "level finished");
-                timer.shutdownNow();
+                    logic.getLevelDescription(logic.getLevel() + 1), scorePercent)
+                    .show(getFragmentManager(), "level finished");
             }
-        }, 10, TimeUnit.SECONDS);
+        });
 
         updateGameState();
     }

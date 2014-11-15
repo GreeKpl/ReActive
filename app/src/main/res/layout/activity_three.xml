@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <pl.edu.agh.inz.reactive.games.three.PatternImageView
+    <pl.edu.agh.inz.reactive.games.three.images.PatternImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/patternImageView"

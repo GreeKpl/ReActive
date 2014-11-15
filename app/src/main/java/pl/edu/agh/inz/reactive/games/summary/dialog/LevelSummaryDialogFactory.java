@@ -1,17 +1,16 @@
-package pl.edu.agh.inz.reactive.games;
+package pl.edu.agh.inz.reactive.games.summary.dialog;
 
 import android.media.MediaPlayer;
 
 import pl.edu.agh.inz.reactive.R;
+import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.GameLevel;
 
 /**
  * Created by alek on 29.09.14.
  */
 public class LevelSummaryDialogFactory {
 
-    public LevelSummaryDialogFactory() {
-
-    }
 
     public AbstractLevelSummaryDialog create(GameActivity gameActivity, boolean passed, GameLevel nextLevel, int percent) {
         AbstractLevelSummaryDialog summaryDialog;

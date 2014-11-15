@@ -9,12 +9,26 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import pl.edu.agh.inz.reactive.R;
+import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteriaFactory;
 
 public abstract class GameActivity extends Activity {
+
+    protected FinishCriteriaFactory factory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        System.out.println("BUNDLE SAVEDINSTNACE: " + savedInstanceState);
+        System.out.println(getIntent().getExtras() + " " + getIntent().getExtras());
+        boolean withTimer = getIntent().getExtras().getBoolean("withTimer");
+        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
+        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
+        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
+        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
+
+        factory = new FinishCriteriaFactory(withTimer);
+
         createGameLogic();
 
         showLevelSelection();
@@ -42,6 +56,7 @@ public abstract class GameActivity extends Activity {
     public abstract AbstractGame getLogic();
 
     public abstract void createGameLogic();
+
 
     @Override
     protected void onDestroy() {

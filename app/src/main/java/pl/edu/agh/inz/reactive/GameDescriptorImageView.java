@@ -13,14 +13,16 @@ import pl.edu.agh.inz.reactive.games.GameActivity;
 public class GameDescriptorImageView extends ImageView {
 
     private Class<? extends GameActivity> gameClass;
+    private boolean withTime;
 
     public GameDescriptorImageView(Context context) {
         super(context);
     }
 
-    public GameDescriptorImageView(Context context, Class<? extends GameActivity> gameClass) {
+    public GameDescriptorImageView(Context context, Class<? extends GameActivity> gameClass, boolean withTime) {
         super(context);
         this.gameClass = gameClass;
+        this.withTime = withTime;
     }
 
     public void setGameClass(Class<? extends GameActivity> gameClass) {
@@ -29,6 +31,10 @@ public class GameDescriptorImageView extends ImageView {
 
     public Class<? extends GameActivity> getGameClass() {
         return gameClass;
+    }
+
+    public boolean isWithTime() {
+        return withTime;
     }
 }
 

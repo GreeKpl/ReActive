@@ -1,4 +1,4 @@
-package pl.edu.agh.inz.reactive.games;
+package pl.edu.agh.inz.reactive.games.summary.dialog;
 
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pl.edu.agh.inz.reactive.R;
+import pl.edu.agh.inz.reactive.games.GameLevel;
 
 /**
  * Created by alek on 02.10.14.
