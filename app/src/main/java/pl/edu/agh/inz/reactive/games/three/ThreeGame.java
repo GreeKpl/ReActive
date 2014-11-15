@@ -22,7 +22,7 @@ public class ThreeGame extends AbstractGame {
     private ThreeSpecification specification = new ThreeSpecification();
 
     public ThreeGame(Context context, FinishCriteriaFactory factory) {
-        super(factory.isTimeBased() ? THREE_GAME_TRAINING : THREE_GAME_TRAINING, factory, context);
+        super(factory.isTimeBased() ? THREE_GAME : THREE_GAME_TRAINING, factory, context);
     }
 
     public Level getLevelDescription(int level) {

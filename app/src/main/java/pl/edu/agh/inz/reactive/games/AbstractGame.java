@@ -106,8 +106,9 @@ public abstract class AbstractGame {
     public void setScore(int score) {
 
         if (score > db.getPointsFromLevel(user.getLogin(), gameId, getLevel())) {
-            db.saveResult(user.getLogin(), gameId, new Date().getTime(), getLevel(), score);
+            db.saveLevelResult(user.getLogin(), gameId, getLevel(), score);
         }
+        db.prepareToSaveDateResult(user.getLogin(), gameId, new Date().getTime(), getLevel(), score);
 
         this.score = score;
 

@@ -357,8 +357,7 @@ public class DatabaseManager {
         cursor.close();
     }
 
-    public boolean saveResult(String login, int game, long date, int level, int points) {
-        saveLevelResult(login, game, level, points);
+    public boolean prepareToSaveDateResult(String login, int game, long date, int level, int points) {
         int allPoints = 0;
         for (int prevLevel = 0; prevLevel < level; prevLevel++) {
             allPoints += getPointsFromLevel(login, game, prevLevel);
