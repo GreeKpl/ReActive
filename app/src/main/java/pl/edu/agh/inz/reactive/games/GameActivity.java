@@ -19,13 +19,7 @@ public abstract class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        System.out.println("BUNDLE SAVEDINSTNACE: " + savedInstanceState);
-        System.out.println(getIntent().getExtras() + " " + getIntent().getExtras());
         boolean withTimer = getIntent().getExtras().getBoolean("withTimer");
-        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
-        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
-        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
-        System.out.println("ODPOWIEDZ BRZMI: " + withTimer);
 
         factory = new FinishCriteriaFactory(withTimer);
 

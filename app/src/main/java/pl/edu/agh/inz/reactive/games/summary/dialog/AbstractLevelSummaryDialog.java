@@ -22,7 +22,7 @@ public abstract class AbstractLevelSummaryDialog extends DialogFragment {
     public static final int PERCENT_FOR_TWO_STARS = 70;
     public static final int PERCENT_FOR_THREE_STARS = 90;
 
-    public static final int SUMMARY_DIALOG_TIME_MSEC = 5000;
+    public static final int SUMMARY_DIALOG_TIME_MSEC = 4000;
 
     private GameActivity gameActivity;
     private int percent;
