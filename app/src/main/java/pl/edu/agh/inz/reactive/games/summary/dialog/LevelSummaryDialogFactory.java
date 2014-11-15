@@ -21,12 +21,12 @@ public class LevelSummaryDialogFactory {
             levelPassedDialog.setNextLevel(nextLevel);
             summaryDialog = levelPassedDialog;
 
-            summaryDialog.startNextLevel(3000);
+            summaryDialog.startNextLevel(AbstractLevelSummaryDialog.SUMMARY_DIALOG_TIME_MSEC);
             MediaPlayer mp = MediaPlayer.create(gameActivity, R.raw.round);
             mp.start();
         } else {
             summaryDialog = new LevelFailedSummaryDialog();
-            summaryDialog.restartTheSameLevel(3000);
+            summaryDialog.restartTheSameLevel(AbstractLevelSummaryDialog.SUMMARY_DIALOG_TIME_MSEC);
         }
         summaryDialog.setParams(gameActivity, percent);
         return summaryDialog;

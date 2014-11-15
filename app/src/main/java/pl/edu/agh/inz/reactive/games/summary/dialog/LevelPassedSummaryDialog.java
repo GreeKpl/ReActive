@@ -28,8 +28,8 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
 
         if (percent >= AbstractLevelSummaryDialog.PERCENT_FOR_THREE_STARS) {
             descView.addView(createStar(true));
-            descView.addView(createStar(false));
-            descView.addView(createStar(false));
+            descView.addView(createStar(true));
+            descView.addView(createStar(true));
         } else if (percent >= AbstractLevelSummaryDialog.PERCENT_FOR_TWO_STARS) {
             descView.addView(createStar(true));
             descView.addView(createStar(true));
@@ -39,7 +39,6 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
             descView.addView(createStar(false));
             descView.addView(createStar(false));
         }
-
 
         String instruction = getString(R.string.instruction);
         instructionField.setText(instruction);

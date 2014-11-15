@@ -22,6 +22,8 @@ public abstract class AbstractLevelSummaryDialog extends DialogFragment {
     public static final int PERCENT_FOR_TWO_STARS = 70;
     public static final int PERCENT_FOR_THREE_STARS = 90;
 
+    public static final int SUMMARY_DIALOG_TIME_MSEC = 4000;
+
     private GameActivity gameActivity;
     private int percent;
 
@@ -84,8 +86,6 @@ public abstract class AbstractLevelSummaryDialog extends DialogFragment {
     protected abstract AlertDialog getBuilder(int percent);
 
     public DialogFragment setParams(GameActivity activity, int percent) {
-
-        System.out.println("SET PARAMS PERCENT: " + percent);
         gameActivity = activity;
         this.percent = percent;
         return this;
