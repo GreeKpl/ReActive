@@ -1,9 +1,10 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,6 @@ import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.finish.criteria.DefaultFinishListener;
-import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
 import pl.edu.agh.inz.reactive.games.rainbow.images.OtherImageView;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
@@ -104,8 +104,14 @@ public class RainbowActivity extends GameActivity {
     private void setupObjectParams(ImageView targetObject, int imgResource, double size) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(150, 150);
 
-        params.width = (int) (screenWidth * size);
-        params.height = (int) (screenHeight * size);
+        BitmapFactory.Options originalDim = getOriginalDimensions(imgResource);
+        double widthToHeight = 1.0 * originalDim.outWidth / originalDim.outHeight;
+
+
+        double width = screenWidth * size;
+        double height = screenHeight * size;
+        params.width = (int) Math.min(width, height * widthToHeight);
+        params.height = (int) Math.min(height, width / widthToHeight);
         params.setMargins(rand.nextInt(screenWidth - params.width), rand.nextInt(screenHeight - params.height), 10, 10);
 
         targetObject.setLayoutParams(params);
@@ -121,6 +127,13 @@ public class RainbowActivity extends GameActivity {
             }
         });
         System.out.println("Score " + logic.getScore());
+    }
+
+    private BitmapFactory.Options getOriginalDimensions(int imgResource) {
+        BitmapFactory.Options dimensions = new BitmapFactory.Options();
+        dimensions.inJustDecodeBounds = true;
+        Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), imgResource, dimensions);
+        return dimensions;
     }
 
     private void updateGameState() {
