@@ -92,7 +92,7 @@ public abstract class AbstractGame {
     }
 
     public int getUserMaxLevel() {
-        return db.getMaxLevel(user.getLogin(), RAINBOW_GAME);
+        return db.getMaxLevel(user.getLogin(), gameId);
     }
 
     public int getMaxLevel() {
