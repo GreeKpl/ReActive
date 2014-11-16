@@ -107,7 +107,7 @@ public class LineGraph {
             x4[i] = new Long(entry.getKey().toString());
             y4[i] = new Integer(entry.getValue().toString());
             System.out.println("Three training Indeks: " + x4[i] + " wynik: " + y4[i]);
-            series3.add(x4[i], y4[i]);
+            series4.add(x4[i], y4[i]);
             i++;
         }
 
@@ -154,7 +154,7 @@ public class LineGraph {
 		mRenderer.setXTitle("Dzień ćwiczeń");
 		mRenderer.setYTitle("Punkty");
 
-		mRenderer.setLegendTextSize(25);
+		mRenderer.setLegendTextSize(20);
         mRenderer.setLegendHeight(50);
 
         mRenderer.setLabelsTextSize(20);    //liczby
