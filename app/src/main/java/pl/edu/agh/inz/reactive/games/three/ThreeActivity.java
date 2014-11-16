@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.finish.criteria.DefaultFinishListener;
 import pl.edu.agh.inz.reactive.games.summary.dialog.LevelSummaryDialogFactory;
 import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
 import pl.edu.agh.inz.reactive.games.three.images.PatternImageView;
@@ -63,15 +64,7 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
 
         timer = new ScheduledThreadPoolExecutor(1);
 
-        logic.setFinishListener(new FinishListener() {
-            @Override
-            public void onFinish() {
-                int scorePercent = 100 * logic.getScore() / level.getScoreNeeded();
-                new LevelSummaryDialogFactory().create(ThreeActivity.this, scorePercent >= 20,
-                    logic.getLevelDescription(logic.getLevel() + 1), scorePercent)
-                    .show(getFragmentManager(), "level finished");
-            }
-        });
+        logic.setFinishListener(new DefaultFinishListener(logic, level, this));
 
         updateGameState();
     }
@@ -91,7 +84,6 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
     private void updateGameState() {
         List<Integer> images = level.getImages();
 
-        int pattern = images.get(rand.nextInt(images.size()));
         Collections.shuffle(images);
 
         patternElement.setImageResource(images.get(0));

@@ -9,7 +9,7 @@ import pl.edu.agh.inz.reactive.games.summary.dialog.LevelSummaryDialogFactory;
 /**
  * Created by alek on 15.11.14.
  */
-public abstract class DefaultFinishListener implements FinishListener {
+public class DefaultFinishListener implements FinishListener {
 
     private AbstractGame logic;
     private GameLevel level;
@@ -30,5 +30,7 @@ public abstract class DefaultFinishListener implements FinishListener {
         finishAddition();
     }
 
-    public abstract void finishAddition();
+    public void finishAddition() {
+        // default implementation is to do nothing
+    }
 }
