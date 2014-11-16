@@ -8,6 +8,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import android.media.MediaPlayer;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import pl.edu.agh.inz.reactive.R;
@@ -53,6 +55,10 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
 
         patternElement = (PatternImageView) this.findViewById(R.id.patternImageView);
 
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
+        patternElement.setLayoutParams(layoutParams);
+        patternElement.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
         LinearLayout pickableElements = (LinearLayout) this.findViewById(R.id.pickableElements);
 
         pickablesList = new ArrayList<PickableImageView>();
@@ -71,6 +77,13 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
 
     private PickableImageView createPickableImageView() {
         PickableImageView pickable = new PickableImageView(this);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
+        pickable.setLayoutParams(layoutParams);
+
+
+        pickable.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
         pickable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
