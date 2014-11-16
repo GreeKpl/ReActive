@@ -17,8 +17,7 @@ public class ThreeSpecification implements GameSpecification {
             new Level.Builder(5, 3, 3).setImages(new Integer[] { three_apple, three_pear, three_plum }).build(),
             new Level.Builder(10, 3, 5).setImages(new Integer[] { three_orange, three_apple, three_peach }).build(),
             new Level.Builder(10, 3, 8).setImages(new Integer[] { three_lemon, three_lime, three_pear }).build(),
-            new Level.Builder(10, 3, 8).setImages(new Integer[] { three_mushroom_1, three_mushroom_2, three_sq }).build(),
-            new Level.Builder(20, 3, 7).setImages(new Integer[] { three_coin, three_pc, three_sq, three_waga }).build()
+            new Level.Builder(10, 3, 8).setImages(new Integer[] { three_mushroom_1, three_mushroom_2, three_toadstool }).build()
         };
     }
 
