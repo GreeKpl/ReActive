@@ -2,6 +2,7 @@ package pl.edu.agh.inz.reactive.games.three;
 
 import android.content.Context;
 
+import java.security.cert.CertPathBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,12 +53,14 @@ public class ThreeGame extends AbstractGame {
         private final int shownAtOnce;
         private final int scoreNeeded;
         private final List<Integer> images;
+        private final boolean rotatePattern;
 
         public Level(Builder builder) {
             scoreNeeded = builder.scoreNeeded;
             images = builder.images;
             shownAtOnce = builder.shownAtOnce;
             seconds = builder.seconds;
+            this.rotatePattern = builder.rotatePattern;
         }
 
         public List<Integer> getImages() {
@@ -87,6 +90,10 @@ public class ThreeGame extends AbstractGame {
             return R.drawable.three_task;
         }
 
+        public boolean isRotatePattern() {
+            return rotatePattern;
+        }
+
         public static class Builder {
 
             private final int shownAtOnce;
@@ -94,6 +101,7 @@ public class ThreeGame extends AbstractGame {
             private final int seconds;
 
             private List<Integer> images;
+            private boolean rotatePattern = false;
 
             public Builder(int scoreNeeded, int shownAtOnce, int seconds) {
                 this.scoreNeeded = scoreNeeded;
@@ -108,6 +116,11 @@ public class ThreeGame extends AbstractGame {
 
             public Level build() {
                 return new Level(Builder.this);
+            }
+
+            public Builder  withRotatedPattern() {
+                this.rotatePattern = true;
+                return this;
             }
         }
     }
