@@ -1,6 +1,7 @@
 package pl.edu.agh.inz.reactive.games;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,6 +51,12 @@ public abstract class GameActivity extends Activity {
     public abstract AbstractGame getLogic();
 
     public abstract void createGameLogic();
+
+    protected Point getScreenSize() {
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        return  size;
+    }
 
 
     @Override

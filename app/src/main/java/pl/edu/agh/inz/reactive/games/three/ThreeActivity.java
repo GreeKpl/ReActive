@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.view.Gravity;
 import android.view.View;
@@ -35,6 +36,8 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
     private ScheduledThreadPoolExecutor timer;
     private MediaPlayer mp;
 
+    private Point screenSize;
+
     @Override
     public AbstractGame getLogic() {
         return logic;
@@ -55,14 +58,17 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
 
         level = logic.getLevelDescription(levelId);
 
+        screenSize = getScreenSize();
+
         patternElement = (PatternImageView) this.findViewById(R.id.patternImageView);
 
         if (level.isRotatePattern()) {
             rotateImage(patternElement);
         }
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(250, 250);
-        layoutParams.gravity = Gravity.HORIZONTAL_GRAVITY_MASK;
+        int imgSize = screenSize.x / level.getShownAtOnce() - 50; // it should be possible to have 5 images next to each other
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imgSize, imgSize);
         patternElement.setLayoutParams(layoutParams);
         patternElement.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
@@ -97,7 +103,8 @@ public class ThreeActivity extends GameActivity /* implements OnClickListener,*/
     private PickableImageView createPickableImageView() {
         PickableImageView pickable = new PickableImageView(this);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(250, 250);
+        int imgSize = screenSize.x / level.getShownAtOnce() - 50; // it should be possible to have 5 images next to each other
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imgSize, imgSize);
         pickable.setLayoutParams(layoutParams);
 
 
