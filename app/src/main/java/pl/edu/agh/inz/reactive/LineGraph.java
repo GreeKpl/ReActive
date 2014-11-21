@@ -38,9 +38,9 @@ public class LineGraph {
 
         int length1 = map1.size();
         System.out.println("length1 = "+length1);
-        long[] x1 = new long[length1+1];
-        int[] y1 = new int[length1+1];
-        int i = 1;
+        long[] x1 = new long[length1];
+        int[] y1 = new int[length1];
+        int i = 0;
         series1.add(0, 0);
         while(iterator.hasNext()) {
             Map.Entry entry = iterator.next();
@@ -59,9 +59,9 @@ public class LineGraph {
 
         int length2 = map2.size();
         System.out.println("length2 = "+length2);
-        long[] x2 = new long[length2+1];
-        int[] y2 = new int[length2+1];
-        i = 1;
+        long[] x2 = new long[length2];
+        int[] y2 = new int[length2];
+        i = 0;
         series2.add(0, 0);
         while(iterator.hasNext()) {
             Map.Entry entry = iterator.next();
@@ -80,9 +80,9 @@ public class LineGraph {
 
         int length3 = map3.size();
         System.out.println("length3 = "+length3);
-        long[] x3 = new long[length3+1];
-        int[] y3 = new int[length3+1];
-        i = 1;
+        long[] x3 = new long[length3];
+        int[] y3 = new int[length3];
+        i = 0;
         series3.add(0, 0);
         while(iterator.hasNext()) {
             Map.Entry entry = iterator.next();
@@ -101,9 +101,9 @@ public class LineGraph {
 
         int length4 = map4.size();
         System.out.println("length4 = "+length4);
-        long[] x4 = new long[length4+1];
-        int[] y4 = new int[length4+1];
-        i = 1;
+        long[] x4 = new long[length4];
+        int[] y4 = new int[length4];
+        i = 0;
         series4.add(0, 0);
         while(iterator.hasNext()) {
             Map.Entry entry = iterator.next();
@@ -162,8 +162,8 @@ public class LineGraph {
         mRenderer.setLegendHeight(50);
 
         mRenderer.setLabelsTextSize(20);    //liczby
-        mRenderer.setYLabels(7);
-        mRenderer.setXLabels(7);
+        mRenderer.setYLabels(10);
+        mRenderer.setXLabels(10);
         mRenderer.setXLabelsColor(context.getResources().getColor(R.color.graph_x_label));
         mRenderer.setYLabelsColor(0, context.getResources().getColor(R.color.graph_y_label));
         mRenderer.setYLabelsAlign(Paint.Align.RIGHT);

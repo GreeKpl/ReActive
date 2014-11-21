@@ -295,7 +295,7 @@ public class DatabaseManager {
         long minDate = getMinDate(login);
 
         while (cursor.moveToNext()) {
-            achievements.put(cursor.getLong(0) - minDate, cursor.getInt(1));
+            achievements.put(cursor.getLong(0) - minDate + 1, cursor.getInt(1));
         }
         cursor.close();
         return achievements;
