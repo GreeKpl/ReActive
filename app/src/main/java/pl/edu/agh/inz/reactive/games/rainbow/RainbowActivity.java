@@ -138,6 +138,12 @@ public class RainbowActivity extends GameActivity {
 
     private void updateGameState() {
         RainbowGame.Level desc = level;
+        for (int i = otherObjectsNow.size(); i < desc.getOtherObjects(); i++) {
+            createOtherObject(desc.getOtherImg(), desc.getOtherObjectsSize());
+        }
+        for (int i = otherObjectsNow.size(); i > desc.getOtherObjects(); i--) {
+            removeObject(otherObjectsNow.get(i));
+        }
         for (int i = targetObjectsNow.size(); i < desc.getTargets(); i++) {
             System.out.println("dodaje target");
             createTargetObject(desc.getTargetImg(), desc.getTargetSize());
@@ -145,12 +151,6 @@ public class RainbowActivity extends GameActivity {
         for (int i = targetObjectsNow.size(); i > desc.getTargets(); i--) {
             System.out.println("usuwam target");
             removeObject(targetObjectsNow.get(i));
-        }
-        for (int i = otherObjectsNow.size(); i < desc.getOtherObjects(); i++) {
-            createOtherObject(desc.getOtherImg(), desc.getOtherObjectsSize());
-        }
-        for (int i = otherObjectsNow.size(); i > desc.getOtherObjects(); i--) {
-            removeObject(otherObjectsNow.get(i));
         }
     }
 
