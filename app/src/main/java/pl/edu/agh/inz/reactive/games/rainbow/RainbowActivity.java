@@ -2,6 +2,7 @@ package pl.edu.agh.inz.reactive.games.rainbow;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,7 +22,6 @@ import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
 
 public class RainbowActivity extends GameActivity {
 
-    private static final int MSEC_PER_SEC = 1000;
     private RelativeLayout layout;
 
     private RainbowGame logic;
@@ -31,8 +31,6 @@ public class RainbowActivity extends GameActivity {
     private List<ImageView> otherObjectsNow = new ArrayList<ImageView>();
 
     private Random rand = new Random();
-    private int screenHeight = 570;
-    private int screenWidth = 1070;
 
     private ScheduledThreadPoolExecutor timer;
 
@@ -108,11 +106,12 @@ public class RainbowActivity extends GameActivity {
         double widthToHeight = 1.0 * originalDim.outWidth / originalDim.outHeight;
 
 
-        double width = screenWidth * size;
-        double height = screenHeight * size;
+        Point screenSize = getScreenSize();
+        double width = screenSize.x * size;
+        double height = screenSize.y * size;
         params.width = (int) Math.min(width, height * widthToHeight);
         params.height = (int) Math.min(height, width / widthToHeight);
-        params.setMargins(rand.nextInt(screenWidth - params.width), rand.nextInt(screenHeight - params.height), 10, 10);
+        params.setMargins(rand.nextInt(screenSize.x - params.width), rand.nextInt(screenSize.y - params.height), 10, 10);
 
         targetObject.setLayoutParams(params);
         targetObject.setImageResource(imgResource);

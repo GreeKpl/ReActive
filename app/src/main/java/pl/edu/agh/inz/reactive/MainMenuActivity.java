@@ -20,10 +20,12 @@ import android.widget.TextView;
 
 import com.devsmart.android.ui.HorizontialListView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import pl.edu.agh.inz.reactive.games.GameActivity;
+import pl.edu.agh.inz.reactive.games.GameRegistry;
 import pl.edu.agh.inz.reactive.games.rainbow.RainbowActivity;
 import pl.edu.agh.inz.reactive.games.three.ThreeActivity;
 
@@ -55,16 +57,10 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
         final HorizontialListView gamesView = (HorizontialListView) this.findViewById(R.id.gamesList);
 
-        ImageView seaGame    = createGameImage(RainbowActivity.class, true, R.drawable.promo_rainbow_time);
-        ImageView three1Game = createGameImage(RainbowActivity.class, false, R.drawable.promo_rainbow);
-        ImageView three2Game = createGameImage(ThreeActivity.class, true, R.drawable.promo_three_time);
-        ImageView three3Game = createGameImage(ThreeActivity.class, false, R.drawable.promo_three);
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-
-        List<ImageView> games = Arrays.asList(seaGame, three1Game, three2Game, three3Game);
+        List<ImageView> games = new ArrayList<ImageView>();
+        for (GameDescriptor game : GameRegistry.getInstance().getGames()) {
+            games.add(createGameImage(game));
+        }
 
         ImageArrayAdapter adapter = new ImageArrayAdapter(this, android.R.layout.simple_list_item_1, games);
 
@@ -75,10 +71,11 @@ public class MainMenuActivity extends Activity implements OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GameDescriptorImageView clickedGameImage = (GameDescriptorImageView) gamesView.getAdapter().getItem(position);
-                Class<? extends GameActivity> game = clickedGameImage.getGameClass();
+                GameDescriptor descriptor = clickedGameImage.getGameDescriptor();
+                Class<? extends GameActivity> game = descriptor.getGameClass();
 
                 Intent intent = new Intent(MainMenuActivity.this, game);
-                intent.putExtra("withTimer", clickedGameImage.isWithTime());
+                intent.putExtra("withTimer", descriptor.isWithTimer());
                 db.close();
                 MainMenuActivity.this.startActivity(intent);
             }
@@ -93,11 +90,9 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         labelTextView.setText(labelUser);
     }
 
-    private GameDescriptorImageView createGameImage(Class<? extends GameActivity> gameClass, boolean withTime, int imgSrc) {
-        GameDescriptorImageView game = new GameDescriptorImageView(this, gameClass, withTime);
-        game.setImageResource(imgSrc);
+    private GameDescriptorImageView createGameImage(GameDescriptor descriptor) {
+        GameDescriptorImageView game = new GameDescriptorImageView(this, descriptor);
         game.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
-
         return game;
     }
 
