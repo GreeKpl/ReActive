@@ -11,12 +11,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import pl.edu.agh.inz.reactive.games.GameRegistry;
 
 public class LineGraph {
 
-
+    public static final List<Integer> graphColors = Arrays.asList(
+        R.color.graph_1, R.color.graph_2, R.color.graph_3, R.color.graph_4,
+        R.color.graph_5, R.color.graph_6, R.color.graph_7, R.color.graph_8,
+        R.color.graph_9, R.color.graph_10, R.color.graph_11, R.color.graph_12,
+        R.color.graph_13, R.color.graph_14, R.color.graph_15, R.color.graph_16);
 
 	public Intent getIntent(Context context) {
 
@@ -31,123 +39,42 @@ public class LineGraph {
         db.printResultsTable();
         System.out.println("Minimalna data: "+db.getMinDate(user.getLogin()));
 
+
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+
         //Rainbow
-        Map<Long, Integer> map1 = db.getAchievements(user.getLogin(), 1);
-        Iterator<Map.Entry<Long, Integer>> iterator = map1.entrySet().iterator();
-        TimeSeries series1 = new TimeSeries("Rainbow   ");
+        int serialNumber = 0; // used only for defining graph color
+        for (GameDescriptor game : GameRegistry.getInstance().getGames()) {
+            Map<Long, Integer> map1 = db.getAchievements(user.getLogin(), game.getId());
+            Iterator<Map.Entry<Long, Integer>> iterator = map1.entrySet().iterator();
+            TimeSeries series1 = new TimeSeries(game.getName() + "   ");
 
-        int length1 = map1.size();
-        System.out.println("length1 = "+length1);
-        long[] x1 = new long[length1];
-        int[] y1 = new int[length1];
-        int i = 0;
-        series1.add(0, 0);
-        while(iterator.hasNext()) {
-            Map.Entry entry = iterator.next();
+            int length1 = map1.size();
+            System.out.println("length1 = " + length1);
+            long[] x1 = new long[length1];
+            int[] y1 = new int[length1];
+            int i = 0;
+            series1.add(0, 0);
+            while (iterator.hasNext()) {
+                Map.Entry entry = iterator.next();
 
-            x1[i] = new Long(entry.getKey().toString());
-            y1[i] = new Integer(entry.getValue().toString());
-            System.out.println("Rainbow Indeks: " + x1[i] + " wynik: " + y1[i]);
-            series1.add(x1[i], y1[i]);
-            i++;
+                x1[i] = Long.valueOf(entry.getKey().toString());
+                y1[i] = Integer.valueOf(entry.getValue().toString());
+                System.out.println(game.getName() + " Indeks: " + x1[i] + " wynik: " + y1[i]);
+                series1.add(x1[i], y1[i]);
+                i++;
+            }
+            dataset.addSeries(series1);
+
+            XYSeriesRenderer renderer = new XYSeriesRenderer();
+            renderer.setColor(context.getResources().getColor(graphColors.get(serialNumber)));
+            renderer.setPointStyle(PointStyle.CIRCLE);
+            renderer.setFillPoints(true);
+            mRenderer.addSeriesRenderer(renderer);
+
+            serialNumber++;
         }
-
-        //Rainbow training
-        Map<Long, Integer> map2 = db.getAchievements(user.getLogin(), 2);
-        iterator = map2.entrySet().iterator();
-        TimeSeries series2 = new TimeSeries("Rainbow training   ");
-
-        int length2 = map2.size();
-        System.out.println("length2 = "+length2);
-        long[] x2 = new long[length2];
-        int[] y2 = new int[length2];
-        i = 0;
-        series2.add(0, 0);
-        while(iterator.hasNext()) {
-            Map.Entry entry = iterator.next();
-
-            x2[i] = new Long(entry.getKey().toString());
-            y2[i] = new Integer(entry.getValue().toString());
-            System.out.println("Rainbow training Indeks: " + x2[i] + " wynik: " + y2[i]);
-            series2.add(x2[i], y2[i]);
-            i++;
-        }
-
-        //Three
-        Map<Long, Integer> map3 = db.getAchievements(user.getLogin(), 3);
-        iterator = map3.entrySet().iterator();
-        TimeSeries series3 = new TimeSeries("Three   ");
-
-        int length3 = map3.size();
-        System.out.println("length3 = "+length3);
-        long[] x3 = new long[length3];
-        int[] y3 = new int[length3];
-        i = 0;
-        series3.add(0, 0);
-        while(iterator.hasNext()) {
-            Map.Entry entry = iterator.next();
-
-            x3[i] = new Long(entry.getKey().toString());
-            y3[i] = new Integer(entry.getValue().toString());
-            System.out.println("Three Indeks: " + x3[i] + " wynik: " + y3[i]);
-            series3.add(x3[i], y3[i]);
-            i++;
-        }
-
-        //Three training
-        Map<Long, Integer> map4 = db.getAchievements(user.getLogin(), 4);
-        iterator = map4.entrySet().iterator();
-        TimeSeries series4 = new TimeSeries("Three training  ");
-
-        int length4 = map4.size();
-        System.out.println("length4 = "+length4);
-        long[] x4 = new long[length4];
-        int[] y4 = new int[length4];
-        i = 0;
-        series4.add(0, 0);
-        while(iterator.hasNext()) {
-            Map.Entry entry = iterator.next();
-
-            x4[i] = new Long(entry.getKey().toString());
-            y4[i] = new Integer(entry.getValue().toString());
-            System.out.println("Three training Indeks: " + x4[i] + " wynik: " + y4[i]);
-            series4.add(x4[i], y4[i]);
-            i++;
-        }
-
-		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		dataset.addSeries(series1);
-		dataset.addSeries(series2);
-        dataset.addSeries(series3);
-        dataset.addSeries(series4);
-
-
-		XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-
-		XYSeriesRenderer renderer = new XYSeriesRenderer();
-		renderer.setColor(context.getResources().getColor(R.color.graph_first_chart));
-		renderer.setPointStyle(PointStyle.CIRCLE);
-		renderer.setFillPoints(true);
-
-		XYSeriesRenderer renderer2 = new XYSeriesRenderer();
-		renderer2.setColor(context.getResources().getColor(R.color.graph_second_chart));
-		renderer2.setPointStyle(PointStyle.CIRCLE);
-		renderer2.setFillPoints(true);
-
-        XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-        renderer3.setColor(context.getResources().getColor(R.color.graph_third_chart));
-        renderer3.setPointStyle(PointStyle.CIRCLE);
-        renderer3.setFillPoints(true);
-
-        XYSeriesRenderer renderer4 = new XYSeriesRenderer();
-        renderer4.setColor(context.getResources().getColor(R.color.graph_fourth_chart));
-        renderer4.setPointStyle(PointStyle.CIRCLE);
-        renderer4.setFillPoints(true);
-
-		mRenderer.addSeriesRenderer(renderer);
-		mRenderer.addSeriesRenderer(renderer2);
-        mRenderer.addSeriesRenderer(renderer3);
-        mRenderer.addSeriesRenderer(renderer4);
 
 		mRenderer.setAxesColor(context.getResources().getColor(R.color.graph_axes));
 		mRenderer.setXAxisMin(0);
@@ -155,8 +82,8 @@ public class LineGraph {
 
         mRenderer.setAxisTitleTextSize(20);
         mRenderer.setLabelsColor(context.getResources().getColor(R.color.graph_axes_labels));
-		mRenderer.setXTitle("Dzień ćwiczeń");
-		mRenderer.setYTitle("Punkty");
+		mRenderer.setXTitle(context.getString(R.string.graph_training_day));
+		mRenderer.setYTitle(context.getString(R.string.graph_points));
 
 		mRenderer.setLegendTextSize(20);
         mRenderer.setLegendHeight(50);

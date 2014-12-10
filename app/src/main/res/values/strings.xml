@@ -41,4 +41,8 @@
     <string name="user_prefix">Zalogowano jako: </string>
     <string name="btnSeeResults_text">Zobacz postępy</string>
 
+    // LineGraph.java
+    <string name="graph_training_day">Dzień ćwiczeń</string>
+    <string name="graph_points">Punkty</string>
+
 </resources>

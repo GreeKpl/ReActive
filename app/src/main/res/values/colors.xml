@@ -16,8 +16,20 @@
     <color name="graph_y_label">#DDDDDD</color>
     <color name="graph_axes_labels">#FFFF00</color>
     <color name="graph_axes">#BBBBBB</color>
-    <color name="graph_first_chart">#0000FF</color>
-    <color name="graph_second_chart">#0088AA</color>
-    <color name="graph_third_chart">#00FF00</color>
-    <color name="graph_fourth_chart">#228822</color>
+    <color name="graph_1">#0000FF</color>
+    <color name="graph_2">#0088AA</color>
+    <color name="graph_3">#00FF00</color>
+    <color name="graph_4">#228822</color>
+    <color name="graph_5">#AF002A</color>
+    <color name="graph_6">#C46210</color>
+    <color name="graph_7">#F19CBB</color>
+    <color name="graph_8">#3B444B</color>
+    <color name="graph_9">#FF9966</color>
+    <color name="graph_10">#6E7F80</color>
+    <color name="graph_11">#E0218A</color>
+    <color name="graph_12">#000000</color>
+    <color name="graph_13">#3D0C02</color>
+    <color name="graph_14">#E97451</color>
+    <color name="graph_15">#E4D00A</color>
+    <color name="graph_16">#FF3800</color>
 </resources>
