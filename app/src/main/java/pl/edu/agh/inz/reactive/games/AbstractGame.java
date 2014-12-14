@@ -15,12 +15,6 @@ import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
  */
 public abstract class AbstractGame {
 
-    public static final int RAINBOW_GAME = 1;
-    public static final int RAINBOW_GAME_TRAINING = 2;
-    public static final int THREE_GAME = 3;
-    public static final int THREE_GAME_TRAINING = 4;
-
-
     protected final DatabaseManager db;
     private final int gameId;
     private FinishCriteriaFactory factory;

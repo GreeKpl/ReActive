@@ -5,6 +5,7 @@ import android.view.View;
 
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameLevel;
+import pl.edu.agh.inz.reactive.games.GameRegistry;
 import pl.edu.agh.inz.reactive.games.GameSpecification;
 import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteriaFactory;
 import pl.edu.agh.inz.reactive.games.rainbow.images.TargetImageView;
@@ -17,7 +18,7 @@ public class RainbowGame extends AbstractGame {
     private RainbowSpecification specification = new RainbowSpecification();
 
     public RainbowGame(Context context, FinishCriteriaFactory factory) {
-        super(factory.isTimeBased() ? RAINBOW_GAME: RAINBOW_GAME_TRAINING, factory, context);
+        super(factory.isTimeBased() ? GameRegistry.RAINBOW_GAME: GameRegistry.RAINBOW_GAME_TRAINING, factory, context);
     }
 
     public void onObjectClick(View v) {
@@ -26,7 +27,7 @@ public class RainbowGame extends AbstractGame {
         } else {
             setScore(getScore() - 1);
         }
-        System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), RAINBOW_GAME, getLevel()));
+        System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), GameRegistry.RAINBOW_GAME, getLevel()));
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.List;
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameLevel;
+import pl.edu.agh.inz.reactive.games.GameRegistry;
 import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteriaFactory;
 import pl.edu.agh.inz.reactive.games.GameSpecification;
 import pl.edu.agh.inz.reactive.games.three.images.PatternImageView;
@@ -23,7 +24,7 @@ public class ThreeGame extends AbstractGame {
     private ThreeSpecification specification = new ThreeSpecification();
 
     public ThreeGame(Context context, FinishCriteriaFactory factory) {
-        super(factory.isTimeBased() ? THREE_GAME : THREE_GAME_TRAINING, factory, context);
+        super(factory.isTimeBased() ? GameRegistry.THREE_GAME : GameRegistry.THREE_GAME_TRAINING, factory, context);
     }
 
     public Level getLevelDescription(int level) {
@@ -39,7 +40,7 @@ public class ThreeGame extends AbstractGame {
             System.out.println("Nietrafione!!!");
         }
 
-        System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), THREE_GAME_TRAINING, getLevel()));
+        System.out.println("NAJLEPSZY WYNIK: " + db.getPointsFromLevel(user.getLogin(), GameRegistry.THREE_GAME_TRAINING, getLevel()));
     }
 
     @Override
