@@ -21,8 +21,8 @@
     <string name="password">admin</string>
 
     //GameFinishedSummaryDialog.java
-    <string name="game_finished_summary_dialog_message">Brawo! Wygrałeś grę!!!</string>
-    <string name="game_finished_summary_dialog_negative_button">done</string>
+    <string name="game_finished_summary_dialog_message">Brawo! Wygrywasz całą grę!</string>
+    <string name="game_finished_summary_dialog_negative_button">Ukończ</string>
 
     //LevelPassedSummaryDialog.java
     <string name="level_passed_summary_dialog_message">Poziom pomyślnie ukończono </string>
