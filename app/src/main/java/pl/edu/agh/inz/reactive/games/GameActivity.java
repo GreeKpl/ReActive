@@ -58,7 +58,6 @@ public abstract class GameActivity extends Activity {
         return  size;
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

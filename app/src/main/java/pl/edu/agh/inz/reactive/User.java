@@ -3,12 +3,11 @@ package pl.edu.agh.inz.reactive;
 
 public class User {
 	
-	String login;	
-	String name;	
-	String surname;
+	private String login;
+    private String name;
+    private String surname;
 	
-	public User(){
-		
+	public User() {
 	}
 	
 	public User(String login, String name, String surname) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import pl.edu.agh.inz.reactive.games.AbstractGame;
+import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.GameLevel;
 import pl.edu.agh.inz.reactive.games.GameRegistry;
 import pl.edu.agh.inz.reactive.games.GameSpecification;
@@ -17,7 +18,7 @@ public class RainbowGame extends AbstractGame {
 
     private RainbowSpecification specification = new RainbowSpecification();
 
-    public RainbowGame(Context context, FinishCriteriaFactory factory) {
+    public RainbowGame(GameActivity context, FinishCriteriaFactory factory) {
         super(factory.isTimeBased() ? GameRegistry.RAINBOW_GAME: GameRegistry.RAINBOW_GAME_TRAINING, factory, context);
     }
 
@@ -31,8 +32,8 @@ public class RainbowGame extends AbstractGame {
     }
 
     @Override
-    public Level getLevelDescription(int level) {
-        return (Level) super.getLevelDescription(level);
+    public Level getLevelDescription(int levelId) {
+        return (Level) super.getLevelDescription(levelId);
     }
 
     @Override

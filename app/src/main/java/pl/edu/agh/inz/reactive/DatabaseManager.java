@@ -143,14 +143,6 @@ public class DatabaseManager {
         db.insert(DB_USERS_TABLE, null, values);
     }
 
-    public void updateUser(String login, String name, String surname) {
-        String where = LOGIN + "='" + login + "'";
-        ContentValues updateValues = new ContentValues();
-        updateValues.put(NAME, name);
-        updateValues.put(SURNAME, surname);
-        db.update(DB_USERS_TABLE, updateValues, where, null);
-    }
-
     public void deleteUser(User user){
         String where = LOGIN + "='" + user.getLogin() + "'";
         db.delete(DB_LEVELS_TABLE, where, null);
@@ -254,21 +246,6 @@ public class DatabaseManager {
         return pointsOnLevel;
     }
 
-    public int getPointsFromDate(String login, int game, long date) {
-        String[] columns = {POINTS};
-        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +date;
-
-        Cursor cursor = db.query(DB_RESULTS_TABLE, columns, where, null, null, null, null);
-
-        int pointsFromDate = 0;
-        if (cursor.moveToFirst()) {
-            pointsFromDate = cursor.getInt(0);
-        }
-        cursor.close();
-
-        return pointsFromDate;
-    }
-
     public long getMinDate(String login) {
         String[] columns = {DATE};
         String where = LOGIN + "='" + login + "'";
@@ -330,12 +307,6 @@ public class DatabaseManager {
         values.put(DATE, date);
         values.put(POINTS, points);
         db.replace(DB_RESULTS_TABLE, null, values);
-    }
-
-    public void deleteDateResult(String login, int game, long date) {
-        String where = LOGIN + "='" + login + "' AND " + GAME + "=" + game + " AND " + DATE + "=" +date;
-
-        db.delete(DB_RESULTS_TABLE, where, null);
     }
 
     public void saveDateResult(String login, int game, long date, int points) {

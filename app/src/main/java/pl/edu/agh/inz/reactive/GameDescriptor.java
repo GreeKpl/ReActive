@@ -10,7 +10,7 @@ public class GameDescriptor {
     private String name;
     private int img;
 
-    boolean withTimer = false;
+    private boolean withTimer = false;
     private Class<? extends GameActivity> gameClass;
 
     public GameDescriptor(int id, String name, Class<? extends GameActivity> gameClass, boolean withTimer, int img) {
