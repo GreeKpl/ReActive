@@ -13,8 +13,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static pl.edu.agh.inz.reactive.R.string;
-
 public class DatabaseManager {
     private static final String DEBUG_TAG = "DatabaseManager";
 
@@ -70,7 +68,7 @@ public class DatabaseManager {
 
     private static final String DB_DROP_TABLE = "drop table if exists ";
     private static final String ACTIVE_USER = "activeUser";
-    public static final int MSEC_PER_DAY = 24 * 60 * 60 * 1000;
+    private static final int MSEC_PER_DAY = 24 * 60 * 60 * 1000;
 
     private SQLiteDatabase db;
     private Context context;
@@ -113,7 +111,7 @@ public class DatabaseManager {
         }
     }
 
-    public DatabaseManager(Context context) {
+    public DatabaseManager (Context context) {
         this.context = context;
     }
 
@@ -151,7 +149,7 @@ public class DatabaseManager {
         db.update(DB_USERS_TABLE, updateValues, where, null);
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         String where = LOGIN + "='" + user.getLogin() + "'";
         db.delete(DB_LEVELS_TABLE, where, null);
         db.delete(DB_RESULTS_TABLE, where, null);
