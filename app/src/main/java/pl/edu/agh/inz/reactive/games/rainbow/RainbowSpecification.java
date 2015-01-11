@@ -1,6 +1,5 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
-import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.GameSpecification;
 
 import static pl.edu.agh.inz.reactive.games.rainbow.RainbowGame.Level;

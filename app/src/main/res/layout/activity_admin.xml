@@ -38,7 +38,9 @@
                 android:textSize="30dp"
                 android:layout_weight="3"
                 android:clickable="true"
-                android:hint="Login" />
+                android:hint="Login"
+                android:lines="1"
+                android:linksClickable="true" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +64,9 @@
                 android:textSize="30dp"
                 android:layout_weight="3"
                 android:clickable="true"
-                android:hint="Imię" />
+                android:hint="Imię"
+                android:capitalize="words"
+                android:lines="1" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +90,9 @@
                 android:textSize="30dp"
                 android:layout_weight="3"
                 android:clickable="true"
-                android:hint="Nazwisko" />
+                android:hint="Nazwisko"
+                android:lines="1"
+                android:capitalize="words" />
         </LinearLayout>
 
         <TextView
