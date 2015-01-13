@@ -117,7 +117,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	public void addUser(View view) {
+	private void addUser(View view) {
 		
 		if ((loginUser.length() != 0) && (nameUser.length() != 0) && (surnameUser.length() != 0)) {
             if (db.getUser(loginUser.getText().toString()) == null) {
@@ -143,7 +143,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 
 	}
 	
-	public void removeUser(View view) {
+	private void removeUser(View view) {
 		User user = new User();
 		user.setLogin(loginUser.getText().toString());
 		user.setName(nameUser.getText().toString());
@@ -169,7 +169,7 @@ public class AdminActivity extends Activity implements OnClickListener {
         cleanInformation();
 	}
 	
-	public void loginUser(View view) {
+	private void loginUser(View view) {
 		if ((loginUser.length() != 0) && (nameUser.length() != 0) && (surnameUser.length() != 0)) {
 			db.setActiveUser(loginUser.getText().toString());
 

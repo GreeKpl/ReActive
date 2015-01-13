@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeBasedFinishCriteria extends FinishCriteria {
 
-    ScheduledThreadPoolExecutor timer;
+    private ScheduledThreadPoolExecutor timer;
 
     public TimeBasedFinishCriteria(int seconds) {
         timer = new ScheduledThreadPoolExecutor(1);

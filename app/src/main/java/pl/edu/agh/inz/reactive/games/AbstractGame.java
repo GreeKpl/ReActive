@@ -20,12 +20,12 @@ public abstract class AbstractGame {
     private FinishCriteriaFactory factory;
 
     protected User user;
-    int level;
+    private int level;
 
-    int score;
+    private int score;
     private FinishCriteria finishCriteria;
 
-    public AbstractGame(int gameId, FinishCriteriaFactory factory, Context context) {
+    public AbstractGame(int gameId, FinishCriteriaFactory factory, GameActivity context) {
         this.gameId = gameId;
         this.factory = factory;
 
@@ -49,13 +49,13 @@ public abstract class AbstractGame {
         finishCriteria.setOnFinishListener(listener);
     }
 
-    public GameLevel getLevelDescription(int level) {
-        if (level > getMaxLevel()) {
+    public GameLevel getLevelDescription(int levelId) {
+        if (levelId > getMaxLevel()) {
             return null;
         }
 
         GameLevel[] levels = getSpecification().getLevels();
-        return levels[level];
+        return levels[levelId];
     }
 
     public Integer[] getLevelsArray() {
@@ -68,10 +68,6 @@ public abstract class AbstractGame {
     }
 
     public abstract GameSpecification getSpecification();
-
-    private User getUser() {
-        return user;
-    }
 
     public void setUser(User user) {
         this.user = user;

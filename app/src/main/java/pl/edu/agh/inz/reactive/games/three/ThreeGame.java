@@ -9,6 +9,7 @@ import java.util.List;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
+import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.GameLevel;
 import pl.edu.agh.inz.reactive.games.GameRegistry;
 import pl.edu.agh.inz.reactive.games.finish.criteria.FinishCriteriaFactory;
@@ -23,12 +24,12 @@ public class ThreeGame extends AbstractGame {
 
     private ThreeSpecification specification = new ThreeSpecification();
 
-    public ThreeGame(Context context, FinishCriteriaFactory factory) {
+    public ThreeGame(GameActivity context, FinishCriteriaFactory factory) {
         super(factory.isTimeBased() ? GameRegistry.THREE_GAME : GameRegistry.THREE_GAME_TRAINING, factory, context);
     }
 
-    public Level getLevelDescription(int level) {
-        return (Level) super.getLevelDescription(level);
+    public Level getLevelDescription(int levelId) {
+        return (Level) super.getLevelDescription(levelId);
     }
 
     public void onClick(PickableImageView v, PatternImageView pattern) {

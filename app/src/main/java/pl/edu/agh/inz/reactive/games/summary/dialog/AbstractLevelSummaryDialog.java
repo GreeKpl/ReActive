@@ -18,7 +18,7 @@ import pl.edu.agh.inz.reactive.games.GameActivity;
  */
 public abstract class AbstractLevelSummaryDialog extends DialogFragment {
 
-    public static final int PERCENT_TO_WIN= 50;
+    public static final int PERCENT_TO_WIN = 50;
     public static final int PERCENT_FOR_TWO_STARS = 70;
     public static final int PERCENT_FOR_THREE_STARS = 90;
 

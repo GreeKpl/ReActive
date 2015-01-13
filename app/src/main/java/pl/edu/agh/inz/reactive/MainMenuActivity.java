@@ -31,10 +31,8 @@ import pl.edu.agh.inz.reactive.games.three.ThreeActivity;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
 
-    String labelUser;
-    EditText etPassword;
-
-    private static final int TILES_HEIGHT = 300;
+    private String labelUser;
+    private EditText etPassword;
 
     private DatabaseManager db = new DatabaseManager(this);
 
@@ -107,7 +105,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         }
     }
 
-    public void passwordPopup() {
+    private void passwordPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_password, null))
