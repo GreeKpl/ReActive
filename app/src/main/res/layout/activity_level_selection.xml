@@ -14,8 +14,10 @@
         android:text="Wybierz poziom"
         android:id="@+id/textView" />
 
-    <ListView
+    <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/levelList" />
+        android:id="@+id/levelList"
+        android:drawSelectorOnTop="false"
+        android:numColumns="3" />
 </LinearLayout>
