@@ -58,13 +58,13 @@ public abstract class AbstractGame {
         return levels[levelId];
     }
 
-    public Integer[] getLevelsArray() {
+    public String[] getLevelsArray() {
         int maxLevel = this.getUserMaxLevel() + 1;
-        Integer[] ints = new Integer[maxLevel];
+        String[] levels = new String[maxLevel];
         for (int i = 0; i < maxLevel; i++) {
-            ints[i] = i + 1;
+            levels[i] = Integer.toString(i + 1);
         }
-        return ints;
+        return levels;
     }
 
     public abstract GameSpecification getSpecification();

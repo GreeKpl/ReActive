@@ -1,32 +1,26 @@
 package pl.edu.agh.inz.reactive.games.three;
 
+import android.graphics.Point;
+import android.media.MediaPlayer;
+import android.view.View;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import android.graphics.Point;
-import android.media.MediaPlayer;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.finish.criteria.DefaultFinishListener;
-import pl.edu.agh.inz.reactive.games.summary.dialog.LevelSummaryDialogFactory;
-import pl.edu.agh.inz.reactive.games.finish.criteria.FinishListener;
 import pl.edu.agh.inz.reactive.games.three.images.PatternImageView;
 import pl.edu.agh.inz.reactive.games.three.images.PickableImageView;
 
-public class ThreeActivity extends GameActivity /* implements OnClickListener,*/ {
-
-	Random rand = new Random();
+public class ThreeActivity extends GameActivity {
 
     private ThreeGame logic;
 
