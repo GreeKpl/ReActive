@@ -111,7 +111,7 @@ public class RainbowActivity extends GameActivity {
         double height = screenSize.y * size;
         params.width = (int) Math.min(width, height * widthToHeight);
         params.height = (int) Math.min(height, width / widthToHeight);
-        params.setMargins(rand.nextInt(screenSize.x - params.width), rand.nextInt(screenSize.y - params.height), 10, 10);
+        params.setMargins(rand.nextInt(screenSize.x - params.width), rand.nextInt(screenSize.y - params.height), 1, 1);
 
         targetObject.setLayoutParams(params);
         targetObject.setImageResource(imgResource);
@@ -131,7 +131,7 @@ public class RainbowActivity extends GameActivity {
     private BitmapFactory.Options getOriginalDimensions(int imgResource) {
         BitmapFactory.Options dimensions = new BitmapFactory.Options();
         dimensions.inJustDecodeBounds = true;
-        Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), imgResource, dimensions);
+        BitmapFactory.decodeResource(getResources(), imgResource, dimensions);
         return dimensions;
     }
 
