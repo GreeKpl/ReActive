@@ -8,6 +8,7 @@ public interface GameLevel {
     String getPreparationText(); // for next level dialog
     int getPreparationImgResource(); // for next level dialog
 
+    String getDesc();
     int getScoreNeeded();
     int getSeconds();
 }

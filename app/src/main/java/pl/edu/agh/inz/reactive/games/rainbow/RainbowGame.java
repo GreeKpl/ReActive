@@ -54,19 +54,21 @@ public class RainbowGame extends AbstractGame {
         private final int backgroundImg;
         private final int scoreNeeded;
         private final int secondsUntilMove;
+        private final String desc;
 
-        public Level(Builder levelBuilder) {
-            this.scoreNeeded = levelBuilder.scoreNeeded;
-            this.seconds = levelBuilder.seconds;
+        public Level(Builder builder) {
+            this.scoreNeeded = builder.scoreNeeded;
+            this.seconds = builder.seconds;
 
-            this.targets = levelBuilder.targets;
-            this.targetSize = levelBuilder.targetSize;
-            this.secondsUntilMove = levelBuilder.secondsUntilMove;
-            this.otherObjects = levelBuilder.otherObjects;
-            this.otherObjectsSize = levelBuilder.otherObjectsSize;
-            this.targetImg = levelBuilder.targetImg;
-            this.otherImg = levelBuilder.otherImg;
-            this.backgroundImg = levelBuilder.backgroundImg;
+            this.targets = builder.targets;
+            this.targetSize = builder.targetSize;
+            this.secondsUntilMove = builder.secondsUntilMove;
+            this.otherObjects = builder.otherObjects;
+            this.otherObjectsSize = builder.otherObjectsSize;
+            this.targetImg = builder.targetImg;
+            this.otherImg = builder.otherImg;
+            this.backgroundImg = builder.backgroundImg;
+            this.desc = builder.desc;
         }
 
         public int getTargets() {
@@ -89,6 +91,11 @@ public class RainbowGame extends AbstractGame {
 
         public int getSeconds() {
             return seconds;
+        }
+
+        @Override
+        public String getDesc() {
+            return desc;
         }
 
         public int getOtherImg() {
@@ -129,6 +136,7 @@ public class RainbowGame extends AbstractGame {
             private int seconds;
             private int backgroundImg;
             private int secondsUntilMove;
+            private String desc = "";
 
             public Builder(int scoreNeeded, int seconds) {
                 this.scoreNeeded = scoreNeeded;
@@ -147,6 +155,11 @@ public class RainbowGame extends AbstractGame {
                 this.otherObjects = otherObjects;
                 this.otherObjectsSize = otherObjectsSize;
                 this.otherImg = otherImg;
+                return this;
+            }
+
+            public Builder desc(String desc) {
+                this.desc = desc;
                 return this;
             }
 

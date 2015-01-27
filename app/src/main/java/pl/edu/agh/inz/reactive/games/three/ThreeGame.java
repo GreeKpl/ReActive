@@ -56,6 +56,7 @@ public class ThreeGame extends AbstractGame {
         private final int scoreNeeded;
         private final List<Integer> images;
         private final boolean rotatePattern;
+        private final String desc;
 
         public Level(Builder builder) {
             scoreNeeded = builder.scoreNeeded;
@@ -63,6 +64,7 @@ public class ThreeGame extends AbstractGame {
             shownAtOnce = builder.shownAtOnce;
             seconds = builder.seconds;
             this.rotatePattern = builder.rotatePattern;
+            this.desc = builder.desc;
         }
 
         public List<Integer> getImages() {
@@ -80,6 +82,11 @@ public class ThreeGame extends AbstractGame {
         @Override
         public int getSeconds() {
             return seconds;
+        }
+
+        @Override
+        public String getDesc() {
+            return desc;
         }
 
         @Override
@@ -104,6 +111,7 @@ public class ThreeGame extends AbstractGame {
 
             private List<Integer> images;
             private boolean rotatePattern = false;
+            private String desc = "";
 
             public Builder(int scoreNeeded, int shownAtOnce, int seconds) {
                 this.scoreNeeded = scoreNeeded;
@@ -111,8 +119,13 @@ public class ThreeGame extends AbstractGame {
                 this.seconds = seconds;
             }
 
-            public Builder setImages(Integer[] images) {
+            public Builder images(Integer[] images) {
                 this.images = Arrays.asList(images);
+                return this;
+            }
+
+            public Builder desc(String desc) {
+                this.desc = desc;
                 return this;
             }
 
