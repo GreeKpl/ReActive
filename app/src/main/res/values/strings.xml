@@ -8,17 +8,31 @@
     <string name="default_user_name">Profil</string>
     <string name="default_user_surname">domyślny</string>
 
-    //AdminActivity.java
+    //activity_admin
+    <string name="activity_admin_Label_Login">Login:</string>
+    <string name="activity_admin_White_Login">Login</string>
+    <string name="activity_admin_Label_Name">Imię:</string>
+    <string name="activity_admin_White_Name">Imię</string>
+    <string name="activity_admin_White_Surname">Nazwisko</string>
+    <string name="activity_admin_Label_Surname">Nazwisko:</string>
+    <string name="activity_admin_Button_LoginUser">Zaloguj</string>
+    <string name="activity_admin_Button_AddUser">Dodaj</string>
+    <string name="activity_admin_Button_DeleteUser">Usuń</string>
+
     <string name="add_user_information">Dodano użytkownika </string>
     <string name="delete_user_information">Usunięto użytkownika </string>
     <string name="busy_login_information">Użytkownik o danym loginie już istnieje</string>
     <string name="empty_fields_information">Aby dodać nowego użytkownika wypełnij wszystkie pola</string>
     <string name="choose_user_information">Wybierz użytkownika</string>
 
-    //MainMenuActivity.java
-    <string name="admin_dialog_message">Podaj hasło do panelu administratora</string>
-    <string name="positive_button_text">OK</string>
-    <string name="password">admin</string>
+    //activity_level_selection
+    <string name="activity_level_selection_Main_Label">Wybierz poziom</string>
+
+    //dialog_password
+    <string name="dialog_password_Message">Podaj hasło do panelu administratora</string>
+    <string name="dialog_password_Label_Password">Hasło</string>
+    <string name="dialog_password_Positive_Button_Text">OK</string>
+    <string name="dialog_password_Password">admin</string>
 
     //GameFinishedSummaryDialog.java
     <string name="game_finished_summary_dialog_message">Brawo! Wygrywasz całą grę!</string>
@@ -44,5 +58,6 @@
     // LineGraph.java
     <string name="graph_training_day">Dzień ćwiczeń</string>
     <string name="graph_points">Punkty</string>
+
 
 </resources>

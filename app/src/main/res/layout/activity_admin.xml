@@ -14,84 +14,85 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
         android:orientation="vertical"
         android:layout_weight="1" >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20sp"
             android:id="@+id/linear1" >
             <TextView
                 android:id="@+id/tvLogin"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:layout_weight="1"
-                android:text="Login:" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="30sp"
+                android:layout_weight="3"
+                android:text="@string/activity_admin_Label_Login" />
             <EditText
                 android:id="@+id/etLogin"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="30sp"
+                android:layout_weight="2"
                 android:clickable="true"
-                android:hint="Login"
-                android:lines="1"
-                android:linksClickable="true" />
+                android:hint="@string/activity_admin_White_Login"
+                android:linksClickable="true"
+                android:importantForAccessibility="yes"
+                android:singleLine="true" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20sp"
             android:layout_below="@+id/linear1"
             android:id="@+id/linear2" >
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:layout_weight="1"
-                android:text="Imię:" />
+                android:textSize="30sp"
+                android:layout_weight="3"
+                android:text="@string/activity_admin_Label_Name" />
             <EditText
                 android:id="@+id/etName"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:layout_weight="3"
+                android:textSize="30sp"
+                android:layout_weight="2"
                 android:clickable="true"
-                android:hint="Imię"
+                android:hint="@string/activity_admin_White_Name"
                 android:capitalize="words"
-                android:lines="1" />
+                android:singleLine="true" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20sp"
             android:layout_below="@+id/linear2"
             android:id="@+id/linear3" >
             <TextView
                 android:id="@+id/tvSurname"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:layout_weight="1"
-                android:text="Nazwisko:" />
+                android:textSize="30sp"
+                android:layout_weight="3"
+                android:text="@string/activity_admin_Label_Surname" />
             <EditText
                 android:id="@+id/etSurname"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:layout_weight="3"
+                android:textSize="30sp"
+                android:layout_weight="2"
                 android:clickable="true"
-                android:hint="Nazwisko"
-                android:lines="1"
+                android:hint="@string/activity_admin_White_Surname"
+                android:singleLine="true"
                 android:capitalize="words" />
         </LinearLayout>
 
@@ -100,14 +101,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textSize="20dp" />
+            android:layout_marginTop="5sp"
+            android:textSize="20sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10sp"
             android:layout_below="@+id/linear3"
             android:id="@+id/linear4" >
             <Button
@@ -115,34 +116,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="30dp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:textSize="25sp"
                 android:background="@color/btnLoginUser"
-                android:text="Zaloguj" />
+                android:text="@string/activity_admin_Button_LoginUser" />
             <Button
                 android:id="@+id/buttonAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="30dp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:textSize="25sp"
                 android:background="@color/btnAddUser"
-                android:text="Dodaj" />
+                android:text="@string/activity_admin_Button_AddUser" />
             <Button
                 android:id="@+id/buttonDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="30dp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:textSize="25sp"
                 android:background="@color/btnDeleteUser"
-                android:text="Usuń" />
+                android:text="@string/activity_admin_Button_DeleteUser" />
         </LinearLayout>
     </LinearLayout>
 

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Wybierz poziom"
+        android:text="@string/activity_level_selection_Main_Label"
         android:id="@+id/textView" />
 
     <GridView

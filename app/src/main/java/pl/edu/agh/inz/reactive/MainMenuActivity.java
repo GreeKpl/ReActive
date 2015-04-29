@@ -2,12 +2,9 @@ package pl.edu.agh.inz.reactive;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,19 +12,15 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.devsmart.android.ui.HorizontialListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.GameRegistry;
-import pl.edu.agh.inz.reactive.games.rainbow.RainbowActivity;
-import pl.edu.agh.inz.reactive.games.three.ThreeActivity;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
 
@@ -109,10 +102,10 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_password, null))
-                .setPositiveButton(getString(R.string.positive_button_text),
+                .setPositiveButton(getString(R.string.dialog_password_Positive_Button_Text),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                if (etPassword.getText().toString().equals(getString(R.string.password))) {
+                                if (etPassword.getText().toString().equals(getString(R.string.dialog_password_Password))) {
                                     goLogin();
                                 }
                             }
