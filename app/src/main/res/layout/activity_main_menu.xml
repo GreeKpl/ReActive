@@ -16,7 +16,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="10sp" >
+            android:layout_margin="10dp" >
 
             <TextView
                 android:id="@+id/tvLabelUser"
@@ -34,16 +34,15 @@
                 android:textStyle="bold" />
 
             <View
-                android:layout_width="0sp"
-                android:layout_height="0sp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_weight="1" />
 
             <ImageButton
                 android:id="@+id/btnAdminPanel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/redorb"
-                android:layout_margin="10sp"/>
+                android:background="@drawable/redorb"/>
         </LinearLayout>
 
         <com.devsmart.android.ui.HorizontialListView
@@ -52,23 +51,21 @@
             android:layout_height="match_parent"
             android:stretchMode="columnWidth"
             android:layout_weight="1"
-            android:horizontalSpacing="0sp"
-            android:verticalSpacing="0sp"/>
-        <!--android:layout_height="450sp"-->
+            android:horizontalSpacing="0dp"
+            android:verticalSpacing="0dp"/>
 
-    <Button
-        android:id="@+id/btnSeeResults"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="@color/btnSeeResults"
-        android:text="@string/btnSeeResults_text"
-        android:layout_weight="2"
-        android:maxHeight="60sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginBottom="20sp"
-
-        android:padding="30sp"
-        android:textSize="30sp" />
+        <Button
+            android:id="@+id/btnSeeResults"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@color/btnSeeResults"
+            android:text="@string/btnSeeResults_text"
+            android:layout_weight="2"
+            android:layout_gravity="bottom"
+            android:maxHeight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 </LinearLayout>
 
 </FrameLayout>
