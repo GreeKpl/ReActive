@@ -196,9 +196,7 @@ public class AdminActivity extends Activity implements OnClickListener {
 			newfl = true;
 		} else {
 			if (newfl) {
-				loginUser.setText("");
-				nameUser.setText("");
-				surnameUser.setText("");
+				cleanEditText();
 				newfl = false;
 			}
 			bAddUser.setVisibility(View.VISIBLE);

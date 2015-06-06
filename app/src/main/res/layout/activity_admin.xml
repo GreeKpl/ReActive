@@ -14,28 +14,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/activity_admin_margin"
+        android:layout_marginLeft="@dimen/activity_admin_margin"
+        android:layout_marginRight="@dimen/activity_admin_margin"
         android:orientation="vertical"
         android:layout_weight="1" >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_admin_margin_between"
             android:id="@+id/linear1" >
             <TextView
                 android:id="@+id/tvLogin"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/activity_admin_textSize"
                 android:layout_weight="3"
                 android:text="@string/activity_admin_Label_Login" />
             <EditText
                 android:id="@+id/etLogin"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="30sp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/activity_admin_textSize"
                 android:layout_weight="2"
                 android:clickable="true"
                 android:hint="@string/activity_admin_White_Login"
@@ -48,21 +50,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/activity_admin_margin_between"
             android:layout_below="@+id/linear1"
             android:id="@+id/linear2" >
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="@dimen/activity_admin_textSize"
                 android:layout_weight="3"
                 android:text="@string/activity_admin_Label_Name" />
             <EditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="@dimen/activity_admin_textSize"
                 android:layout_weight="2"
                 android:clickable="true"
                 android:hint="@string/activity_admin_White_Name"
@@ -74,21 +76,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/activity_admin_margin_between"
             android:layout_below="@+id/linear2"
             android:id="@+id/linear3" >
             <TextView
                 android:id="@+id/tvSurname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="@dimen/activity_admin_textSize"
                 android:layout_weight="3"
                 android:text="@string/activity_admin_Label_Surname" />
             <EditText
                 android:id="@+id/etSurname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="@dimen/activity_admin_textSize"
                 android:layout_weight="2"
                 android:clickable="true"
                 android:hint="@string/activity_admin_White_Surname"
@@ -116,9 +118,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:textSize="25sp"
+                android:textSize="@dimen/activity_admin_button_textSize"
                 android:background="@color/btnLoginUser"
                 android:text="@string/activity_admin_Button_LoginUser" />
             <Button
@@ -128,7 +129,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:textSize="25sp"
+                android:textSize="@dimen/activity_admin_button_textSize"
                 android:background="@color/btnAddUser"
                 android:text="@string/activity_admin_Button_AddUser" />
             <Button
@@ -137,8 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="25sp"
+                android:textSize="@dimen/activity_admin_button_textSize"
                 android:background="@color/btnDeleteUser"
                 android:text="@string/activity_admin_Button_DeleteUser" />
         </LinearLayout>

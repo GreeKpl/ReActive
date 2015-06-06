@@ -16,21 +16,21 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="10dp" >
+            android:layout_margin="@dimen/activity_main_menu_margin_title_bar" >
 
             <TextView
                 android:id="@+id/tvLabelUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_prefix"
-                android:textSize="20sp" />
+                android:textSize="@dimen/activity_main_menu_title_textSize" />
 
             <TextView
                 android:id="@+id/tvLoginUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="20sp"
+                android:textSize="@dimen/activity_main_menu_title_textSize"
                 android:textStyle="bold" />
 
             <View
@@ -40,9 +40,9 @@
 
             <ImageButton
                 android:id="@+id/btnAdminPanel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/redorb"/>
+                android:layout_width="@dimen/activity_main_menu_redorb_size"
+                android:layout_height="@dimen/activity_main_menu_redorb_size"
+                android:background="@drawable/redorb" />
         </LinearLayout>
 
         <com.devsmart.android.ui.HorizontialListView
@@ -62,10 +62,9 @@
             android:text="@string/btnSeeResults_text"
             android:layout_weight="2"
             android:layout_gravity="bottom"
-            android:maxHeight="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textSize="@dimen/activity_main_menu_button_textSize"
+            android:maxHeight="20dp"
+            android:layout_marginBottom="@dimen/activity_main_menu_margin_bottom" />
 </LinearLayout>
 
 </FrameLayout>
