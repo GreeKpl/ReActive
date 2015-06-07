@@ -4,14 +4,28 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="activity_admin_textSize">20sp</dimen>
-    <dimen name="activity_admin_margin_between">8sp</dimen>
-    <dimen name="activity_admin_margin">10sp</dimen>
+    <dimen name="activity_admin_margin_between">8dp</dimen>
+    <dimen name="activity_admin_margin">10dp</dimen>
     <dimen name="activity_admin_item_textSize">20sp</dimen>
     <dimen name="activity_admin_button_textSize">20sp</dimen>
 
     <dimen name="activity_main_menu_button_textSize">15sp</dimen>
-    <dimen name="activity_main_menu_margin_bottom">10sp</dimen>
-    <dimen name="activity_main_menu_margin_title_bar">10sp</dimen>
+    <dimen name="activity_main_menu_margin_bottom">10dp</dimen>
+    <dimen name="activity_main_menu_margin_title_bar">10dp</dimen>
+    <dimen name="activity_main_menu_margin_list_top">2dp</dimen>
     <dimen name="activity_main_menu_title_textSize">18sp</dimen>
     <dimen name="activity_main_menu_redorb_size">30dp</dimen>
+
+    <dimen name="activity_three_margin">4dp</dimen>
+
+    <item name="line_graph_legend_text_size" format="integer" type="integer">10</item>
+    <item name="line_graph_labels_text_size" format="integer" type="integer">15</item>
+    <item name="line_graph_title_text_size" format="integer" type="integer">15</item>
+    <item name="line_graph_legend_height" format="integer" type="integer">50</item>
+    <item name="line_graph_margin_top" format="integer" type="integer">10</item>
+    <item name="line_graph_margin_left" format="integer" type="integer">50</item>
+    <item name="line_graph_margin_bottom" format="integer" type="integer">15</item>
+    <item name="line_graph_margin_right" format="integer" type="integer">10</item>
+    <item name="line_graph_x_labels" format="integer" type="integer">8</item>
+    <item name="line_graph_y_labels" format="integer" type="integer">8</item>
 </resources>

@@ -80,17 +80,17 @@ public class LineGraph {
 		mRenderer.setXAxisMin(0);
 		mRenderer.setYAxisMin(0);
 
-        mRenderer.setAxisTitleTextSize(20);
+        mRenderer.setAxisTitleTextSize(context.getResources().getInteger(R.integer.line_graph_title_text_size));
         mRenderer.setLabelsColor(context.getResources().getColor(R.color.graph_axes_labels));
 		mRenderer.setXTitle(context.getString(R.string.graph_training_day));
 		mRenderer.setYTitle(context.getString(R.string.graph_points));
 
-		mRenderer.setLegendTextSize(20);
-        mRenderer.setLegendHeight(50);
+		mRenderer.setLegendTextSize(context.getResources().getInteger(R.integer.line_graph_legend_text_size));
+        mRenderer.setLegendHeight(context.getResources().getInteger(R.integer.line_graph_legend_height));
 
-        mRenderer.setLabelsTextSize(20);    //liczby
-        mRenderer.setYLabels(10);
-        mRenderer.setXLabels(10);
+        mRenderer.setLabelsTextSize(context.getResources().getInteger(R.integer.line_graph_labels_text_size));    //liczby
+        mRenderer.setYLabels(context.getResources().getInteger(R.integer.line_graph_y_labels));
+        mRenderer.setXLabels(context.getResources().getInteger(R.integer.line_graph_x_labels));
         mRenderer.setXLabelsColor(context.getResources().getColor(R.color.graph_x_label));
         mRenderer.setYLabelsColor(0, context.getResources().getColor(R.color.graph_y_label));
         mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
@@ -104,7 +104,12 @@ public class LineGraph {
         mRenderer.setBackgroundColor(context.getResources().getColor(R.color.graph_background));
         mRenderer.setApplyBackgroundColor(true);
 
-        mRenderer.setMargins(new int[] {20, 70, 30, 20});
+        mRenderer.setMargins(new int[] {
+                context.getResources().getInteger(R.integer.line_graph_margin_top),
+                context.getResources().getInteger(R.integer.line_graph_margin_left),
+                context.getResources().getInteger(R.integer.line_graph_margin_bottom),
+                context.getResources().getInteger(R.integer.line_graph_margin_right)
+        });
 
 
 		Intent intent = ChartFactory.getLineChartIntent(context, dataset, mRenderer, labelUser);

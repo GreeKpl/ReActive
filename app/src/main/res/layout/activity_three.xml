@@ -2,30 +2,31 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    android:weightSum="1">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="340dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="@dimen/activity_three_margin">
 
         <pl.edu.agh.inz.reactive.games.three.images.PatternImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/patternImageView"
-            android:layout_gravity="top" />
+            android:id="@+id/patternImageView" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/activity_three_margin"
+        android:layout_gravity="center"
         android:id="@+id/pickableElements">
 
     </LinearLayout>

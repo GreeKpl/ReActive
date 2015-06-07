@@ -50,9 +50,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:stretchMode="columnWidth"
-            android:layout_weight="1"
-            android:horizontalSpacing="0dp"
-            android:verticalSpacing="0dp"/>
+            android:layout_weight="2"
+            android:layout_marginTop="@dimen/activity_main_menu_margin_list_top"
+            android:layout_gravity="center_horizontal" />
 
         <Button
             android:id="@+id/btnSeeResults"
@@ -60,10 +60,8 @@
             android:layout_height="match_parent"
             android:background="@color/btnSeeResults"
             android:text="@string/btnSeeResults_text"
-            android:layout_weight="2"
-            android:layout_gravity="bottom"
+            android:layout_weight="5"
             android:textSize="@dimen/activity_main_menu_button_textSize"
-            android:maxHeight="20dp"
             android:layout_marginBottom="@dimen/activity_main_menu_margin_bottom" />
 </LinearLayout>
 
