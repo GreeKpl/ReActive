@@ -28,4 +28,5 @@
     <item name="line_graph_margin_right" format="integer" type="integer">10</item>
     <item name="line_graph_x_labels" format="integer" type="integer">8</item>
     <item name="line_graph_y_labels" format="integer" type="integer">8</item>
+    <item name="line_graph_line_width" format="integer" type="integer">1</item>
 </resources>

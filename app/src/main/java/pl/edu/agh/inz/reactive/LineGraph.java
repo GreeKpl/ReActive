@@ -71,6 +71,7 @@ public class LineGraph {
             renderer.setColor(context.getResources().getColor(graphColors.get(serialNumber)));
             renderer.setPointStyle(PointStyle.CIRCLE);
             renderer.setFillPoints(true);
+            renderer.setLineWidth(context.getResources().getInteger(R.integer.line_graph_line_width));
             mRenderer.addSeriesRenderer(renderer);
 
             serialNumber++;
