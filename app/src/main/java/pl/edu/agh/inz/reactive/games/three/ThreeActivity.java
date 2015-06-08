@@ -60,11 +60,11 @@ public class ThreeActivity extends GameActivity {
             rotateImage(patternElement);
         }
 
-        int imgSize = screenSize.x / level.getShownAtOnce() - 50; // it should be possible to have 5 images next to each other
+        int imgSize = screenSize.y / 2 - 50; // it should be possible to have 5 images next to each other
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imgSize, imgSize);
+        layoutParams.gravity = 16;  //16 is center
         patternElement.setLayoutParams(layoutParams);
-        patternElement.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
 
         LinearLayout pickableElements = (LinearLayout) this.findViewById(R.id.pickableElements);
@@ -72,8 +72,11 @@ public class ThreeActivity extends GameActivity {
         pickablesList = new ArrayList<PickableImageView>();
         for (int i = 0; i < level.getShownAtOnce(); i++) { // create pickable objects
             PickableImageView pickable = createPickableImageView();
+            int paddingmargin = this.getResources().getInteger(R.integer.tree_activity_padding_margin);
+            pickable.setPadding(paddingmargin, 0, paddingmargin, 0);
             pickablesList.add(pickable);
             pickableElements.addView(pickable);
+            pickableElements.setGravity(16);    //16 is center
         }
 
         timer = new ScheduledThreadPoolExecutor(1);
@@ -97,7 +100,7 @@ public class ThreeActivity extends GameActivity {
     private PickableImageView createPickableImageView() {
         PickableImageView pickable = new PickableImageView(this);
 
-        int imgSize = screenSize.x / level.getShownAtOnce() - 50; // it should be possible to have 5 images next to each other
+        int imgSize = Math.min(screenSize.y / 2 - 50, ((screenSize.x - 50) / level.getShownAtOnce())); // it should be possible to have 5 images next to each other
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imgSize, imgSize);
         pickable.setLayoutParams(layoutParams);
 

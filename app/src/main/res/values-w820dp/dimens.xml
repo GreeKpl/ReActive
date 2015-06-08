@@ -30,4 +30,6 @@
     <item name="line_graph_x_labels" format="integer" type="integer">10</item>
     <item name="line_graph_y_labels" format="integer" type="integer">10</item>
     <item name="line_graph_line_width" format="integer" type="integer">2</item>
+
+    <item name="tree_activity_padding_margin" format="integer" type="integer">10</item>
 </resources>

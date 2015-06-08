@@ -1,6 +1,5 @@
 package pl.edu.agh.inz.reactive.games.rainbow;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.view.View;
@@ -41,13 +40,13 @@ public class RainbowActivity extends GameActivity {
 
     @Override
     public void startLevel(int levelId) {
-        setContentView(R.layout.activity_sea);
+        setContentView(R.layout.activity_rainbow);
 
         logic.startLevel(levelId);
 
         level = logic.getLevelDescription(levelId);
 
-        layout = (RelativeLayout)findViewById(R.id.seaLayout);
+        layout = (RelativeLayout)findViewById(R.id.rainbowLayout);
         layout.setBackgroundResource(level.getBackgroundImg());
 
         targetObjectsNow = new ArrayList<ImageView>();
@@ -105,13 +104,12 @@ public class RainbowActivity extends GameActivity {
         BitmapFactory.Options originalDim = getOriginalDimensions(imgResource);
         double widthToHeight = 1.0 * originalDim.outWidth / originalDim.outHeight;
 
-
         Point screenSize = getScreenSize();
-        double width = screenSize.x * size;
-        double height = screenSize.y * size;
+        double width = originalDim.outWidth * size;
+        double height = originalDim.outHeight * size;
         params.width = (int) Math.min(width, height * widthToHeight);
         params.height = (int) Math.min(height, width / widthToHeight);
-        params.setMargins(rand.nextInt(screenSize.x - params.width), rand.nextInt(screenSize.y - params.height), 1, 1);
+        params.setMargins(rand.nextInt(screenSize.x - params.width - 1), rand.nextInt(screenSize.y - params.height - 1 - 60), 1, 1);
 
         targetObject.setLayoutParams(params);
         targetObject.setImageResource(imgResource);
