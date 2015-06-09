@@ -71,6 +71,8 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         }
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(5, 0, 5, 0);
+        lp.height = this.getResources().getInteger(R.integer.level_passed_summary_dialog_star_size);
+        lp.width = this.getResources().getInteger(R.integer.level_passed_summary_dialog_star_size);
         star.setLayoutParams(lp);
         return star;
     }

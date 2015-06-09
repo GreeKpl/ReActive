@@ -105,8 +105,8 @@ public class RainbowActivity extends GameActivity {
         double widthToHeight = 1.0 * originalDim.outWidth / originalDim.outHeight;
 
         Point screenSize = getScreenSize();
-        double width = originalDim.outWidth * size;
-        double height = originalDim.outHeight * size;
+        double width = screenSize.x * size;
+        double height = screenSize.y * size;
         params.width = (int) Math.min(width, height * widthToHeight);
         params.height = (int) Math.min(height, width / widthToHeight);
         params.setMargins(rand.nextInt(screenSize.x - params.width - 1), rand.nextInt(screenSize.y - params.height - 1 - 60), 1, 1);

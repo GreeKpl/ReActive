@@ -19,6 +19,12 @@
 
     <dimen name="activity_three_margin">10dp</dimen>
 
+    <dimen name="dialog_preparation_images_for_level_size">200dp</dimen>
+    <dimen name="dialog_preparation_textSize">20sp</dimen>
+
+    <dimen name="dialog_level_summary_textSize">20sp</dimen>
+    <dimen name="dialog_level_summary_image_size">200dp</dimen>
+
     <item name="line_graph_legend_text_size" format="integer" type="integer">20</item>
     <item name="line_graph_labels_text_size" format="integer" type="integer">20</item>
     <item name="line_graph_title_text_size" format="integer" type="integer">20</item>
@@ -32,4 +38,6 @@
     <item name="line_graph_line_width" format="integer" type="integer">2</item>
 
     <item name="tree_activity_padding_margin" format="integer" type="integer">10</item>
+
+    <item name="level_passed_summary_dialog_star_size" format="integer" type="integer">60</item>
 </resources>
