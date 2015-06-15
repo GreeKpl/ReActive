@@ -1,6 +1,7 @@
 package pl.edu.agh.inz.reactive.games.summary.dialog;
 
 import android.app.AlertDialog;
+import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -71,8 +72,10 @@ public class LevelPassedSummaryDialog extends AbstractLevelSummaryDialog {
         }
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(5, 0, 5, 0);
-        lp.height = this.getResources().getInteger(R.integer.level_passed_summary_dialog_star_size);
-        lp.width = this.getResources().getInteger(R.integer.level_passed_summary_dialog_star_size);
+        Point screenSize = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(screenSize);
+        lp.height = screenSize.y / 10;
+        lp.width = screenSize.y / 10;
         star.setLayoutParams(lp);
         return star;
     }

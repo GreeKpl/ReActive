@@ -10,6 +10,8 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.view.WindowManager;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -26,7 +28,7 @@ public class LineGraph {
         R.color.graph_9, R.color.graph_10, R.color.graph_11, R.color.graph_12,
         R.color.graph_13, R.color.graph_14, R.color.graph_15, R.color.graph_16);
 
-	public Intent getIntent(Context context) {
+	public Intent getIntent(Context context, int screenHeight) {
 
         DatabaseManager db = new DatabaseManager(context);
         db.open();
@@ -81,17 +83,17 @@ public class LineGraph {
 		mRenderer.setXAxisMin(0);
 		mRenderer.setYAxisMin(0);
 
-        mRenderer.setAxisTitleTextSize(context.getResources().getInteger(R.integer.line_graph_title_text_size));
+        mRenderer.setAxisTitleTextSize(screenHeight/25);
         mRenderer.setLabelsColor(context.getResources().getColor(R.color.graph_axes_labels));
 		mRenderer.setXTitle(context.getString(R.string.graph_training_day));
 		mRenderer.setYTitle(context.getString(R.string.graph_points));
 
-		mRenderer.setLegendTextSize(context.getResources().getInteger(R.integer.line_graph_legend_text_size));
-        mRenderer.setLegendHeight(context.getResources().getInteger(R.integer.line_graph_legend_height));
+		mRenderer.setLegendTextSize(screenHeight/25);
+        mRenderer.setLegendHeight(screenHeight/10);
 
-        mRenderer.setLabelsTextSize(context.getResources().getInteger(R.integer.line_graph_labels_text_size));    //liczby
-        mRenderer.setYLabels(context.getResources().getInteger(R.integer.line_graph_y_labels));
-        mRenderer.setXLabels(context.getResources().getInteger(R.integer.line_graph_x_labels));
+        mRenderer.setLabelsTextSize(screenHeight/25);//liczby
+        mRenderer.setYLabels(screenHeight/45);
+        mRenderer.setXLabels(screenHeight/45);
         mRenderer.setXLabelsColor(context.getResources().getColor(R.color.graph_x_label));
         mRenderer.setYLabelsColor(0, context.getResources().getColor(R.color.graph_y_label));
         mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
@@ -105,17 +107,13 @@ public class LineGraph {
         mRenderer.setBackgroundColor(context.getResources().getColor(R.color.graph_background));
         mRenderer.setApplyBackgroundColor(true);
 
-        mRenderer.setMargins(new int[] {
-                context.getResources().getInteger(R.integer.line_graph_margin_top),
-                context.getResources().getInteger(R.integer.line_graph_margin_left),
-                context.getResources().getInteger(R.integer.line_graph_margin_bottom),
-                context.getResources().getInteger(R.integer.line_graph_margin_right)
-        });
+        mRenderer.setMargins(new int[] { screenHeight/30, screenHeight/7, screenHeight/12, screenHeight/30 });
 
 
 		Intent intent = ChartFactory.getLineChartIntent(context, dataset, mRenderer, labelUser);
         db.close();
 		return intent;
 	}
+
 
 }

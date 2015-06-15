@@ -24,19 +24,7 @@
     <dimen name="dialog_level_summary_textSize">15sp</dimen>
     <dimen name="dialog_level_summary_image_size">100dp</dimen>
 
-    <item name="line_graph_legend_text_size" format="integer" type="integer">10</item>
-    <item name="line_graph_labels_text_size" format="integer" type="integer">15</item>
-    <item name="line_graph_title_text_size" format="integer" type="integer">15</item>
-    <item name="line_graph_legend_height" format="integer" type="integer">50</item>
-    <item name="line_graph_margin_top" format="integer" type="integer">10</item>
-    <item name="line_graph_margin_left" format="integer" type="integer">50</item>
-    <item name="line_graph_margin_bottom" format="integer" type="integer">15</item>
-    <item name="line_graph_margin_right" format="integer" type="integer">10</item>
-    <item name="line_graph_x_labels" format="integer" type="integer">8</item>
-    <item name="line_graph_y_labels" format="integer" type="integer">8</item>
-    <item name="line_graph_line_width" format="integer" type="integer">1</item>
+    <item name="line_graph_line_width" format="integer" type="integer">2</item>
 
     <item name="tree_activity_padding_margin" format="integer" type="integer">10</item>
-
-    <item name="level_passed_summary_dialog_star_size" format="integer" type="integer">30</item>
 </resources>

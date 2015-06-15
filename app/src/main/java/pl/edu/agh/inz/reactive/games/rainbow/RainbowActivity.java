@@ -2,6 +2,7 @@ package pl.edu.agh.inz.reactive.games.rainbow;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -107,9 +108,16 @@ public class RainbowActivity extends GameActivity {
         Point screenSize = getScreenSize();
         double width = screenSize.x * size;
         double height = screenSize.y * size;
+
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int statusBarHeight = rect.top;
+        int contentViewTop = getWindow().findViewById(getWindow().ID_ANDROID_CONTENT).getTop();
+        int titleBarHeight = contentViewTop - statusBarHeight;
+
         params.width = (int) Math.min(width, height * widthToHeight);
         params.height = (int) Math.min(height, width / widthToHeight);
-        params.setMargins(rand.nextInt(screenSize.x - params.width - 1), rand.nextInt(screenSize.y - params.height - 1 - 60), 1, 1);
+        params.setMargins(rand.nextInt(screenSize.x - params.width - 1), rand.nextInt(screenSize.y - params.height - 40 - titleBarHeight), 1, 1);
 
         targetObject.setLayoutParams(params);
         targetObject.setImageResource(imgResource);

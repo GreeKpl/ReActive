@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,10 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
     private void showGraph(View view) {
         LineGraph line = new LineGraph();
-        Intent intent = line.getIntent(this);
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        System.out.println("====="+size.y);
+        Intent intent = line.getIntent(this, size.y);
         startActivity(intent);
 
     }
