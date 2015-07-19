@@ -6,6 +6,7 @@ import java.util.List;
 
 import pl.edu.agh.inz.reactive.GameDescriptor;
 import pl.edu.agh.inz.reactive.R;
+import pl.edu.agh.inz.reactive.games.fit.FitActivity;
 import pl.edu.agh.inz.reactive.games.rainbow.RainbowActivity;
 import pl.edu.agh.inz.reactive.games.three.ThreeActivity;
 
@@ -23,6 +24,8 @@ public class GameRegistry {
     public static final int RAINBOW_GAME_TRAINING = 2;
     public static final int THREE_GAME = 3;
     public static final int THREE_GAME_TRAINING = 4;
+    public static final int FIT_GAME = 5;
+    public static final int FIT_GAME_TRAINING = 6;
 
     // GAME IDS LIST END
 
@@ -34,6 +37,8 @@ public class GameRegistry {
         games.add(new GameDescriptor(RAINBOW_GAME_TRAINING, "Rainbow Training", RainbowActivity.class, false, R.drawable.promo_rainbow));
         games.add(new GameDescriptor(THREE_GAME, "Three", ThreeActivity.class, true, R.drawable.promo_three_time));
         games.add(new GameDescriptor(THREE_GAME_TRAINING, "Three Training", ThreeActivity.class, false, R.drawable.promo_three));
+        games.add(new GameDescriptor(FIT_GAME, "Fit", FitActivity.class, true, R.drawable.promo_fit_time));
+        games.add(new GameDescriptor(FIT_GAME_TRAINING, "Fit Training", FitActivity.class, false, R.drawable.promo_fit));
 
 
         // GAMES LIST END

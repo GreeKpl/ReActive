@@ -24,6 +24,9 @@
             android:name=".games.three.ThreeActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".games.fit.FitActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".AdminActivity"
             android:screenOrientation="landscape" />
         <activity
