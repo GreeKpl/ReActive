@@ -34,7 +34,6 @@ public class FitActivity extends GameActivity {
         logic.startLevel(levelId);
 
         level = logic.getLevelDescription(levelId);
-        System.out.println("================== startLevel =================");
 
         layout = (RelativeLayout)findViewById(R.id.fitLayout);
         layout.setBackgroundResource(R.drawable.tapeta);
@@ -66,8 +65,6 @@ public class FitActivity extends GameActivity {
         ImageView image = new ImageView(this);
         image.setImageResource(imgResource);
 
-        System.out.println("****************HEJ***************");
-
         int chunkWidth = image.getWidth() / cols;
         int chunkHeight = image.getHeight() / rows;
 
@@ -86,7 +83,6 @@ public class FitActivity extends GameActivity {
         imageView.setImageDrawable(bmd);
 
         layout.addView(imageView);
-        System.out.println("****************HEJO***************");
     }
 
 }
