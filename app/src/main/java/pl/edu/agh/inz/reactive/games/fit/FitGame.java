@@ -35,11 +35,9 @@ public class FitGame extends AbstractGame {
         private final int rows;
         private final int columns;
         private final int image;
-        private final int scoreNeeded;
         private final String desc;
 
         public Level(Builder builder) {
-            this.scoreNeeded = builder.scoreNeeded;
             this.image = builder.image;
             seconds = builder.seconds;
             this.desc = builder.desc;
@@ -64,7 +62,7 @@ public class FitGame extends AbstractGame {
 
         @Override
         public int getScoreNeeded() {
-            return scoreNeeded;
+            return 0;
         }
 
         @Override
@@ -89,13 +87,11 @@ public class FitGame extends AbstractGame {
             private final int rows;
             private final int columns;
             private int image;
-            private final int scoreNeeded;
             private String desc = "";
 
-            public Builder(int rows, int columns, int scoreNeeded, int seconds) {
+            public Builder(int rows, int columns, int seconds) {
                 this.rows = rows;
                 this.columns = columns;
-                this.scoreNeeded = scoreNeeded;
                 this.seconds = seconds;
             }
 

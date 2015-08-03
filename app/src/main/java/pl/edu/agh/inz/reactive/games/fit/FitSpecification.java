@@ -13,8 +13,15 @@ public class FitSpecification implements GameSpecification {
     private static final int SEC_PER_LEVEL = 30;
 
     private Level[] levels = new Level[] {
-            new Level.Builder(2, 2, 1, SEC_PER_LEVEL).desc("morze").image(morze).build(),
-            new Level.Builder(2, 2, 1, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("morze").image(morze).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
+            new Level.Builder(2, 2, SEC_PER_LEVEL).desc("tapeta").image(tapeta).build(),
     };
 
     @Override
