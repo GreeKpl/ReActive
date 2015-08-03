@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import pl.edu.agh.inz.reactive.R;
 import pl.edu.agh.inz.reactive.games.AbstractGame;
@@ -36,7 +37,9 @@ public class FitActivity extends GameActivity {
         level = logic.getLevelDescription(levelId);
 
         layout = (RelativeLayout)findViewById(R.id.fitLayout);
-        layout.setBackgroundResource(R.drawable.tapeta);
+        layout.setBackgroundResource(level.getImage());
+
+        timer = new ScheduledThreadPoolExecutor(1);
 
         logic.setFinishListener(new DefaultFinishListener(logic, level, this));
 

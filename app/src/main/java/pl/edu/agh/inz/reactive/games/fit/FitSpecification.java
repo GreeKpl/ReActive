@@ -10,7 +10,7 @@ import static pl.edu.agh.inz.reactive.R.drawable.*;
  */
 public class FitSpecification implements GameSpecification {
 
-    private static final int SEC_PER_LEVEL = 30;
+    private static final int SEC_PER_LEVEL = 3;
 
     private Level[] levels = new Level[] {
             //row, columns

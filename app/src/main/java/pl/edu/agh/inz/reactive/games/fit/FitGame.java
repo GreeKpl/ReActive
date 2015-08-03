@@ -52,7 +52,7 @@ public class FitGame extends AbstractGame {
 
         @Override
         public int getPreparationImgResource() {
-            return R.drawable.fit_double_tap;
+            return image;
         }
 
         @Override
