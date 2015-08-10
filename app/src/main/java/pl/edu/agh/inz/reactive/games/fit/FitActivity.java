@@ -1,12 +1,15 @@
 package pl.edu.agh.inz.reactive.games.fit;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.Random;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +29,7 @@ public class FitActivity extends GameActivity {
     private FitGame.Level level;
     private RelativeLayout layout;
     private ImageView mainImageView;
+    private Random random = new Random();
     private ScheduledThreadPoolExecutor timer;
 
     @Override
@@ -37,13 +41,13 @@ public class FitActivity extends GameActivity {
         level = logic.getLevelDescription(levelId);
 
         layout = (RelativeLayout)findViewById(R.id.fitLayout);
-        layout.setBackgroundResource(level.getImage());
+        layout.setBackgroundColor(Color.BLACK);
 
         timer = new ScheduledThreadPoolExecutor(1);
 
         logic.setFinishListener(new DefaultFinishListener(logic, level, this));
 
-//        splitImage(morze, 3, 4);
+        splitImage(morze, 3, 4);
     }
 
     @Override
@@ -65,27 +69,28 @@ public class FitActivity extends GameActivity {
     }
 
     public void splitImage(int imgResource, int rows, int cols) {
-        ImageView image = new ImageView(this);
-        image.setImageResource(imgResource);
 
-        int chunkWidth = image.getWidth() / cols;
-        int chunkHeight = image.getHeight() / rows;
+        Bitmap bMap = BitmapFactory.decodeResource(getResources(), imgResource);
+        int chunkWidth = bMap.getWidth() / cols;
+        int chunkHeight = bMap.getHeight() / rows;
+        Bitmap bMapScaled = Bitmap.createScaledBitmap(bMap, bMap.getWidth(), bMap.getHeight(), true);
 
-        float scaleWidth = ((float) chunkWidth) / image.getWidth();
-        float scaleHeight = ((float) chunkHeight) / image.getHeight();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                int cornerX = j * chunkWidth;
+                int cornerY = i * chunkHeight;
 
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleWidth, scaleHeight);
+                Bitmap bitmap = Bitmap.createBitmap(bMapScaled, cornerX, cornerY, chunkWidth, chunkHeight);
 
-        Bitmap resizedBitmap = Bitmap.createBitmap(image.getDrawingCache(), 0, 0, 50, 50, matrix, true);
-
-        BitmapDrawable bmd = new BitmapDrawable(resizedBitmap);
-
-        ImageView imageView = new ImageView(this);
-
-        imageView.setImageDrawable(bmd);
-
-        layout.addView(imageView);
+                ImageView imageView = new ImageView(this);
+                imageView.setImageBitmap(bitmap);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(chunkWidth, chunkHeight);
+                params.topMargin = random.nextInt(bMap.getHeight() - chunkHeight);
+                params.leftMargin = random.nextInt(bMap.getWidth() - chunkWidth);
+                imageView.setRotation(random.nextInt(90));
+                layout.addView(imageView, params);
+            }
+        }
     }
 
 }
