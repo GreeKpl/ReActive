@@ -1,11 +1,17 @@
 package pl.edu.agh.inz.reactive.games.fit;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -28,10 +34,10 @@ public class FitActivity extends GameActivity {
     private FitGame logic;
     private FitGame.Level level;
     private RelativeLayout layout;
-    private ImageView mainImageView;
     private Random random = new Random();
     private ScheduledThreadPoolExecutor timer;
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void startLevel(int levelId) {
         setContentView(R.layout.activity_fit);
@@ -41,7 +47,12 @@ public class FitActivity extends GameActivity {
         level = logic.getLevelDescription(levelId);
 
         layout = (RelativeLayout)findViewById(R.id.fitLayout);
-        layout.setBackgroundColor(Color.BLACK);
+
+        Point screenSize = new Point();
+        getWindowManager().getDefaultDisplay().getSize(screenSize);
+        ImageView background = new BackgroundLines(this, level.getRows(), level.getColumns(), 2, Color.BLACK, Color.WHITE, screenSize);
+
+        layout.setBackground(new BitmapDrawable(background.getDrawingCache()));
 
         timer = new ScheduledThreadPoolExecutor(1);
 
@@ -92,5 +103,4 @@ public class FitActivity extends GameActivity {
             }
         }
     }
-
 }
