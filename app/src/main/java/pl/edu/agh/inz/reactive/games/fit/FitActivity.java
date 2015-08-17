@@ -92,13 +92,17 @@ public class FitActivity extends GameActivity {
 
                 Bitmap bitmap = Bitmap.createBitmap(bMapScaled, cornerX, cornerY, chunkWidth, chunkHeight);
 
-                ImageView imageView = new ImageView(this);
-                imageView.setImageBitmap(bitmap);
+                int randTop = random.nextInt(bMap.getHeight() - chunkHeight);
+                int randLeft = random.nextInt(bMap.getWidth() - chunkWidth);
+                int randRotation = random.nextInt(90);
+
+                ImageView chunkImage = new ChunkImage(this, bitmap, randTop-cornerY, randLeft-cornerX, randRotation);
+
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(chunkWidth, chunkHeight);
                 params.topMargin = random.nextInt(bMap.getHeight() - chunkHeight);
                 params.leftMargin = random.nextInt(bMap.getWidth() - chunkWidth);
-                imageView.setRotation(random.nextInt(90));
-                layout.addView(imageView, params);
+
+                layout.addView(chunkImage, params);
             }
         }
     }
