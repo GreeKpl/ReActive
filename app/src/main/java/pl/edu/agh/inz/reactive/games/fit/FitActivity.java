@@ -24,8 +24,6 @@ import pl.edu.agh.inz.reactive.games.AbstractGame;
 import pl.edu.agh.inz.reactive.games.GameActivity;
 import pl.edu.agh.inz.reactive.games.finish.criteria.DefaultFinishListener;
 
-import static pl.edu.agh.inz.reactive.R.drawable.*;
-
 /**
  * Created by Jacek on 2015-07-19.
  */
@@ -50,15 +48,16 @@ public class FitActivity extends GameActivity {
 
         Point screenSize = new Point();
         getWindowManager().getDefaultDisplay().getSize(screenSize);
-        ImageView background = new BackgroundLines(this, level.getRows(), level.getColumns(), 2, Color.BLACK, Color.WHITE, screenSize);
+        ImageView background = new BackgroundLines(this, level.getRows(), level.getColumns(), 2, Color.BLACK, Color.BLUE, screenSize);
 
-        layout.setBackground(new BitmapDrawable(background.getDrawingCache()));
+        //set background here
 
         timer = new ScheduledThreadPoolExecutor(1);
 
         logic.setFinishListener(new DefaultFinishListener(logic, level, this));
 
-        splitImage(morze, 3, 4);
+        layout.addView(background);
+        splitImage(level.getImage(), level.getRows(), level.getColumns());
     }
 
     @Override
