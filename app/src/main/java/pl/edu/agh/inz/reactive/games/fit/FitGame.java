@@ -34,6 +34,8 @@ public class FitGame extends AbstractGame {
         private final int seconds;
         private final int rows;
         private final int columns;
+        private final int measurementErrorOfPosition;
+        private final int measurementErrorOfRotation;
         private final int image;
         private final String desc;
 
@@ -43,6 +45,8 @@ public class FitGame extends AbstractGame {
             this.desc = builder.desc;
             this.columns = builder.columns;
             this.rows = builder.rows;
+            this.measurementErrorOfPosition = builder.measurementErrorOfPosition;
+            this.measurementErrorOfRotation = builder.measurementErrorOfRotation;
         }
 
         @Override
@@ -78,6 +82,14 @@ public class FitGame extends AbstractGame {
             return columns;
         }
 
+        public int getMeasurementErrorOfPosition() {
+            return measurementErrorOfPosition;
+        }
+
+        public int getMeasurementErrorOfRotation() {
+            return measurementErrorOfRotation;
+        }
+
         public int getImage() {
             return image;
         }
@@ -86,13 +98,17 @@ public class FitGame extends AbstractGame {
             private final int seconds;
             private final int rows;
             private final int columns;
+            private final int measurementErrorOfPosition;
+            private final int measurementErrorOfRotation;
             private int image;
             private String desc = "";
 
-            public Builder(int rows, int columns, int seconds) {
+            public Builder(int rows, int columns, int seconds, int measurementErrorOfPosition, int measurementErrorOfRotation) {
                 this.rows = rows;
                 this.columns = columns;
                 this.seconds = seconds;
+                this.measurementErrorOfPosition = measurementErrorOfPosition;
+                this.measurementErrorOfRotation = measurementErrorOfRotation;
             }
 
             public Builder image(int image) {
