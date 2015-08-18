@@ -24,6 +24,8 @@ public class ChunkImage extends ImageView{
         this.measurementErrorOfPosition = measurementErrorOfPosition;
         this.measurementErrorOfRotation = measurementErrorOfRotation;
         setImageBitmap(bitmap);
+        setScaleType(ScaleType.MATRIX);
+        setOnTouchListener(new MultiTouchListener());
     }
 
     public boolean isOnPosition() {
