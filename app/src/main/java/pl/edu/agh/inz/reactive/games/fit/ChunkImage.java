@@ -2,6 +2,9 @@ package pl.edu.agh.inz.reactive.games.fit;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.DragEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 
 /**
@@ -25,7 +28,17 @@ public class ChunkImage extends ImageView{
         this.measurementErrorOfRotation = measurementErrorOfRotation;
         setImageBitmap(bitmap);
         setScaleType(ScaleType.MATRIX);
-        setOnTouchListener(new MultiTouchListener());
+        setOnTouchListener(new MultiTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                super.onTouch(v, event);
+                if (isOnPosition()) {
+                    setPerfectPosition();
+                }
+                return true;
+            }
+        });
+
     }
 
     public boolean isOnPosition() {
