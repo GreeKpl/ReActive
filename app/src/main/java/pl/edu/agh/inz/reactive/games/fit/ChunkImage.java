@@ -31,7 +31,37 @@ public class ChunkImage extends ImageView{
         setOnTouchListener(new MultiTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                super.onTouch(v, event);
+                //super.onTouch(v, event);
+
+                // POCZATEK NOWEGO KODU
+                float x;
+                float y;
+                float dx = 0;
+                float dy = 0;
+
+                bringToFront();
+
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        x = event.getX();
+                        y = event.getY();
+                        dx = x - ChunkImage.this.getX();
+                        dy = y - ChunkImage.this.getY();
+                    break;
+                    case MotionEvent.ACTION_MOVE:
+                        ChunkImage.this.setX(event.getX() - dx);
+                        ChunkImage.this.setY(event.getY() - dy);
+                    break;
+                    case MotionEvent.ACTION_UP:
+                        //your stuff
+                    break;
+                    default:
+                        super.onTouch(v, event);
+                }
+                // KONIEC NOWEGO KODU
+
+
                 if (isOnPosition()) {
                     setPerfectPosition();
                 }
