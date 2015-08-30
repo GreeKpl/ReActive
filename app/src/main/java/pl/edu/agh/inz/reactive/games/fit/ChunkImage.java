@@ -1,6 +1,5 @@
 package pl.edu.agh.inz.reactive.games.fit;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.util.FloatMath;
@@ -8,10 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-/**
- * Created by jacek on 17.08.15.
- */
-public class ChunkImage extends ImageView{
+public class ChunkImage extends ImageView {
 
     int leftPosition;
 
@@ -34,8 +30,9 @@ public class ChunkImage extends ImageView{
     private float d = 0f;
     private float newRot = 0f;
     private float[] lastEvent = null;
+    private ChunkMatchingChangeListener chunkMatchingListener;
 
-    public ChunkImage(Context context, Bitmap bitmap, int topPosition, int leftPosition, int measurementErrorOfPosition, int measurementErrorOfRotation) {
+    public ChunkImage(FitActivity context, Bitmap bitmap, int topPosition, int leftPosition, int measurementErrorOfPosition, int measurementErrorOfRotation, int chunkId) {
         super(context);
         this.leftPosition = leftPosition;
         this.topPosition = topPosition;
@@ -49,6 +46,7 @@ public class ChunkImage extends ImageView{
                 bringToFront();
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
+//                        System.out.println("ACTION DOWN");
                         start.set(event.getX(), event.getY());
                         dx = event.getX(0) - ChunkImage.this.getX();
                         dy = event.getY(0) - ChunkImage.this.getY();
@@ -56,32 +54,37 @@ public class ChunkImage extends ImageView{
                         lastEvent = null;
                         break;
                     case MotionEvent.ACTION_POINTER_DOWN:
+//                        System.out.println("ACTION POINTER DOWN");
                         oldDist = spacing(event);
                         if (oldDist > 1f) {
                             midPoint(mid, event);
                             mode = ROT;
                         }
-                        d = rotation(event);
+                        d = getRotation(event);
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_POINTER_UP:
+//                        System.out.println("ACTION UP OR POINTER UP");
                         mode = NONE;
                         lastEvent = null;
                         break;
                     case MotionEvent.ACTION_MOVE:
+//                        System.out.println("MOVE WITH MODE " + (mode == 1 ? "DRAG" : "ROT"));
                         if (mode == DRAG) {
                             ChunkImage.this.setX(event.getX(0) - dx);
                             ChunkImage.this.setY(event.getY(0) - dy);
                         } else if (mode == ROT) {
-                            ChunkImage.this.setRotation(rotation(event) - d);
+//                            System.out.println("ROT: " + getRotation(event) + " so final is " + (getRotation(event) - d));
+                            ChunkImage.this.setRotation(getRotation(event) - d);
                         }
                         break;
                 }
+
                 if (isOnPosition()) {
                     setPerfectPosition();
-                    //addScore
+                    chunkMatchingListener.onChanged(true);
                 } else {
-                    //cutScore
+                    chunkMatchingListener.onChanged(false);
                 }
 
                 return true;
@@ -140,20 +143,18 @@ public class ChunkImage extends ImageView{
         return FloatMath.sqrt(x * x + y * y);
     }
 
-    private float rotation(MotionEvent event) {
+    private float getRotation(MotionEvent event) {
+//        System.out.println("POSITION: [" + event.getX(0) + ", " + event.getY(0) + "] [" + event.getX(1) + ", " + event.getY(1) + "]");
         double delta_x = (event.getX(0) - event.getX(1));
         double delta_y = (event.getY(0) - event.getY(1));
         double radians = Math.atan2(delta_y, delta_x);
-        return (float) Math.toDegrees(radians);
+        return (float) Math.toDegrees(radians) + 180;
     }
 
     public boolean isOnPosition() {
-        if ((Math.abs(leftPosition-getX()) < measurementErrorOfPosition) &&
-                (Math.abs(topPosition-getY()) < measurementErrorOfPosition) &&
-                (Math.abs(getRotation()) < measurementErrorOfRotation)) {
-            return true;
-        }
-        return false;
+        return (Math.abs(leftPosition - getX()) < measurementErrorOfPosition) &&
+                (Math.abs(topPosition - getY()) < measurementErrorOfPosition) &&
+                (Math.abs(getRotation()) < measurementErrorOfRotation);
     }
 
     public void setPerfectPosition() {
@@ -162,4 +163,11 @@ public class ChunkImage extends ImageView{
         setRotation(0);
     }
 
+    public void onToggleFinalPosition(ChunkMatchingChangeListener listener) {
+        this.chunkMatchingListener = listener;
+    }
+
+    public interface ChunkMatchingChangeListener {
+        void onChanged(boolean correctPosition);
+    }
 }

@@ -35,6 +35,8 @@ public class FitActivity extends GameActivity {
     private Random random = new Random();
     private ScheduledThreadPoolExecutor timer;
 
+    private boolean[] chunksMatched;
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void startLevel(int levelId) {
@@ -57,6 +59,7 @@ public class FitActivity extends GameActivity {
         logic.setFinishListener(new DefaultFinishListener(logic, level, this));
 
         layout.addView(background);
+        chunksMatched = new boolean[level.getColumns() * level.getRows()];
         splitImage(level.getImage(), level.getRows(), level.getColumns());
     }
 
@@ -96,7 +99,23 @@ public class FitActivity extends GameActivity {
                 int randLeft = random.nextInt(bMap.getWidth() - chunkWidth);
                 int randRotation = random.nextInt(90);
 
-                ImageView chunkImage = new ChunkImage(this, bitmap, cornerY, cornerX, level.getMeasurementErrorOfPosition(), level.getMeasurementErrorOfRotation());
+                final int chunkId = i * cols + j;
+                ChunkImage chunkImage = new ChunkImage(this, bitmap, cornerY, cornerX, level.getMeasurementErrorOfPosition(), level.getMeasurementErrorOfRotation(), chunkId);
+
+                chunkImage.onToggleFinalPosition(new ChunkImage.ChunkMatchingChangeListener() {
+                    @Override
+                    public void onChanged(boolean correctPosition) {
+                        if (chunksMatched[chunkId] != correctPosition) { // has really changed
+                            chunksMatched[chunkId] = correctPosition;
+                            int scoreChange = level.getScorePerChunk();
+                            if (!correctPosition) {
+                                scoreChange *= -1;
+                            }
+                            logic.setScore(logic.getScore() + scoreChange);
+                            System.out.println("SCORE NOW IS: " + logic.getScore());
+                        }
+                    }
+                });
                 chunkImage.setRotation(randRotation);
 
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(chunkWidth, chunkHeight);

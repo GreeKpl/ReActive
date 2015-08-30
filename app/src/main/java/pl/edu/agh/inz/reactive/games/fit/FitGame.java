@@ -49,6 +49,10 @@ public class FitGame extends AbstractGame {
             this.measurementErrorOfRotation = builder.measurementErrorOfRotation;
         }
 
+        public int getScorePerChunk() {
+            return (int) Math.ceil(getScoreNeeded() / (1.0 * columns * rows));
+        }
+
         @Override
         public String getPreparationText() {
             return "Używając dwóch palców ułóż obrazek";
