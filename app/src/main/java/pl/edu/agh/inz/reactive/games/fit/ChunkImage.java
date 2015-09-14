@@ -1,7 +1,6 @@
 package pl.edu.agh.inz.reactive.games.fit;
 
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.util.FloatMath;
 import android.view.MotionEvent;
@@ -23,18 +22,15 @@ public class ChunkImage extends ImageView {
     private static final int ROT = 2;
     private int mode = NONE;
     // remember some things for zooming
-    private PointF start = new PointF();
-    private PointF mid = new PointF();
+    private PointF initialTouchPos = new PointF();
     private float oldDist = 1f;
-    private float dx = 0f;
-    private float dy = 0f;
-    private float d = 0f;
-    private float newRot = 0f;
-    private float[] lastEvent = null;
-    private double startAngle;
-    private ChunkMatchingChangeListener chunkMatchingListener;
-    private View copy;
+    private float initialRotation = 0f;
+    private int sumRotChange = 0;
+    private PointF initialImagePos = new PointF();
 
+    private ChunkMatchingChangeListener chunkMatchingListener;
+    private float prevDx = 0;
+    private float prevDy = 0;
 
 
     public ChunkImage(FitActivity context, Bitmap bitmap, int topPosition, int leftPosition, int measurementErrorOfPosition, int measurementErrorOfRotation, int chunkId) {
@@ -46,41 +42,53 @@ public class ChunkImage extends ImageView {
         setImageBitmap(bitmap);
         setScaleType(ScaleType.MATRIX);
         setOnTouchListener(new OnTouchListener() {
-            private Matrix matrix;
-            private Matrix savedMatrix;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 bringToFront();
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
-                        start.set(event.getX(), event.getY());
+                        initialTouchPos.set(event.getX(), event.getY());
+                        initialImagePos.set(ChunkImage.this.getX(), ChunkImage.this.getY());
                         mode = DRAG;
-                        lastEvent = null;
+                        prevDx = 0;
+                        prevDy = 0;
                         break;
                     case MotionEvent.ACTION_POINTER_DOWN:
                         oldDist = spacing(event);
                         if (oldDist > 1f) {
-                            midPoint(mid, event);
                             mode = ROT;
                         }
-                        d = getRotation(event);
+                        initialRotation = ChunkImage.this.getRotation();
+                        sumRotChange = 0;
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_POINTER_UP:
                         mode = NONE;
-                        lastEvent = null;
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (mode == DRAG) {
-                            float dx = event.getX() - start.x;
-                            float dy = event.getY() - start.y;
-                            ChunkImage.this.setX(ChunkImage.this.getX() + dx);
-                            ChunkImage.this.setY(ChunkImage.this.getY() + dy);
+                            float dx = event.getX() - initialTouchPos.x;
+                            float dy = event.getY() - initialTouchPos.y;
+
+                            float finalDx = (dx + prevDx) / 2;
+                            float finalDy = (dy + prevDy) / 2;
+                            prevDx = dx;
+                            prevDy = dy;
+
+                            ChunkImage.this.setX(initialImagePos.x + finalDx);
+                            ChunkImage.this.setY(initialImagePos.y + finalDy);
                         } else if (mode == ROT) {
-                            float newRot = getRotation(event);
-                            ChunkImage.this.setRotation(newRot - d);
-//                            d = newRot;
+                            float rotationChange = getRotation(event);
+                            if (rotationChange > 10) {
+                                rotationChange = 10;
+                            } else if (rotationChange < -10) {
+                                rotationChange = -10;
+                            }
+                            sumRotChange += rotationChange;
+                            float finalRot = initialRotation + sumRotChange;
+
+                            ChunkImage.this.setRotation(finalRot);
                         }
                         break;
                 }
@@ -96,13 +104,6 @@ public class ChunkImage extends ImageView {
             }
 
         });
-
-    }
-
-    private void midPoint(PointF point, MotionEvent event) {
-        float x = event.getX(0) + event.getX(1);
-        float y = event.getY(0) + event.getY(1);
-        point.set(x / 2, y / 2);
     }
 
     private float spacing(MotionEvent event) {
@@ -121,7 +122,17 @@ public class ChunkImage extends ImageView {
     public boolean isOnPosition() {
         return (Math.abs(leftPosition - getX()) < measurementErrorOfPosition) &&
                 (Math.abs(topPosition - getY()) < measurementErrorOfPosition) &&
-                (Math.abs(getRotation()) < measurementErrorOfRotation);
+                (Math.abs(normalizeDegree(getRotation())) < measurementErrorOfRotation);
+    }
+
+    private float normalizeDegree(float degree) {
+        while (degree > 180) {
+            degree -= 360;
+        }
+        while (degree < -180) {
+            degree += 360;
+        }
+        return degree;
     }
 
     public void setPerfectPosition() {
