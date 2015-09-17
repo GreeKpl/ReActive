@@ -70,14 +70,20 @@ public class ChunkImage extends ImageView {
                         if (mode == DRAG) {
                             float dx = event.getX() - initialTouchPos.x;
                             float dy = event.getY() - initialTouchPos.y;
-
-                            float finalDx = (dx + prevDx) / 2;
-                            float finalDy = (dy + prevDy) / 2;
-                            prevDx = dx;
-                            prevDy = dy;
-
-                            ChunkImage.this.setX(initialImagePos.x + finalDx);
-                            ChunkImage.this.setY(initialImagePos.y + finalDy);
+                            float rot = (ChunkImage.this.getRotation()+360)%360;
+                            if (rot <= 45 || rot >= 315) {
+                                ChunkImage.this.setX(ChunkImage.this.getX() + dx);
+                                ChunkImage.this.setY(ChunkImage.this.getY() + dy);
+                            } else if (rot > 45 && rot < 135) {
+                                ChunkImage.this.setX(ChunkImage.this.getX() - dy);
+                                ChunkImage.this.setY(ChunkImage.this.getY() + dx);
+                            } else if (rot >= 135 && rot <= 225) {
+                                ChunkImage.this.setX(ChunkImage.this.getX() - dx);
+                                ChunkImage.this.setY(ChunkImage.this.getY() - dy);
+                            } else if (rot > 225 || rot < 45) {
+                                ChunkImage.this.setX(ChunkImage.this.getX() + dy);
+                                ChunkImage.this.setY(ChunkImage.this.getY() - dx);
+                            }
                         } else if (mode == ROT) {
                             float rotationChange = getRotation(event);
                             if (rotationChange > 10) {
