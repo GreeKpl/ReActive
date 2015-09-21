@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -84,9 +85,14 @@ public class FitActivity extends GameActivity {
     public void splitImage(int imgResource, int rows, int cols) {
 
         Bitmap bMap = BitmapFactory.decodeResource(getResources(), imgResource);
-        int chunkWidth = bMap.getWidth() / cols;
-        int chunkHeight = bMap.getHeight() / rows;
-        Bitmap bMapScaled = Bitmap.createScaledBitmap(bMap, bMap.getWidth(), bMap.getHeight(), true);
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        Rect rectangle = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        int sizey = size.y-getActionBar().getHeight()-rectangle.top;
+        int chunkWidth = size.x / cols;
+        int chunkHeight = sizey / rows;
+        Bitmap bMapScaled = Bitmap.createScaledBitmap(bMap, size.x, sizey, true);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -95,8 +101,8 @@ public class FitActivity extends GameActivity {
 
                 Bitmap bitmap = Bitmap.createBitmap(bMapScaled, cornerX, cornerY, chunkWidth, chunkHeight);
 
-                int randTop = random.nextInt(bMap.getHeight() - chunkHeight);
-                int randLeft = random.nextInt(bMap.getWidth() - chunkWidth);
+                int randTop = random.nextInt(sizey - chunkHeight);
+                int randLeft = random.nextInt(size.x - chunkWidth);
                 int randRotation = random.nextInt(90);
 
                 final int chunkId = i * cols + j;
